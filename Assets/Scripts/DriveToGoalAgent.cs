@@ -9,5 +9,6 @@ public class DriveToGoalAgent : Agent
     public override void OnActionReceived(ActionBuffers actions)
     {
         Debug.Log(actions.ContinuousActions[0]);
+        
     }
 }
