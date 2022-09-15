@@ -1,0 +1,42 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1663230176",
+        "python_version": "3.7.14 (default, Sep  6 2022, 23:37:35) \n[Clang 13.1.6 (clang-1316.0.21.2.5)]",
+        "command_line_arguments": "/Users/iakalann/Documents/ReinforcementLearning/Autonomous Driving RL/venv37/bin/mlagents-learn --run-id=Test9",
+        "mlagents_version": "0.29.0",
+        "mlagents_envs_version": "0.29.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "1.8.1",
+        "numpy_version": "1.21.2",
+        "end_time_seconds": "1663230185"
+    },
+    "total": 9.313730851999999,
+    "count": 1,
+    "self": 0.010849269999999578,
+    "children": {
+        "run_training.setup": {
+            "total": 0.02741369299999996,
+            "count": 1,
+            "self": 0.02741369299999996
+        },
+        "TrainerController.start_learning": {
+            "total": 9.275467889,
+            "count": 1,
+            "self": 0.00011500700000155462,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 9.275195285999999,
+                    "count": 1,
+                    "self": 9.275195285999999
+                },
+                "TrainerController._save_models": {
+                    "total": 0.00015759599999931595,
+                    "count": 1,
+                    "self": 0.00015759599999931595
+                }
+            }
+        }
+    }
+}
