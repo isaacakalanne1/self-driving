@@ -30,7 +30,7 @@ public class CarController : MonoBehaviour
     [SerializeField] private Transform backRightWheelTransform;
 
     private void FixedUpdate() {
-        // GetInput();
+        GetInput();
         HandleMotor();
         HandleSteering();
         UpdateWheels();
