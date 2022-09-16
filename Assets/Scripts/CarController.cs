@@ -38,7 +38,7 @@ public class CarController : MonoBehaviour
 
     public void SetInput(float turnValue)
     {
-        verticalInput = 1f;
+        verticalInput = 1;
         horizontalInput = turnValue;
     }
 
