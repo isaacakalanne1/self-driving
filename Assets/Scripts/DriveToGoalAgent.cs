@@ -21,6 +21,11 @@ public class DriveToGoalAgent : Agent
         sensor.AddObservation(transform.position);
     }
 
+    public override void OnEpisodeBegin()
+    {
+        transform.position = Vector3.zero;
+    }
+
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         var continuousActions = actionsOut.ContinuousActions;
@@ -37,6 +42,12 @@ public class DriveToGoalAgent : Agent
         if (didDriveOffRoad())
         {
             Debug.Log("Drove off road!");
+            SetReward(-10000f);
+            EndEpisode();
+        }
+        else
+        {
+            SetReward(1f);
         }
     }
 
