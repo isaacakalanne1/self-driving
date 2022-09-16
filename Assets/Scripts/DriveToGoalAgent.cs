@@ -40,7 +40,6 @@ public class DriveToGoalAgent : Agent
 
         if (DidDriveOffRoad())
         {
-            Debug.Log("Drove off road!");
             SetReward(-10000f);
             EndEpisode();
         }
