@@ -30,16 +30,23 @@ public class CarController : MonoBehaviour
     [SerializeField] private Transform backRightWheelTransform;
 
     private void FixedUpdate() {
-        GetInput();
+        // GetInput();
         HandleMotor();
         HandleSteering();
         UpdateWheels();
+    }
+
+    public void SetInput(float turnValue, float driveValue)
+    {
+        horizontalInput = turnValue;
+        verticalInput = driveValue;
     }
 
     private void GetInput() {
         horizontalInput = Input.GetAxis(Horizontal);
         verticalInput = Input.GetAxis(Vertical);
         isBraking = Input.GetKey(KeyCode.Space);
+        Debug.Log(horizontalInput);
     }
 
     private void HandleMotor() {
