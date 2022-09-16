@@ -30,17 +30,15 @@ public class DriveToGoalAgent : Agent
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         var continuousActions = actionsOut.ContinuousActions;
-        continuousActions[0] = Input.GetAxisRaw("Vertical");
-        continuousActions[1] = Input.GetAxisRaw("Horizontal");
+        continuousActions[0] = Input.GetAxisRaw("Horizontal");
     }
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        var driveValue = actions.ContinuousActions[0];
-        var turnValue = actions.ContinuousActions[1];
-        carController.SetInput(driveValue, turnValue);
+        var turnValue = actions.ContinuousActions[0];
+        carController.SetInput(turnValue);
 
-        if (didDriveOffRoad())
+        if (DidDriveOffRoad())
         {
             Debug.Log("Drove off road!");
             SetReward(-10000f);
@@ -52,7 +50,7 @@ public class DriveToGoalAgent : Agent
         }
     }
 
-    private bool didDriveOffRoad()
+    private bool DidDriveOffRoad()
     {
         var dividerName = "Divider Mesh Holder";
         var terrainName = "Terrain";

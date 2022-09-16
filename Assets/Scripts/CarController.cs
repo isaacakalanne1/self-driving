@@ -36,9 +36,9 @@ public class CarController : MonoBehaviour
         UpdateWheels();
     }
 
-    public void SetInput(float driveValue, float turnValue)
+    public void SetInput(float turnValue)
     {
-        verticalInput = driveValue;
+        verticalInput = 1f;
         horizontalInput = turnValue;
     }
 
