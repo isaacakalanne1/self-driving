@@ -24,6 +24,7 @@ public class DriveToGoalAgent : Agent
     public override void OnEpisodeBegin()
     {
         transform.position = Vector3.zero;
+        transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
