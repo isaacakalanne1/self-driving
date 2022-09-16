@@ -19,10 +19,10 @@ public class CarController : MonoBehaviour
     [SerializeField] private float brakeForce;
     [SerializeField] private float maxSteeringAngle;
 
-    [SerializeField] private WheelCollider frontLeftWheelCollider;
-    [SerializeField] private WheelCollider frontRightWheelCollider;
-    [SerializeField] private WheelCollider backLeftWheelCollider;
-    [SerializeField] private WheelCollider backRightWheelCollider;
+    [SerializeField] public WheelCollider frontLeftWheelCollider;
+    [SerializeField] public WheelCollider frontRightWheelCollider;
+    [SerializeField] public WheelCollider backLeftWheelCollider;
+    [SerializeField] public WheelCollider backRightWheelCollider;
 
     [SerializeField] private Transform frontLeftWheelTransform;
     [SerializeField] private Transform frontRightWheelTransform;
@@ -30,23 +30,22 @@ public class CarController : MonoBehaviour
     [SerializeField] private Transform backRightWheelTransform;
 
     private void FixedUpdate() {
-        GetInput();
+        // GetInput();
         HandleMotor();
         HandleSteering();
         UpdateWheels();
     }
 
-    public void SetInput(float turnValue, float driveValue)
+    public void SetInput(float driveValue, float turnValue)
     {
-        horizontalInput = turnValue;
         verticalInput = driveValue;
+        horizontalInput = turnValue;
     }
 
     private void GetInput() {
         horizontalInput = Input.GetAxis(Horizontal);
         verticalInput = Input.GetAxis(Vertical);
         isBraking = Input.GetKey(KeyCode.Space);
-        Debug.Log(horizontalInput);
     }
 
     private void HandleMotor() {
