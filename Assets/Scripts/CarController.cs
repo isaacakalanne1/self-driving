@@ -18,6 +18,7 @@ public class CarController : MonoBehaviour
     [SerializeField] private float motorForce;
     [SerializeField] private float brakeForce;
     [SerializeField] private float maxSteeringAngle;
+    [SerializeField] private float maxSteerPerAction;
 
     [SerializeField] public WheelCollider frontLeftWheelCollider;
     [SerializeField] public WheelCollider frontRightWheelCollider;
@@ -63,10 +64,19 @@ public class CarController : MonoBehaviour
         backRightWheelCollider.brakeTorque = currentBrakeForce;
     }
 
-    private void HandleSteering() {
-        currentSteerAngle = maxSteeringAngle * horizontalInput;
-        frontLeftWheelCollider.steerAngle = currentSteerAngle;
-        frontRightWheelCollider.steerAngle = currentSteerAngle;
+    private void HandleSteering()
+    {
+        var newSteerAngle = frontLeftWheelCollider.steerAngle + (maxSteerPerAction * horizontalInput);
+        if (newSteerAngle < -maxSteeringAngle)
+        {
+            newSteerAngle = -maxSteeringAngle;
+        }
+        if (newSteerAngle > maxSteeringAngle)
+        {
+            newSteerAngle = maxSteeringAngle;
+        }
+        frontLeftWheelCollider.steerAngle = newSteerAngle;
+        frontRightWheelCollider.steerAngle = newSteerAngle;
     }
 
     private void UpdateWheels() {

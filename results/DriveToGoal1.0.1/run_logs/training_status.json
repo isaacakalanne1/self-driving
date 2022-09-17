@@ -18,15 +18,33 @@
                 "auxillary_file_paths": [
                     "results/DriveToGoal1.0.1/DriveToGoal/DriveToGoal-337678.pt"
                 ]
+            },
+            {
+                "steps": 346689,
+                "file_path": "results/DriveToGoal1.0.1/DriveToGoal/DriveToGoal-346689.onnx",
+                "reward": -9004.875,
+                "creation_time": 1663427293.863245,
+                "auxillary_file_paths": [
+                    "results/DriveToGoal1.0.1/DriveToGoal/DriveToGoal-346689.pt"
+                ]
+            },
+            {
+                "steps": 475704,
+                "file_path": "results/DriveToGoal1.0.1/DriveToGoal/DriveToGoal-475704.onnx",
+                "reward": null,
+                "creation_time": 1663428776.2125812,
+                "auxillary_file_paths": [
+                    "results/DriveToGoal1.0.1/DriveToGoal/DriveToGoal-475704.pt"
+                ]
             }
         ],
         "final_checkpoint": {
-            "steps": 337678,
+            "steps": 475704,
             "file_path": "results/DriveToGoal1.0.1/DriveToGoal.onnx",
             "reward": null,
-            "creation_time": 1663426987.822717,
+            "creation_time": 1663428776.2125812,
             "auxillary_file_paths": [
-                "results/DriveToGoal1.0.1/DriveToGoal/DriveToGoal-337678.pt"
+                "results/DriveToGoal1.0.1/DriveToGoal/DriveToGoal-475704.pt"
             ]
         }
     },

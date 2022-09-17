@@ -16,12 +16,19 @@ public class DriveToGoalAgent : Agent
         carController = GetComponent<CarController>();
     }
 
+    public override void CollectObservations(VectorSensor sensor)
+    {
+        sensor.AddObservation(carController.frontLeftWheelCollider.steerAngle);
+    }
+
     public override void OnEpisodeBegin()
     {
         carController.TryGetComponent<Rigidbody>(out Rigidbody rigidBody);
         rigidBody.velocity = Vector3.zero;
         transform.position = Vector3.zero;
         transform.rotation = Quaternion.Euler(0, 0, 0);
+        carController.frontLeftWheelCollider.steerAngle = 0;
+        carController.frontRightWheelCollider.steerAngle = 0;
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
