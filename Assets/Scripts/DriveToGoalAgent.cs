@@ -35,7 +35,7 @@ public class DriveToGoalAgent : Agent
         var turnValue = actions.ContinuousActions[0];
         carController.SetInput(turnValue);
 
-        if (DidDriveOffRoad())
+        if (DidDriveOffRoad() || DidRollOver())
         {
             SetReward(-10000f);
             EndEpisode();
@@ -57,5 +57,11 @@ public class DriveToGoalAgent : Agent
                || lHit.collider.name == terrainName
                || rHit.collider.name == dividerName
                || rHit.collider.name == terrainName;
+    }
+
+    private bool DidRollOver()
+    {
+        var rotation = transform.rotation.z;
+        return rotation < -50 || rotation > 50;
     }
 }
