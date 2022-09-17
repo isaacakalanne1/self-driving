@@ -1,0 +1,29 @@
+{
+    "DriveToGoal": {
+        "checkpoints": [
+            {
+                "steps": 893,
+                "file_path": "results/Test54/DriveToGoal/DriveToGoal-893.onnx",
+                "reward": -9965.48,
+                "creation_time": 1663422122.274376,
+                "auxillary_file_paths": [
+                    "results/Test54/DriveToGoal/DriveToGoal-893.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 893,
+            "file_path": "results/Test54/DriveToGoal.onnx",
+            "reward": -9965.48,
+            "creation_time": 1663422122.274376,
+            "auxillary_file_paths": [
+                "results/Test54/DriveToGoal/DriveToGoal-893.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.29.0",
+        "torch_version": "1.8.1"
+    }
+}
