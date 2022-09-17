@@ -18,6 +18,8 @@ public class DriveToGoalAgent : Agent
 
     public override void OnEpisodeBegin()
     {
+        carController.TryGetComponent<Rigidbody>(out Rigidbody rigidBody);
+        rigidBody.velocity = Vector3.zero;
         transform.position = Vector3.zero;
         transform.rotation = Quaternion.Euler(0, 0, 0);
     }
