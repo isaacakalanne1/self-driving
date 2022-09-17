@@ -16,11 +16,6 @@ public class DriveToGoalAgent : Agent
         carController = GetComponent<CarController>();
     }
 
-    public override void CollectObservations(VectorSensor sensor)
-    {
-        sensor.AddObservation(transform.position);
-    }
-
     public override void OnEpisodeBegin()
     {
         transform.position = Vector3.zero;
