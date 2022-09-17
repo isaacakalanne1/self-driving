@@ -1,0 +1,47 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1663346708",
+        "python_version": "3.7.14 (default, Sep  6 2022, 23:37:35) \n[Clang 13.1.6 (clang-1316.0.21.2.5)]",
+        "command_line_arguments": "/Users/iakalann/Documents/ReinforcementLearning/self-driving/venv37/bin/mlagents-learn config/ppo/DriveScene.yaml --run-id=Test42",
+        "mlagents_version": "0.29.0",
+        "mlagents_envs_version": "0.29.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "1.8.1",
+        "numpy_version": "1.21.2",
+        "end_time_seconds": "1663346718"
+    },
+    "total": 10.234036334999999,
+    "count": 1,
+    "self": 0.009414468999997538,
+    "children": {
+        "run_training.setup": {
+            "total": 0.01637603700000001,
+            "count": 1,
+            "self": 0.01637603700000001
+        },
+        "TrainerController.start_learning": {
+            "total": 10.208245829,
+            "count": 1,
+            "self": 0.0006678909999990879,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 10.207554672,
+                    "count": 1,
+                    "self": 10.207554672
+                },
+                "trainer_threads": {
+                    "total": 1.2659999999442562e-06,
+                    "count": 1,
+                    "self": 1.2659999999442562e-06
+                },
+                "TrainerController._save_models": {
+                    "total": 2.200000000129876e-05,
+                    "count": 1,
+                    "self": 2.200000000129876e-05
+                }
+            }
+        }
+    }
+}
