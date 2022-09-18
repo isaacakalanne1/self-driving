@@ -22,7 +22,6 @@ public class DriveToGoalAgent : Agent
         var steerAngle = (int) Math.Round(carController.frontLeftWheelCollider.steerAngle, 0);
         var steerAngleDiscretized = (int) Math.Round((steerAngle + carController.maxSteeringAngle) / 5, 0);
         sensor.AddObservation(steerAngleDiscretized);
-        Debug.Log("Current steer angle is " + steerAngleDiscretized);
     }
 
     public override void OnEpisodeBegin()
@@ -56,9 +55,7 @@ public class DriveToGoalAgent : Agent
     public override void OnActionReceived(ActionBuffers actions)
     {
         var highestValue = actions.ContinuousActions.Max();
-        Debug.Log("Highest value is " + highestValue);
         var highestIndex = actions.ContinuousActions.ToList().FindIndex(a => a.Equals(highestValue));
-        Debug.Log("Highest index is " + highestIndex);
         carController.SetInput(highestIndex);
 
         if (DidDriveOffRoad() || DidRollOver())

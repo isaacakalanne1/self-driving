@@ -1,0 +1,47 @@
+{
+    "DriveToGoal": {
+        "checkpoints": [
+            {
+                "steps": 499992,
+                "file_path": "results/DriveToGoal1.1.2/DriveToGoal/DriveToGoal-499992.onnx",
+                "reward": -9937.912280701754,
+                "creation_time": 1663533925.0227132,
+                "auxillary_file_paths": [
+                    "results/DriveToGoal1.1.2/DriveToGoal/DriveToGoal-499992.pt"
+                ]
+            },
+            {
+                "steps": 500034,
+                "file_path": "results/DriveToGoal1.1.2/DriveToGoal/DriveToGoal-500034.onnx",
+                "reward": -9938.095652173914,
+                "creation_time": 1663533925.144285,
+                "auxillary_file_paths": [
+                    "results/DriveToGoal1.1.2/DriveToGoal/DriveToGoal-500034.pt"
+                ]
+            },
+            {
+                "steps": 500493,
+                "file_path": "results/DriveToGoal1.1.2/DriveToGoal/DriveToGoal-500493.onnx",
+                "reward": -9945.125,
+                "creation_time": 1663535717.5274,
+                "auxillary_file_paths": [
+                    "results/DriveToGoal1.1.2/DriveToGoal/DriveToGoal-500493.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 500493,
+            "file_path": "results/DriveToGoal1.1.2/DriveToGoal.onnx",
+            "reward": -9945.125,
+            "creation_time": 1663535717.5274,
+            "auxillary_file_paths": [
+                "results/DriveToGoal1.1.2/DriveToGoal/DriveToGoal-500493.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.29.0",
+        "torch_version": "1.8.1"
+    }
+}
