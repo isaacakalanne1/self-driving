@@ -19,7 +19,10 @@ public class DriveToGoalAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(carController.frontLeftWheelCollider.steerAngle);
+        var steerAngle = (int) Math.Round(carController.frontLeftWheelCollider.steerAngle, 0);
+        var steerAngleDiscretized = (int) Math.Round((steerAngle + carController.maxSteeringAngle) / 5, 0);
+        sensor.AddObservation(steerAngleDiscretized);
+        Debug.Log("Current steer angle is " + steerAngleDiscretized);
     }
 
     public override void OnEpisodeBegin()
@@ -38,14 +41,14 @@ public class DriveToGoalAgent : Agent
         continuousActions[0] = 0;
         continuousActions[1] = 0;
         continuousActions[2] = 0;
-        continuousActions[3] = 0;
-        continuousActions[4] = 0;
+        // continuousActions[3] = 0;
+        // continuousActions[4] = 0;
         if (Input.GetAxisRaw("Horizontal").Equals(-1f))
         {
             continuousActions[1] = 10;            
         } else if (Input.GetAxisRaw("Horizontal").Equals(1f))
         {
-            continuousActions[3] = 10;            
+            continuousActions[2] = 10;            
         }
         
     }

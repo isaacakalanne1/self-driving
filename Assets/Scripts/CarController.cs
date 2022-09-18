@@ -17,9 +17,9 @@ public class CarController : MonoBehaviour
 
     [SerializeField] private float motorForce;
     [SerializeField] private float brakeForce;
-    [SerializeField] private float maxSteeringAngle;
-    [SerializeField] private float softTurn;
-    [SerializeField] private float hardTurn;
+    [SerializeField] public float maxSteeringAngle;
+    [SerializeField] private int softTurn;
+    [SerializeField] private int hardTurn;
 
     [SerializeField] public WheelCollider frontLeftWheelCollider;
     [SerializeField] public WheelCollider frontRightWheelCollider;
@@ -48,10 +48,10 @@ public class CarController : MonoBehaviour
                 turnValue = -softTurn;
                 break;
             case 2:
-                turnValue = -hardTurn;
+                turnValue = +softTurn;
                 break;
             case 3:
-                turnValue = +softTurn;
+                turnValue = -hardTurn;
                 break;
             case 4:
                 turnValue = +hardTurn;
