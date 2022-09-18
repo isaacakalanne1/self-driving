@@ -9,7 +9,7 @@ public class CarController : MonoBehaviour
     private const string Horizontal = "Horizontal";
     private const string Vertical = "Vertical";
 
-    private float horizontalInput;
+    private float turnValue;
     private float verticalInput;
     private float currentSteerAngle;
     private float currentBrakeForce;
@@ -18,7 +18,6 @@ public class CarController : MonoBehaviour
     [SerializeField] private float motorForce;
     [SerializeField] private float brakeForce;
     [SerializeField] private float maxSteeringAngle;
-    [SerializeField] private float maxSteerPerAction;
 
     [SerializeField] public WheelCollider frontLeftWheelCollider;
     [SerializeField] public WheelCollider frontRightWheelCollider;
@@ -37,14 +36,29 @@ public class CarController : MonoBehaviour
         UpdateWheels();
     }
 
-    public void SetInput(float turnValue)
+    public void SetInput(int action)
     {
         verticalInput = 1;
-        horizontalInput = turnValue;
+        turnValue = 0;
+        switch (action)
+        {
+            case 1:
+                turnValue = -2;
+                break;
+            case 2:
+                turnValue = -5;
+                break;
+            case 3:
+                turnValue = +2;
+                break;
+            case 4:
+                turnValue = +5;
+                break;
+        }
     }
 
     private void GetInput() {
-        horizontalInput = Input.GetAxis(Horizontal);
+        turnValue = Input.GetAxis(Horizontal);
         verticalInput = Input.GetAxis(Vertical);
         isBraking = Input.GetKey(KeyCode.Space);
     }
@@ -66,7 +80,7 @@ public class CarController : MonoBehaviour
 
     private void HandleSteering()
     {
-        var newSteerAngle = frontLeftWheelCollider.steerAngle + (maxSteerPerAction * horizontalInput);
+        var newSteerAngle = frontLeftWheelCollider.steerAngle + turnValue;
         if (newSteerAngle < -maxSteeringAngle)
         {
             newSteerAngle = -maxSteeringAngle;

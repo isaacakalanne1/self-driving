@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
@@ -34,13 +35,28 @@ public class DriveToGoalAgent : Agent
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         var continuousActions = actionsOut.ContinuousActions;
-        continuousActions[0] = Input.GetAxisRaw("Horizontal");
+        continuousActions[0] = 0;
+        continuousActions[1] = 0;
+        continuousActions[2] = 0;
+        continuousActions[3] = 0;
+        continuousActions[4] = 0;
+        if (Input.GetAxisRaw("Horizontal").Equals(-1f))
+        {
+            continuousActions[1] = 10;            
+        } else if (Input.GetAxisRaw("Horizontal").Equals(1f))
+        {
+            continuousActions[3] = 10;            
+        }
+        
     }
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        var turnValue = actions.ContinuousActions[0];
-        carController.SetInput(turnValue);
+        var highestValue = actions.ContinuousActions.Max();
+        Debug.Log("Highest value is " + highestValue);
+        var highestIndex = actions.ContinuousActions.ToList().FindIndex(a => a.Equals(highestValue));
+        Debug.Log("Highest index is " + highestIndex);
+        carController.SetInput(highestIndex);
 
         if (DidDriveOffRoad() || DidRollOver())
         {
