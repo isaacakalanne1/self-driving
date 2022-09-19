@@ -18,7 +18,7 @@ public class CarController : MonoBehaviour
     [SerializeField] private float motorForce;
     [SerializeField] private float brakeForce;
     [SerializeField] public float maxSteeringAngle;
-    [SerializeField] private int softTurn;
+    [SerializeField] private float softTurn;
     [SerializeField] private int hardTurn;
 
     [SerializeField] public WheelCollider frontLeftWheelCollider;
@@ -59,12 +59,6 @@ public class CarController : MonoBehaviour
         }
     }
 
-    private void GetInput() {
-        turnValue = Input.GetAxis(Horizontal);
-        verticalInput = Input.GetAxis(Vertical);
-        isBraking = Input.GetKey(KeyCode.Space);
-    }
-
     private void HandleMotor() {
         frontLeftWheelCollider.motorTorque = verticalInput * motorForce;
         frontRightWheelCollider.motorTorque = verticalInput * motorForce;
@@ -72,6 +66,7 @@ public class CarController : MonoBehaviour
     }
 
     private void ApplyBraking() {
+        isBraking = Input.GetKey(KeyCode.Space);
         currentBrakeForce = isBraking ? brakeForce : 0f;
         
         frontLeftWheelCollider.brakeTorque = currentBrakeForce;
@@ -104,8 +99,8 @@ public class CarController : MonoBehaviour
 
     private static void UpdateSingleWheel(WheelCollider wheelCollider, Transform wheelTransform) {
         wheelCollider.GetWorldPose(out var pos, out var rot);
-        wheelTransform.rotation = rot;
-        wheelTransform.position = pos;
+        wheelTransform.localRotation = rot;
+        // wheelTransform.localPosition = pos;
     }
 
 }

@@ -20,7 +20,7 @@ public class DriveToGoalAgent : Agent
     public override void CollectObservations(VectorSensor sensor)
     {
         var steerAngle = (int) Math.Round(carController.frontLeftWheelCollider.steerAngle, 0);
-        var steerAngleDiscretized = (int) Math.Round((steerAngle + carController.maxSteeringAngle) / 5, 0);
+        var steerAngleDiscretized = (int) Math.Round(steerAngle + carController.maxSteeringAngle, 0);
         sensor.AddObservation(steerAngleDiscretized);
     }
 
@@ -28,8 +28,8 @@ public class DriveToGoalAgent : Agent
     {
         carController.TryGetComponent<Rigidbody>(out Rigidbody rigidBody);
         rigidBody.velocity = Vector3.zero;
-        transform.position = Vector3.zero;
-        transform.rotation = Quaternion.Euler(0, 0, 0);
+        transform.localPosition = new Vector3((float)100.5975,(float)119.2238,(float)154.1683);
+        transform.localRotation = Quaternion.Euler(0, 0, 0);
         carController.frontLeftWheelCollider.steerAngle = 0;
         carController.frontRightWheelCollider.steerAngle = 0;
     }
@@ -84,7 +84,7 @@ public class DriveToGoalAgent : Agent
 
     private bool DidRollOver()
     {
-        var rotation = transform.rotation.z;
+        var rotation = transform.localRotation.z;
         return rotation < -50 || rotation > 50;
     }
 }
