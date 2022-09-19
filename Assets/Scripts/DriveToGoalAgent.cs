@@ -49,7 +49,7 @@ public class DriveToGoalAgent : Agent
         {
             continuousActions[2] = 10;            
         }
-        
+
     }
 
     public override void OnActionReceived(ActionBuffers actions)
