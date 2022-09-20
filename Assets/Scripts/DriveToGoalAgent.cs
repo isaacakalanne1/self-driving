@@ -57,9 +57,10 @@ public class DriveToGoalAgent : Agent
         var highestValue = actions.ContinuousActions.Max();
         var highestIndex = actions.ContinuousActions.ToList().FindIndex(a => a.Equals(highestValue));
         carController.SetInput(highestIndex);
-
+        
         if (DidRollOver() || DidDriveOffRoad())
         {
+            Debug.Log("Drove off road or rolled over!");
             SetReward(-10000f);
             EndEpisode();
         }
@@ -76,6 +77,8 @@ public class DriveToGoalAgent : Agent
         // Currently only detecting front wheels hitting the divider or terrain
         carController.frontLeftWheelCollider.GetGroundHit(out WheelHit lHit);
         carController.frontRightWheelCollider.GetGroundHit(out WheelHit rHit);
+        Debug.Log("lHit is " + lHit.collider?.name);
+        Debug.Log("rHit is " + rHit.collider?.name);
         return lHit.collider?.name == dividerName
                || lHit.collider?.name == terrainName
                || rHit.collider?.name == dividerName
