@@ -30,6 +30,8 @@ public class CarController : MonoBehaviour
     [SerializeField] private Transform frontRightWheelTransform;
     [SerializeField] private Transform backLeftWheelTransform;
     [SerializeField] private Transform backRightWheelTransform;
+    
+    public GameObject person1;
 
     private void FixedUpdate() {
         // GetInput();
@@ -57,6 +59,15 @@ public class CarController : MonoBehaviour
                 turnValue = +hardTurn;
                 break;
         }
+    }
+
+    public List<int> GetRelativePositionAndDistanceOfPerson()
+    {
+        person1 = GameObject.Find("Person1");
+        var egoPosition = transform.position;
+        var personPosition = person1.transform.position;
+        var distance = Vector3.Distance (egoPosition, personPosition);
+        var relativeDirection = (egoPosition - personPosition) - transform.forward;
     }
 
     private void HandleMotor() {
