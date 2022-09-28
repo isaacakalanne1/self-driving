@@ -11,7 +11,7 @@ public class DriveToGoalAgent : Agent
 {
 
     private CarController carController;
-    private bool isChangingLane;
+    private bool isChangingLane = false;
     private static String lane1Mesh = "Lane 1 Mesh Holder";
     private static String lane2Mesh = "Lane 2 Mesh Holder";
     private static String dividerMesh = "Divider Mesh Holder";
@@ -57,8 +57,8 @@ public class DriveToGoalAgent : Agent
     {
         triggerLaneChangeTimer.Enabled = false;
         laneChangeCountdownTimer.Enabled = false;
-        triggerLaneChangeTimer = new();
-        laneChangeCountdownTimer = new();
+        triggerLaneChangeTimer = new Timer();
+        laneChangeCountdownTimer = new Timer();
     }
 
     private void RestartTriggerLaneChangeTimer()
@@ -139,7 +139,7 @@ public class DriveToGoalAgent : Agent
             {
                 CancelLaneChangeCountdownTimer();
                 isChangingLane = false;
-                SetReward(500f);
+                SetReward(10f);
             } else if (IsTouching(terrain))
             {
                 SetReward(-10000f);
