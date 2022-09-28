@@ -11,22 +11,29 @@ public class DriveToGoalAgent : Agent
 {
 
     private CarController carController;
-    private bool isChangingLane = false;
-    private static String lane1Mesh = "Lane 1 Mesh Holder";
-    private static String lane2Mesh = "Lane 2 Mesh Holder";
-    private static String dividerMesh = "Divider Mesh Holder";
-    private static String terrain = "Terrain";
-    private String targetLane = lane2Mesh;
+    private bool isChangingLane;
+    private const string Lane1Mesh = "Lane 1 Mesh Holder";
+    private const string Lane2Mesh = "Lane 2 Mesh Holder";
+    private const string DividerMesh = "Divider Mesh Holder";
+    private const string Terrain = "Terrain";
+    private string targetLane = Lane2Mesh;
     private Timer triggerLaneChangeTimer = new();
     private Timer laneChangeCountdownTimer = new();
 
-    private int laneChangeDuration = 3_000;
-    private int minLaneChangeTriggerWait = 0;
-    private int maxLaneChangeTriggerWait = 15_000;
+    private const int LaneChangeDuration = 3_000;
+    private const int MinLaneChangeTriggerWait = 0;
+    private const int MaxLaneChangeTriggerWait = 15_000;
 
     private void Awake()
     {
         carController = GetComponent<CarController>();
+        SetUpTimers();
+    }
+
+    private void SetUpTimers()
+    {
+        laneChangeCountdownTimer.Elapsed += OnLaneChangeFailed;
+        triggerLaneChangeTimer.Elapsed += OnLaneChangeTrigger;
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -48,34 +55,31 @@ public class DriveToGoalAgent : Agent
     {
         ResetCar();
         isChangingLane = false;
-        targetLane = lane2Mesh;
+        targetLane = Lane2Mesh;
         DisableTimers();
         RestartTriggerLaneChangeTimer();
     }
 
     private void DisableTimers()
     {
-        triggerLaneChangeTimer.Enabled = false;
-        laneChangeCountdownTimer.Enabled = false;
-        triggerLaneChangeTimer = new Timer();
-        laneChangeCountdownTimer = new Timer();
+        triggerLaneChangeTimer.Stop();
+        laneChangeCountdownTimer.Stop();
     }
 
     private void RestartTriggerLaneChangeTimer()
     {
-        triggerLaneChangeTimer = new();
-        triggerLaneChangeTimer.Elapsed += OnLaneChangeTrigger;
         triggerLaneChangeTimer.Interval = GetLaneChangeTriggerInterval();
-        triggerLaneChangeTimer.Enabled = true;
+        triggerLaneChangeTimer.Start();
     }
 
     private int GetLaneChangeTriggerInterval()
     {
-        return new Random().Next(minLaneChangeTriggerWait, maxLaneChangeTriggerWait);
+        return new Random().Next(MinLaneChangeTriggerWait, MaxLaneChangeTriggerWait);
     }
 
     private void OnLaneChangeTrigger(object source, ElapsedEventArgs e)
     {
+        Debug.Log("Triggered lane change!");
         isChangingLane = true;
         ToggleTargetLane();
         RestartLaneChangeCountdownTimer();
@@ -83,26 +87,20 @@ public class DriveToGoalAgent : Agent
 
     private void RestartLaneChangeCountdownTimer()
     {
-        laneChangeCountdownTimer = new();
-        laneChangeCountdownTimer.Elapsed += OnLaneChangeFailed;
-        laneChangeCountdownTimer.Interval = laneChangeDuration;
-        laneChangeCountdownTimer.Enabled = true;
-    }
-
-    private void CancelLaneChangeCountdownTimer()
-    {
-        laneChangeCountdownTimer.Enabled = false;
+        laneChangeCountdownTimer.Interval = LaneChangeDuration;
+        laneChangeCountdownTimer.Start();
     }
 
     private void OnLaneChangeFailed(object source, ElapsedEventArgs e)
     {
+        Debug.Log("Failed to change lane!");
         SetReward(-10000f);
-        EndEpisode();
+        EndCurrentEpisode();
     }
 
     private void ResetCar()
     {
-        carController.TryGetComponent<Rigidbody>(out Rigidbody rigidBody);
+        carController.TryGetComponent(out Rigidbody rigidBody);
         rigidBody.velocity = Vector3.zero;
         transform.localPosition = new Vector3((float)636.1836,(float)537.706,(float)-306.7411);
         transform.localRotation = Quaternion.Euler(0, -120, 0);
@@ -137,19 +135,18 @@ public class DriveToGoalAgent : Agent
         {
             if (IsOnlyTouching(targetLane))
             {
-                CancelLaneChangeCountdownTimer();
+                laneChangeCountdownTimer.Stop();
                 isChangingLane = false;
                 SetReward(10f);
-            } else if (IsTouching(terrain))
+            } else if (IsTouching(Terrain))
             {
                 SetReward(-10000f);
-                EndEpisode();
+                EndCurrentEpisode();
             }
-        } else if (IsTouching(dividerMesh) || IsTouching(terrain))
+        } else if (IsTouching(DividerMesh) || IsTouching(Terrain))
         {
-            Debug.Log("Drove off road or rolled over!");
             SetReward(-10000f);
-            EndEpisode();
+            EndCurrentEpisode();
         }
         else
         {
@@ -157,24 +154,28 @@ public class DriveToGoalAgent : Agent
         }
     }
 
+    private void EndCurrentEpisode()
+    {
+        DisableTimers();
+        EndEpisode();
+    }
+
     private bool IsTouching(String colliderName)
     {
         carController.frontLeftWheelCollider.GetGroundHit(out WheelHit lHit);
         carController.frontRightWheelCollider.GetGroundHit(out WheelHit rHit);
-        return lHit.collider?.name == colliderName
-               || rHit.collider?.name == colliderName;
+        return lHit.collider?.name == colliderName || rHit.collider?.name == colliderName;
     }
     
     private bool IsOnlyTouching(String colliderName)
     {
         carController.frontLeftWheelCollider.GetGroundHit(out WheelHit lHit);
         carController.frontRightWheelCollider.GetGroundHit(out WheelHit rHit);
-        return lHit.collider?.name == colliderName
-               && rHit.collider?.name == colliderName;
+        return lHit.collider?.name == colliderName && rHit.collider?.name == colliderName;
     }
 
     private void ToggleTargetLane()
     {
-        targetLane = targetLane.Equals(lane1Mesh) ? lane2Mesh : lane1Mesh;
+        targetLane = targetLane.Equals(Lane1Mesh) ? Lane2Mesh : Lane1Mesh;
     }
 }
