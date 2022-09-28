@@ -329,6 +329,10 @@ PrefabInstance:
       value: Sedan
       objectReference: {fileID: 0}
     - target: {fileID: 5348801597922184880, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 5022602860645237092, guid: 1fe8904dd80b54868a80ddbfd9c08797, type: 3}
+    - target: {fileID: 5348801597922184880, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_BehaviorType
       value: 0
       objectReference: {fileID: 0}

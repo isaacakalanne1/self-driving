@@ -90,6 +90,13 @@ public class DriveToGoalAgent : Agent
             continuousActions[2] = 10;            
         }
 
+        if (currentState == LaneChangeState.Restricted
+            && triggerLaneChangeCounter < triggerLaneChangeMaxCount
+            && Input.GetKey(KeyCode.Space))
+        {
+            triggerLaneChangeCounter = triggerLaneChangeMaxCount;
+        }
+
     }
 
     public override void OnActionReceived(ActionBuffers actions)
@@ -108,7 +115,7 @@ public class DriveToGoalAgent : Agent
             {
                 SetReward(10f);
                 ResetLaneChangeStates();
-            } else if (IsTouching(Terrain) || currentState == LaneChangeState.Failed)
+            } else if (IsTouching(Terrain))
             {
                 SetReward(-10000f);
                 EndEpisode();
@@ -117,6 +124,10 @@ public class DriveToGoalAgent : Agent
             {
                 SetReward(1f);
             }
+        } else if (currentState == LaneChangeState.Failed)
+        {
+            SetReward(-10000f);
+            EndEpisode();
         } else if (IsTouching(DividerMesh) || IsTouching(Terrain))
         {
             SetReward(-10000f);
@@ -139,6 +150,7 @@ public class DriveToGoalAgent : Agent
                 case LaneChangeState.ControlledAccess:
                     Debug.Log("Triggered change lane!");
                     ToggleTargetLane();
+                    Debug.Log("New target lane is " + targetLane);
                     break;
                 case LaneChangeState.Failed:
                     Debug.Log("Change lane timed out!");
