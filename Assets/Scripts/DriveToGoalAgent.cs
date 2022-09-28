@@ -7,17 +7,11 @@ using Unity.MLAgents.Sensors;
 using UnityEngine;
 using Random = System.Random;
 
-public enum LaneChangeState
-{
-    Restricted,
-    Changing
-}
-
 public class DriveToGoalAgent : Agent
 {
 
     private CarController carController;
-    private bool isChangingLane = false;
+    private bool isChangingLane;
     private static String lane1Mesh = "Lane 1 Mesh Holder";
     private static String lane2Mesh = "Lane 2 Mesh Holder";
     private static String dividerMesh = "Divider Mesh Holder";
@@ -147,16 +141,6 @@ public class DriveToGoalAgent : Agent
         {
             SetReward(1f);
         }
-    }
-
-    private bool TriggeredLaneChange()
-    {
-        return isChangingLane;
-    }
-
-    private bool IsChangingLane()
-    {
-        return true;
     }
 
     private bool IsTouching(String colliderName)
