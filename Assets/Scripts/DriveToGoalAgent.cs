@@ -24,7 +24,7 @@ public class DriveToGoalAgent : Agent
     private string targetLane = Lane2Mesh;
     private int triggerLaneChangeMaxCount;
     private int triggerLaneChangeCounter;
-    private const int LaneChangePermittedMaxCount = 40;
+    private const int LaneChangePermittedMaxCount = 50;
 
     private LaneChangeState currentState;
     private LaneChangeState previousState;
