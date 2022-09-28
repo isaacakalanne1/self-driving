@@ -39,7 +39,7 @@ public class DriveToGoalAgent : Agent
         var steerAngle = (int) Math.Round(carController.frontLeftWheelCollider.steerAngle, 0);
         var steerAngleDiscretized = (int) Math.Round(steerAngle + carController.maxSteeringAngle, 0);
         sensor.AddObservation(steerAngleDiscretized);
-        sensor.AddObservation(IsChangingLane() ? 1 : 0);
+        sensor.AddObservation(IsChangingLane() && !DidChangeLaneTimeOut() ? 1 : 0);
 
         // 1. Get distance between ego and object
         // 2. Get relative position of object as Vec3

@@ -2,22 +2,22 @@
     "DriveToGoal": {
         "checkpoints": [
             {
-                "steps": 958,
-                "file_path": "results/DriveToGoal1.4.0/DriveToGoal/DriveToGoal-958.onnx",
-                "reward": -9972.558823529413,
-                "creation_time": 1664383779.389291,
+                "steps": 17431,
+                "file_path": "results/DriveToGoal1.4.0/DriveToGoal/DriveToGoal-17431.onnx",
+                "reward": -9975.927835051547,
+                "creation_time": 1664384051.8986938,
                 "auxillary_file_paths": [
-                    "results/DriveToGoal1.4.0/DriveToGoal/DriveToGoal-958.pt"
+                    "results/DriveToGoal1.4.0/DriveToGoal/DriveToGoal-17431.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 958,
+            "steps": 17431,
             "file_path": "results/DriveToGoal1.4.0/DriveToGoal.onnx",
-            "reward": -9972.558823529413,
-            "creation_time": 1664383779.389291,
+            "reward": -9975.927835051547,
+            "creation_time": 1664384051.8986938,
             "auxillary_file_paths": [
-                "results/DriveToGoal1.4.0/DriveToGoal/DriveToGoal-958.pt"
+                "results/DriveToGoal1.4.0/DriveToGoal/DriveToGoal-17431.pt"
             ]
         }
     },
