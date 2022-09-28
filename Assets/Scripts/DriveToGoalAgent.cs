@@ -104,7 +104,7 @@ public class DriveToGoalAgent : Agent
     {
         carController.TryGetComponent<Rigidbody>(out Rigidbody rigidBody);
         rigidBody.velocity = Vector3.zero;
-        transform.localPosition = new Vector3((float)-42.41,(float)0.01,(float)1062.4);
+        transform.localPosition = new Vector3((float)636.1836,(float)537.706,(float)-306.7411);
         transform.localRotation = Quaternion.Euler(0, -120, 0);
         carController.frontLeftWheelCollider.steerAngle = 0;
         carController.frontRightWheelCollider.steerAngle = 0;
@@ -132,7 +132,7 @@ public class DriveToGoalAgent : Agent
         var highestIndex = actions.ContinuousActions.ToList().FindIndex(a => a.Equals(highestValue));
         carController.SetInput(highestIndex);
         
-        Debug.Log("isChangingLane is " + isChangingLane);
+        // Debug.Log("isChangingLane is " + isChangingLane);
         if (isChangingLane)
         {
             if (IsOnlyTouching(targetLane))
