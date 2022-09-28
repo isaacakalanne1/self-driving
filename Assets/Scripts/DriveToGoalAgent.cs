@@ -35,8 +35,8 @@ public class DriveToGoalAgent : Agent
     {
         carController.TryGetComponent<Rigidbody>(out Rigidbody rigidBody);
         rigidBody.velocity = Vector3.zero;
-        transform.localPosition = new Vector3((float)-73.7,(float)119.2238,(float)84.02);
-        transform.localRotation = Quaternion.Euler(0, 0, 0);
+        transform.localPosition = new Vector3((float)-41.221,(float)0.01,(float)1062.733);
+        transform.localRotation = Quaternion.Euler(0, -90, 0);
         carController.frontLeftWheelCollider.steerAngle = 0;
         carController.frontRightWheelCollider.steerAngle = 0;
     }
