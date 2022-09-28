@@ -1,16 +1,26 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
 
+public enum LaneChangeState
+{
+    Restricted,
+    Changing
+}
+
 public class DriveToGoalAgent : Agent
 {
 
     private CarController carController;
+    private bool isChangingLane = false;
+    private static String lane1Mesh = "Lane 1 Mesh Holder";
+    private static String lane2Mesh = "Lane 2 Mesh Holder";
+    private static String dividerMesh = "Divider Mesh Holder";
+    private static String terrain = "Terrain";
+    private String targetLane = lane2Mesh;
 
     private void Awake()
     {
@@ -35,8 +45,8 @@ public class DriveToGoalAgent : Agent
     {
         carController.TryGetComponent<Rigidbody>(out Rigidbody rigidBody);
         rigidBody.velocity = Vector3.zero;
-        transform.localPosition = new Vector3((float)-41.221,(float)0.01,(float)1062.733);
-        transform.localRotation = Quaternion.Euler(0, -90, 0);
+        transform.localPosition = new Vector3((float)-42.41,(float)0.01,(float)1062.4);
+        transform.localRotation = Quaternion.Euler(0, -120, 0);
         carController.frontLeftWheelCollider.steerAngle = 0;
         carController.frontRightWheelCollider.steerAngle = 0;
     }
@@ -64,8 +74,19 @@ public class DriveToGoalAgent : Agent
         var highestValue = actions.ContinuousActions.Max();
         var highestIndex = actions.ContinuousActions.ToList().FindIndex(a => a.Equals(highestValue));
         carController.SetInput(highestIndex);
-        
-        if (DidRollOver() || DidDriveOffRoad())
+
+        CheckIfShouldTriggerLaneChange();
+        if (isChangingLane)
+        {
+            if (IsOnlyTouching(targetLane))
+            {
+                SetReward(500f);
+            } else if (IsTouching(terrain))
+            {
+                SetReward(-10000f);
+                EndEpisode();
+            }
+        } else if (IsTouching(dividerMesh) || IsTouching(terrain))
         {
             Debug.Log("Drove off road or rolled over!");
             SetReward(-10000f);
@@ -77,24 +98,46 @@ public class DriveToGoalAgent : Agent
         }
     }
 
-    private bool DidDriveOffRoad()
+    private void CheckIfShouldTriggerLaneChange()
     {
-        var dividerName = "Divider Mesh Holder";
-        var terrainName = "Terrain";
-        // Currently only detecting front wheels hitting the divider or terrain
-        carController.frontLeftWheelCollider.GetGroundHit(out WheelHit lHit);
-        carController.frontRightWheelCollider.GetGroundHit(out WheelHit rHit);
-        Debug.Log("lHit is " + lHit.collider?.name);
-        Debug.Log("rHit is " + rHit.collider?.name);
-        return lHit.collider?.name == dividerName
-               || lHit.collider?.name == terrainName
-               || rHit.collider?.name == dividerName
-               || rHit.collider?.name == terrainName;
+        if (!isChangingLane)
+        {
+            isChangingLane = IsChangingLane();
+            if (TriggeredLaneChange())
+            {
+                ToggleTargetLane();
+            }
+        }
     }
 
-    private bool DidRollOver()
+    private bool TriggeredLaneChange()
     {
-        var rotation = transform.localRotation.z;
-        return rotation < -50 || rotation > 50;
+        return isChangingLane;
+    }
+
+    private bool IsChangingLane()
+    {
+        return true;
+    }
+
+    private bool IsTouching(String colliderName)
+    {
+        carController.frontLeftWheelCollider.GetGroundHit(out WheelHit lHit);
+        carController.frontRightWheelCollider.GetGroundHit(out WheelHit rHit);
+        return lHit.collider?.name == colliderName
+               || rHit.collider?.name == colliderName;
+    }
+    
+    private bool IsOnlyTouching(String colliderName)
+    {
+        carController.frontLeftWheelCollider.GetGroundHit(out WheelHit lHit);
+        carController.frontRightWheelCollider.GetGroundHit(out WheelHit rHit);
+        return lHit.collider?.name == colliderName
+               && rHit.collider?.name == colliderName;
+    }
+
+    private void ToggleTargetLane()
+    {
+        targetLane = targetLane.Equals(lane1Mesh) ? lane2Mesh : lane1Mesh;
     }
 }
