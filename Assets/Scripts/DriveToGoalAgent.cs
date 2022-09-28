@@ -1,47 +1,45 @@
 using System;
 using System.Linq;
-using System.Timers;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
 using Random = System.Random;
 
+enum LaneChangeState
+{
+    Restricted,
+    ControlledAccess,
+    Failed
+}
+
 public class DriveToGoalAgent : Agent
 {
 
     private CarController carController;
-    private bool isChangingLane;
     private const string Lane1Mesh = "Lane 1 Mesh Holder";
     private const string Lane2Mesh = "Lane 2 Mesh Holder";
     private const string DividerMesh = "Divider Mesh Holder";
     private const string Terrain = "Terrain";
     private string targetLane = Lane2Mesh;
-    private Timer triggerLaneChangeTimer = new();
-    private Timer laneChangeCountdownTimer = new();
+    private int triggerLaneChangeMaxCount;
+    private int triggerLaneChangeCounter;
+    private const int LaneChangePermittedMaxCount = 40;
 
-    private const int LaneChangeDuration = 3_000;
-    private const int MinLaneChangeTriggerWait = 0;
-    private const int MaxLaneChangeTriggerWait = 15_000;
+    private LaneChangeState currentState;
+    private LaneChangeState previousState;
 
     private void Awake()
     {
         carController = GetComponent<CarController>();
-        SetUpTimers();
     }
-
-    private void SetUpTimers()
-    {
-        laneChangeCountdownTimer.Elapsed += OnLaneChangeFailed;
-        triggerLaneChangeTimer.Elapsed += OnLaneChangeTrigger;
-    }
-
+    
     public override void CollectObservations(VectorSensor sensor)
     {
         var steerAngle = (int) Math.Round(carController.frontLeftWheelCollider.steerAngle, 0);
         var steerAngleDiscretized = (int) Math.Round(steerAngle + carController.maxSteeringAngle, 0);
         sensor.AddObservation(steerAngleDiscretized);
-        sensor.AddObservation(isChangingLane ? 1 : 0);
+        sensor.AddObservation(IsChangingLane() ? 1 : 0);
 
         // 1. Get distance between ego and object
         // 2. Get relative position of object as Vec3
@@ -54,48 +52,18 @@ public class DriveToGoalAgent : Agent
     public override void OnEpisodeBegin()
     {
         ResetCar();
-        isChangingLane = false;
+        ResetLaneChangeStates();
         targetLane = Lane2Mesh;
-        DisableTimers();
-        RestartTriggerLaneChangeTimer();
+        currentState = LaneChangeState.Restricted;
+        previousState = LaneChangeState.Restricted;
     }
 
-    private void DisableTimers()
+    private void ResetLaneChangeStates()
     {
-        triggerLaneChangeTimer.Stop();
-        laneChangeCountdownTimer.Stop();
-    }
-
-    private void RestartTriggerLaneChangeTimer()
-    {
-        triggerLaneChangeTimer.Interval = GetLaneChangeTriggerInterval();
-        triggerLaneChangeTimer.Start();
-    }
-
-    private int GetLaneChangeTriggerInterval()
-    {
-        return new Random().Next(MinLaneChangeTriggerWait, MaxLaneChangeTriggerWait);
-    }
-
-    private void OnLaneChangeTrigger(object source, ElapsedEventArgs e)
-    {
-        Debug.Log("Triggered lane change!");
-        isChangingLane = true;
-        ToggleTargetLane();
-        RestartLaneChangeCountdownTimer();
-    }
-
-    private void RestartLaneChangeCountdownTimer()
-    {
-        laneChangeCountdownTimer.Interval = LaneChangeDuration;
-        laneChangeCountdownTimer.Start();
-    }
-
-    private void OnLaneChangeFailed(object source, ElapsedEventArgs e)
-    {
-        Debug.Log("Failed to change lane!");
-        SetReward(-10000f);
-        EndCurrentEpisode();
+        triggerLaneChangeCounter = 0;
+        triggerLaneChangeMaxCount = new Random().Next(0, 150);
+        currentState = LaneChangeState.Restricted;
+        previousState = LaneChangeState.Restricted;
     }
 
     private void ResetCar()
@@ -131,22 +99,28 @@ public class DriveToGoalAgent : Agent
         carController.SetInput(highestIndex);
         
         // Debug.Log("isChangingLane is " + isChangingLane);
-        if (isChangingLane)
+        triggerLaneChangeCounter += 1;
+        UpdateLaneChangeState();
+
+        if (currentState == LaneChangeState.ControlledAccess)
         {
             if (IsOnlyTouching(targetLane))
             {
-                laneChangeCountdownTimer.Stop();
-                isChangingLane = false;
                 SetReward(10f);
-            } else if (IsTouching(Terrain))
+                ResetLaneChangeStates();
+            } else if (IsTouching(Terrain) || currentState == LaneChangeState.Failed)
             {
                 SetReward(-10000f);
-                EndCurrentEpisode();
+                EndEpisode();
+            }
+            else
+            {
+                SetReward(1f);
             }
         } else if (IsTouching(DividerMesh) || IsTouching(Terrain))
         {
             SetReward(-10000f);
-            EndCurrentEpisode();
+            EndEpisode();
         }
         else
         {
@@ -154,10 +128,30 @@ public class DriveToGoalAgent : Agent
         }
     }
 
-    private void EndCurrentEpisode()
+    private void UpdateLaneChangeState()
     {
-        DisableTimers();
-        EndEpisode();
+        currentState = IsChangingLane() ? LaneChangeState.ControlledAccess : LaneChangeState.Restricted;
+        currentState = FailedToChangeLane() ? LaneChangeState.Failed : currentState;
+        if (previousState != currentState)
+        {
+            switch (currentState)
+            {
+                case LaneChangeState.ControlledAccess:
+                    ToggleTargetLane();
+                    break;
+            }
+        }
+        previousState = currentState;
+    }
+
+    private bool IsChangingLane()
+    {
+        return triggerLaneChangeCounter >= triggerLaneChangeMaxCount;
+    }
+
+    private bool FailedToChangeLane()
+    {
+        return triggerLaneChangeCounter >= triggerLaneChangeMaxCount + LaneChangePermittedMaxCount;
     }
 
     private bool IsTouching(String colliderName)
