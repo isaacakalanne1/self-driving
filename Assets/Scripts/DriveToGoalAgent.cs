@@ -1,9 +1,11 @@
 using System;
 using System.Linq;
+using System.Timers;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
+using Random = System.Random;
 
 public enum LaneChangeState
 {
@@ -21,6 +23,12 @@ public class DriveToGoalAgent : Agent
     private static String dividerMesh = "Divider Mesh Holder";
     private static String terrain = "Terrain";
     private String targetLane = lane2Mesh;
+    private Timer triggerLaneChangeTimer = new();
+    private Timer laneChangeCountdownTimer = new();
+
+    private int laneChangeDuration = 4_000;
+    private int minLaneChangeTriggerWait = 15_000;
+    private int maxLaneChangeTriggerWait = 30_000;
 
     private void Awake()
     {
@@ -43,6 +51,51 @@ public class DriveToGoalAgent : Agent
 
     public override void OnEpisodeBegin()
     {
+        ResetCar();
+        RestartTriggerLaneChangeTimer();
+    }
+
+    private void RestartTriggerLaneChangeTimer()
+    {
+        triggerLaneChangeTimer = new();
+        triggerLaneChangeTimer.Elapsed += OnLaneChangeTrigger;
+        triggerLaneChangeTimer.Interval = GetLaneChangeTriggerInterval();
+        triggerLaneChangeTimer.Enabled = true;
+    }
+
+    private int GetLaneChangeTriggerInterval()
+    {
+        return new Random().Next(minLaneChangeTriggerWait, maxLaneChangeTriggerWait);
+    }
+
+    private void OnLaneChangeTrigger(object source, ElapsedEventArgs e)
+    {
+        isChangingLane = true;
+        ToggleTargetLane();
+        RestartLaneChangeCountdownTimer();
+    }
+
+    private void RestartLaneChangeCountdownTimer()
+    {
+        laneChangeCountdownTimer = new();
+        laneChangeCountdownTimer.Elapsed += OnLaneChangeFailed;
+        laneChangeCountdownTimer.Interval = laneChangeDuration;
+        laneChangeCountdownTimer.Enabled = true;
+    }
+
+    private void CancelLaneChangeCountdownTimer()
+    {
+        laneChangeCountdownTimer.Enabled = false;
+    }
+
+    private void OnLaneChangeFailed(object source, ElapsedEventArgs e)
+    {
+        SetReward(-10000f);
+        EndEpisode();
+    }
+
+    private void ResetCar()
+    {
         carController.TryGetComponent<Rigidbody>(out Rigidbody rigidBody);
         rigidBody.velocity = Vector3.zero;
         transform.localPosition = new Vector3((float)-42.41,(float)0.01,(float)1062.4);
@@ -57,8 +110,6 @@ public class DriveToGoalAgent : Agent
         continuousActions[0] = 0;
         continuousActions[1] = 0;
         continuousActions[2] = 0;
-        // continuousActions[3] = 0;
-        // continuousActions[4] = 0;
         if (Input.GetAxisRaw("Horizontal").Equals(-1f))
         {
             continuousActions[1] = 10;            
@@ -74,12 +125,12 @@ public class DriveToGoalAgent : Agent
         var highestValue = actions.ContinuousActions.Max();
         var highestIndex = actions.ContinuousActions.ToList().FindIndex(a => a.Equals(highestValue));
         carController.SetInput(highestIndex);
-
-        CheckIfShouldTriggerLaneChange();
+        
         if (isChangingLane)
         {
             if (IsOnlyTouching(targetLane))
             {
+                CancelLaneChangeCountdownTimer();
                 SetReward(500f);
             } else if (IsTouching(terrain))
             {
@@ -95,18 +146,6 @@ public class DriveToGoalAgent : Agent
         else
         {
             SetReward(1f);
-        }
-    }
-
-    private void CheckIfShouldTriggerLaneChange()
-    {
-        if (!isChangingLane)
-        {
-            isChangingLane = IsChangingLane();
-            if (TriggeredLaneChange())
-            {
-                ToggleTargetLane();
-            }
         }
     }
 

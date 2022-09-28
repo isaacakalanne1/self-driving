@@ -1150,7 +1150,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5348801597922184880, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_BehaviorType
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5348801597922184881, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: motorForce
