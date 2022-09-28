@@ -65,7 +65,7 @@ checkpoint_settings:
   run_id: DriveToGoal1.4.0
   initialize_from: null
   load_model: false
-  resume: true
+  resume: false
   force: false
   train_model: false
   inference: false

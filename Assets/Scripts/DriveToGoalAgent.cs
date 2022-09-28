@@ -131,13 +131,17 @@ public class DriveToGoalAgent : Agent
     private void UpdateLaneChangeState()
     {
         currentState = IsChangingLane() ? LaneChangeState.ControlledAccess : LaneChangeState.Restricted;
-        currentState = FailedToChangeLane() ? LaneChangeState.Failed : currentState;
+        currentState = DidChangeLaneTimeOut() ? LaneChangeState.Failed : currentState;
         if (previousState != currentState)
         {
             switch (currentState)
             {
                 case LaneChangeState.ControlledAccess:
+                    Debug.Log("Triggered change lane!");
                     ToggleTargetLane();
+                    break;
+                case LaneChangeState.Failed:
+                    Debug.Log("Change lane timed out!");
                     break;
             }
         }
@@ -149,7 +153,7 @@ public class DriveToGoalAgent : Agent
         return triggerLaneChangeCounter >= triggerLaneChangeMaxCount;
     }
 
-    private bool FailedToChangeLane()
+    private bool DidChangeLaneTimeOut()
     {
         return triggerLaneChangeCounter >= triggerLaneChangeMaxCount + LaneChangePermittedMaxCount;
     }
