@@ -61,13 +61,15 @@ public class CarController : MonoBehaviour
         }
     }
 
-    public List<int> GetRelativePositionAndDistanceOfPerson()
+    public float[] GetRelativeDistanceAndDirectionOfPerson()
     {
         person1 = GameObject.Find("Person1");
         var egoPosition = transform.position;
         var personPosition = person1.transform.position;
         var distance = Vector3.Distance (egoPosition, personPosition);
         var relativeDirection = (egoPosition - personPosition) - transform.forward;
+        float[] distanceAndDirection = { distance, relativeDirection.x, relativeDirection.y, relativeDirection.z };
+        return distanceAndDirection;
     }
 
     private void HandleMotor() {
