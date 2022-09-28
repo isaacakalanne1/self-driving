@@ -20,9 +20,9 @@ public class DriveToGoalAgent : Agent
     private Timer triggerLaneChangeTimer = new();
     private Timer laneChangeCountdownTimer = new();
 
-    private int laneChangeDuration = 4_000;
-    private int minLaneChangeTriggerWait = 15_000;
-    private int maxLaneChangeTriggerWait = 30_000;
+    private int laneChangeDuration = 3_000;
+    private int minLaneChangeTriggerWait = 0;
+    private int maxLaneChangeTriggerWait = 15_000;
 
     private void Awake()
     {
@@ -34,6 +34,7 @@ public class DriveToGoalAgent : Agent
         var steerAngle = (int) Math.Round(carController.frontLeftWheelCollider.steerAngle, 0);
         var steerAngleDiscretized = (int) Math.Round(steerAngle + carController.maxSteeringAngle, 0);
         sensor.AddObservation(steerAngleDiscretized);
+        sensor.AddObservation(isChangingLane ? 1 : 0);
 
         // 1. Get distance between ego and object
         // 2. Get relative position of object as Vec3
@@ -46,7 +47,18 @@ public class DriveToGoalAgent : Agent
     public override void OnEpisodeBegin()
     {
         ResetCar();
+        isChangingLane = false;
+        targetLane = lane2Mesh;
+        DisableTimers();
         RestartTriggerLaneChangeTimer();
+    }
+
+    private void DisableTimers()
+    {
+        triggerLaneChangeTimer.Enabled = false;
+        laneChangeCountdownTimer.Enabled = false;
+        triggerLaneChangeTimer = new();
+        laneChangeCountdownTimer = new();
     }
 
     private void RestartTriggerLaneChangeTimer()
@@ -120,11 +132,13 @@ public class DriveToGoalAgent : Agent
         var highestIndex = actions.ContinuousActions.ToList().FindIndex(a => a.Equals(highestValue));
         carController.SetInput(highestIndex);
         
+        Debug.Log("isChangingLane is " + isChangingLane);
         if (isChangingLane)
         {
             if (IsOnlyTouching(targetLane))
             {
                 CancelLaneChangeCountdownTimer();
+                isChangingLane = false;
                 SetReward(500f);
             } else if (IsTouching(terrain))
             {
