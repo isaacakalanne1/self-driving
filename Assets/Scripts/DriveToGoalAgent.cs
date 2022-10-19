@@ -198,7 +198,6 @@ public class DriveToGoalAgent : Agent
 
     private void UpdateLaneMaterials()
     {
-        print("Changing material!");
         lane1Mesh.material = targetLane.Equals(lane1Mesh) ? targetLaneMaterial : outOfBoundsMaterial;
         lane2Mesh.material = targetLane.Equals(lane2Mesh) ? targetLaneMaterial : outOfBoundsMaterial;
     }
