@@ -159,6 +159,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 42862052170922620, guid: 235328bc7e84c4285a672faeb23e238c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 374.51215
+      objectReference: {fileID: 0}
     - target: {fileID: 42862052170922621, guid: 235328bc7e84c4285a672faeb23e238c, type: 3}
       propertyPath: m_Name
       value: Lane 2 Mesh Holder
