@@ -268,8 +268,8 @@ GameObject:
   - component: {fileID: 5348801597922184881}
   - component: {fileID: 5348801597922184880}
   - component: {fileID: 5348801597922184883}
-  - component: {fileID: 5348801597922184882}
   - component: {fileID: 5348801597922184908}
+  - component: {fileID: 6001637137908504632}
   m_Layer: 0
   m_Name: Sedan
   m_TagString: Untagged
@@ -398,7 +398,26 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 10000000
---- !u!114 &5348801597922184882
+  targetLaneMaterial: {fileID: 2100000, guid: 978802ad1a38341389ee0c213897ae08, type: 2}
+  outOfBoundsMaterial: {fileID: 2100000, guid: 839713b09a1b8454dbd769eedef11a8f, type: 2}
+  lane1Mesh: {fileID: 0}
+  lane2Mesh: {fileID: 0}
+  terrainMesh: {fileID: 0}
+--- !u!114 &5348801597922184908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4715570188928537615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DecisionPeriod: 5
+  TakeActionsBetweenDecisions: 0
+--- !u!114 &6001637137908504632
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -418,20 +437,6 @@ MonoBehaviour:
   m_ObservationType: 0
   m_ObservationStacks: 1
   m_Compression: 1
---- !u!114 &5348801597922184908
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4715570188928537615}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DecisionPeriod: 5
-  TakeActionsBetweenDecisions: 0
 --- !u!1 &4945673100857179602
 GameObject:
   m_ObjectHideFlags: 0

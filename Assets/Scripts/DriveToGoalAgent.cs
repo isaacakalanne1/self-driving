@@ -16,12 +16,14 @@ enum LaneChangeState
 public class DriveToGoalAgent : Agent
 {
 
+    [SerializeField] private Material targetLaneMaterial;
+    [SerializeField] private Material outOfBoundsMaterial;
+    [SerializeField] private MeshRenderer lane1Mesh;
+    [SerializeField] private MeshRenderer lane2Mesh;
+    [SerializeField] private MeshRenderer terrainMesh;
+    
     private CarController carController;
-    private const string Lane1Mesh = "Lane 1 Mesh Holder";
-    private const string Lane2Mesh = "Lane 2 Mesh Holder";
-    private const string DividerMesh = "Divider Mesh Holder";
-    private const string Terrain = "Terrain";
-    private string targetLane = Lane2Mesh;
+    private MeshRenderer targetLane;
     private int triggerLaneChangeMaxCount;
     private int triggerLaneChangeCounter;
     private const int LaneChangePermittedMaxCount = 50;
@@ -53,15 +55,14 @@ public class DriveToGoalAgent : Agent
     {
         ResetCar();
         ResetLaneChangeStates();
-        targetLane = Lane2Mesh;
-        currentState = LaneChangeState.Restricted;
-        previousState = LaneChangeState.Restricted;
+        targetLane = lane2Mesh;
+        UpdateLaneMaterials();
     }
 
     private void ResetLaneChangeStates()
     {
         triggerLaneChangeCounter = 0;
-        triggerLaneChangeMaxCount = new Random().Next(0, 150);
+        triggerLaneChangeMaxCount = new Random().Next(1, 150);
         currentState = LaneChangeState.Restricted;
         previousState = LaneChangeState.Restricted;
     }
@@ -70,10 +71,10 @@ public class DriveToGoalAgent : Agent
     {
         carController.TryGetComponent(out Rigidbody rigidBody);
         rigidBody.velocity = Vector3.zero;
-        transform.localPosition = new Vector3((float)636.1836,(float)537.706,(float)-306.7411);
-        transform.localRotation = Quaternion.Euler(0, -120, 0);
         carController.frontLeftWheelCollider.steerAngle = 0;
         carController.frontRightWheelCollider.steerAngle = 0;
+        transform.localPosition = new Vector3((float)636.1836,(float)537.706,(float)-306.7411);
+        transform.localRotation = Quaternion.Euler(0, -120, 0);
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -106,36 +107,41 @@ public class DriveToGoalAgent : Agent
         carController.SetInput(highestIndex);
         
         // Debug.Log("isChangingLane is " + isChangingLane);
-        triggerLaneChangeCounter += 1;
+        // triggerLaneChangeCounter += 1;
         UpdateLaneChangeState();
 
-        if (currentState == LaneChangeState.ControlledAccess)
+        switch (currentState)
         {
-            if (IsOnlyTouching(targetLane))
-            {
-                SetReward(10f);
-                ResetLaneChangeStates();
-            } else if (IsTouching(Terrain))
-            {
+            case LaneChangeState.ControlledAccess:
+                if (IsOnlyTouching(targetLane))
+                {
+                    SetReward(10f);
+                    ResetLaneChangeStates();
+                } else if (IsTouching(terrainMesh))
+                {
+                    SetReward(-10000f);
+                    EndEpisode();
+                }
+                else
+                {
+                    SetReward(1f);
+                }
+                break;
+            case LaneChangeState.Failed:
                 SetReward(-10000f);
                 EndEpisode();
-            }
-            else
-            {
-                SetReward(1f);
-            }
-        } else if (currentState == LaneChangeState.Failed)
-        {
-            SetReward(-10000f);
-            EndEpisode();
-        } else if (IsTouching(DividerMesh) || IsTouching(Terrain))
-        {
-            SetReward(-10000f);
-            EndEpisode();
-        }
-        else
-        {
-            SetReward(1f);
+                break;
+            case LaneChangeState.Restricted:
+                if (!IsOnlyTouching(targetLane))
+                {
+                    SetReward(-10000f);
+                    EndEpisode();
+                }
+                else
+                {
+                    SetReward(1f);
+                }
+                break;
         }
     }
 
@@ -150,7 +156,8 @@ public class DriveToGoalAgent : Agent
                 case LaneChangeState.ControlledAccess:
                     Debug.Log("Triggered change lane!");
                     ToggleTargetLane();
-                    Debug.Log("New target lane is " + targetLane);
+                    UpdateLaneMaterials();
+                    Debug.Log("New target lane is " + targetLane.name);
                     break;
                 case LaneChangeState.Failed:
                     Debug.Log("Change lane timed out!");
@@ -170,22 +177,29 @@ public class DriveToGoalAgent : Agent
         return triggerLaneChangeCounter >= triggerLaneChangeMaxCount + LaneChangePermittedMaxCount;
     }
 
-    private bool IsTouching(String colliderName)
+    private bool IsTouching(MeshRenderer mesh)
     {
         carController.frontLeftWheelCollider.GetGroundHit(out WheelHit lHit);
         carController.frontRightWheelCollider.GetGroundHit(out WheelHit rHit);
-        return lHit.collider?.name == colliderName || rHit.collider?.name == colliderName;
+        return lHit.collider?.name == mesh.name || rHit.collider?.name == mesh.name;
     }
     
-    private bool IsOnlyTouching(String colliderName)
+    private bool IsOnlyTouching(MeshRenderer mesh)
     {
         carController.frontLeftWheelCollider.GetGroundHit(out WheelHit lHit);
         carController.frontRightWheelCollider.GetGroundHit(out WheelHit rHit);
-        return lHit.collider?.name == colliderName && rHit.collider?.name == colliderName;
+        return lHit.collider?.name == mesh.name && rHit.collider?.name == mesh.name;
     }
 
     private void ToggleTargetLane()
     {
-        targetLane = targetLane.Equals(Lane1Mesh) ? Lane2Mesh : Lane1Mesh;
+        targetLane = targetLane.Equals(lane1Mesh) ? lane2Mesh : lane1Mesh;
+    }
+
+    private void UpdateLaneMaterials()
+    {
+        print("Changing material!");
+        lane1Mesh.material = targetLane.Equals(lane1Mesh) ? targetLaneMaterial : outOfBoundsMaterial;
+        lane2Mesh.material = targetLane.Equals(lane2Mesh) ? targetLaneMaterial : outOfBoundsMaterial;
     }
 }

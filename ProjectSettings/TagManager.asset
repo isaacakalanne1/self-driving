@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Lane 1
+  - Lane 2
+  - Divider
   layers:
   - Default
   - TransparentFX

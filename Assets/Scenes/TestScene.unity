@@ -2849,6 +2849,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 2013308120}
+    - target: {fileID: 6106224501703536070, guid: 902558f4037a24430825445e3e1fc739, type: 3}
+      propertyPath: m_TagString
+      value: Lane 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6106224501703536089, guid: 902558f4037a24430825445e3e1fc739, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -2857,6 +2861,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1945166945}
+    - target: {fileID: 6106224502253376486, guid: 902558f4037a24430825445e3e1fc739, type: 3}
+      propertyPath: m_TagString
+      value: Lane 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6106224502253376505, guid: 902558f4037a24430825445e3e1fc739, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -2869,6 +2877,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 134625577}
+    - target: {fileID: 6106224503216247133, guid: 902558f4037a24430825445e3e1fc739, type: 3}
+      propertyPath: m_TagString
+      value: Divider
+      objectReference: {fileID: 0}
     - target: {fileID: 6106224503216247135, guid: 902558f4037a24430825445e3e1fc739, type: 3}
       propertyPath: m_Mesh
       value: 
