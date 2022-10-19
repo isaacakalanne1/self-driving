@@ -107,7 +107,7 @@ public class DriveToGoalAgent : Agent
         carController.SetInput(highestIndex);
         
         // Debug.Log("isChangingLane is " + isChangingLane);
-        // triggerLaneChangeCounter += 1;
+        triggerLaneChangeCounter += 1;
         UpdateLaneChangeState();
 
         switch (currentState)
