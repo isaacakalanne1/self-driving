@@ -157,7 +157,6 @@ public class DriveToGoalAgent : Agent
         
         if (currentState == LaneChangeState.Restricted && Input.GetKey(KeyCode.Space))
         {
-            Debug.Log("Pressed space!");
             triggerLaneChangeCounter = triggerLaneChangeMaxCount + 10;
         }
         UpdateLaneChangeState();
@@ -206,10 +205,8 @@ public class DriveToGoalAgent : Agent
             switch (currentState)
             {
                 case LaneChangeState.ControlledAccess:
-                    Debug.Log("Triggered change lane!");
                     ToggleTargetLane();
                     UpdateLaneMaterials();
-                    Debug.Log("New target lane is " + targetLane.name);
                     break;
                 case LaneChangeState.Failed:
                     Debug.Log("Change lane timed out!");
