@@ -57,30 +57,9 @@ public class DriveToGoalAgent : Agent
     private EpisodeBeginData[] CreateListOfEpisodeBeginData()
     {
         EpisodeBeginData[] list = {
-            new (new Vector3((float)636.1836,(float)537.706,(float)-306.7411), 
-                Quaternion.Euler(0, -120, 0), 
-                lane2Mesh),
-            new (new Vector3((float)636.1836,(float)537.706,(float)-306.7411), 
-                Quaternion.Euler(0, 60, 0), 
-                lane2Mesh),
-            new (new Vector3((float)628.1,(float)537.706,(float)-309.14), 
-                Quaternion.Euler(0, -50, 0), 
-                lane1Mesh),
-            new (new Vector3((float)628.1,(float)537.706,(float)-309.14), 
-                Quaternion.Euler(0, 130, 0), 
-                lane1Mesh),
-            new (new Vector3((float)643.988,(float)537.706,(float)-287.896), 
-                Quaternion.Euler(0, 30, 0), 
-                lane1Mesh),
-            new (new Vector3((float)643.988,(float)537.706,(float)-287.896), 
-                Quaternion.Euler(0, 210, 0), 
-                lane1Mesh),
-            new (new Vector3((float)649.568,(float)537.706,(float)-272.313), 
-                Quaternion.Euler(0, 130, 0), 
-                lane2Mesh),
-            new (new Vector3((float)649.568,(float)537.706,(float)-272.313), 
-                Quaternion.Euler(0, -50, 0), 
-                lane2Mesh),
+            new (new Vector3((float)11.552,(float)-8.04,(float)20.226), 
+                Quaternion.Euler(0, 120, 0), 
+                lane1Mesh)
         };
         return list;
     }
