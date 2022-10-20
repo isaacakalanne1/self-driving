@@ -16,7 +16,6 @@ public class CarController : MonoBehaviour
     [SerializeField] private float brakeForce;
     [SerializeField] public float maxSteeringAngle;
     [SerializeField] private float softTurn;
-    [SerializeField] private int hardTurn;
 
     [SerializeField] public WheelCollider frontLeftWheelCollider;
     [SerializeField] public WheelCollider frontRightWheelCollider;
@@ -37,24 +36,34 @@ public class CarController : MonoBehaviour
         UpdateWheels();
     }
 
-    public void SetInput(int action)
+    public void SetInput(int turn, int motor)
     {
-        verticalInput = 1;
         turnValue = 0;
-        switch (action)
+        switch (turn)
         {
             case 1:
                 turnValue = -softTurn;
                 break;
             case 2:
                 turnValue = +softTurn;
+                break;  
+        }
+        switch (motor)
+        {
+            case 1:
+                if (verticalInput < 1.0f)
+                {
+                    Debug.Log("Forwards!");
+                    verticalInput += 0.2f;
+                }
                 break;
-            case 3:
-                turnValue = -hardTurn;
-                break;
-            case 4:
-                turnValue = +hardTurn;
-                break;
+            case 2:
+                if (verticalInput > -1.0f)
+                {
+                    Debug.Log("Backwards!");
+                    verticalInput -= 0.2f;
+                }
+                break;  
         }
     }
 
@@ -70,6 +79,7 @@ public class CarController : MonoBehaviour
     }
 
     private void HandleMotor() {
+        Debug.Log("Vertical is " + verticalInput);
         frontLeftWheelCollider.motorTorque = verticalInput * motorForce;
         frontRightWheelCollider.motorTorque = verticalInput * motorForce;
         ApplyBraking();
@@ -109,8 +119,8 @@ public class CarController : MonoBehaviour
 
     private static void UpdateSingleWheel(WheelCollider wheelCollider, Transform wheelTransform) {
         wheelCollider.GetWorldPose(out var pos, out var rot);
-        wheelTransform.localRotation = rot;
-        // wheelTransform.localPosition = pos;
+        wheelTransform.rotation = rot;
+        // wheelTransform.position = pos;
     }
 
 }

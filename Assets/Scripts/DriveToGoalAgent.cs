@@ -115,6 +115,10 @@ public class DriveToGoalAgent : Agent
         continuousActions[0] = 0;
         continuousActions[1] = 0;
         continuousActions[2] = 0;
+        continuousActions[3] = 0;
+        continuousActions[4] = 0;
+        continuousActions[5] = 0;
+        
         if (Input.GetAxisRaw("Horizontal").Equals(-1f))
         {
             continuousActions[1] = 10;            
@@ -122,15 +126,28 @@ public class DriveToGoalAgent : Agent
         {
             continuousActions[2] = 10;            
         }
-
+        
+        if (Input.GetAxisRaw("Vertical").Equals(1f))
+        {
+            continuousActions[4] = 10;            
+        } else if (Input.GetAxisRaw("Vertical").Equals(-1f))
+        {
+            continuousActions[5] = 10;            
+        }
+        var turnActions = continuousActions.ToList().GetRange(0, 3);
+        var motorActions = continuousActions.ToList().GetRange(3, 3);
+        var highestTurnValue = turnActions.Max();
+        var highestMotorValue = motorActions.Max();
+        var highestTurnIndex = turnActions.FindIndex(a => a.Equals(highestTurnValue));
+        var highestMotorIndex = motorActions.FindIndex(a => a.Equals(highestMotorValue));
+        Debug.Log("Turn index is " + highestTurnIndex);
+        Debug.Log("Motor index is " + highestMotorIndex);
+        carController.SetInput(highestTurnIndex, highestMotorIndex);
     }
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        var highestValue = actions.ContinuousActions.Max();
-        var highestIndex = actions.ContinuousActions.ToList().FindIndex(a => a.Equals(highestValue));
-        carController.SetInput(highestIndex);
-        
+
         // Debug.Log("isChangingLane is " + isChangingLane);
         // triggerLaneChangeCounter += 1;
         
@@ -173,6 +190,12 @@ public class DriveToGoalAgent : Agent
                 }
                 break;
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        SetReward(-10000f);
+        EndEpisode();
     }
 
     private void UpdateLaneChangeState()

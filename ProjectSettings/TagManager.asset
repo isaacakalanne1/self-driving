@@ -4,9 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Lane 1
-  - Lane 2
-  - Divider
+  - Car
   layers:
   - Default
   - TransparentFX
