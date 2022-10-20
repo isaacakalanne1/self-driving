@@ -144,13 +144,6 @@ public class DriveToGoalAgent : Agent
             continuousActions[2] = 10;            
         }
 
-        if (currentState == LaneChangeState.Restricted
-            && triggerLaneChangeCounter < triggerLaneChangeMaxCount
-            && Input.GetKey(KeyCode.Space))
-        {
-            triggerLaneChangeCounter = triggerLaneChangeMaxCount;
-        }
-
     }
 
     public override void OnActionReceived(ActionBuffers actions)
@@ -160,7 +153,13 @@ public class DriveToGoalAgent : Agent
         carController.SetInput(highestIndex);
         
         // Debug.Log("isChangingLane is " + isChangingLane);
-        triggerLaneChangeCounter += 1;
+        // triggerLaneChangeCounter += 1;
+        
+        if (currentState == LaneChangeState.Restricted && Input.GetKey(KeyCode.Space))
+        {
+            Debug.Log("Pressed space!");
+            triggerLaneChangeCounter = triggerLaneChangeMaxCount + 10;
+        }
         UpdateLaneChangeState();
 
         switch (currentState)
