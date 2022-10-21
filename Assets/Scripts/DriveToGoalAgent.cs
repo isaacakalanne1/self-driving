@@ -40,6 +40,7 @@ public class DriveToGoalAgent : Agent
     private EpisodeBeginData[] listOfEpisodeBeginData;
     
     private CarController carController;
+    private int episodeBeginIndex;
     private MeshRenderer targetLane;
     private int triggerLaneChangeMaxCount;
     private int triggerLaneChangeCounter;
@@ -51,15 +52,52 @@ public class DriveToGoalAgent : Agent
     private void Awake()
     {
         carController = GetComponent<CarController>();
+        episodeBeginIndex = GetEpisodeBeginIndex();
         listOfEpisodeBeginData = CreateListOfEpisodeBeginData();
+    }
+
+    private int GetEpisodeBeginIndex()
+    {
+        const string sedan = "Sedan";
+        var carName = carController.name;
+        var indexOfSedan = carName.IndexOf(sedan, StringComparison.Ordinal);
+        var indexString = carName.Remove(indexOfSedan, sedan.Length);
+        return int.Parse(indexString);
     }
 
     private EpisodeBeginData[] CreateListOfEpisodeBeginData()
     {
         EpisodeBeginData[] list = {
-            new (new Vector3((float)11.552,(float)-8.04,(float)20.226), 
-                Quaternion.Euler(0, 120, 0), 
-                lane1Mesh)
+            new (new Vector3((float)11.552,(float)-8.04,(float)20.226),
+                Quaternion.Euler(0, 120, 0),
+                lane1Mesh),
+            new (new Vector3((float)12.262,(float)-8.04,(float)18.901),
+                Quaternion.Euler(0, 120, 0),
+                lane2Mesh),
+            new (new Vector3((float)15.108,(float)-8.04,(float)17.932),
+                Quaternion.Euler(0, 120, 0),
+                lane1Mesh),
+            new (new Vector3((float)15.59,(float)-8.04,(float)16.499),
+                Quaternion.Euler(0, 150, 0),
+                lane2Mesh),
+            new (new Vector3((float)17.129,(float)-8.04,(float)15.065),
+                Quaternion.Euler(0, 170, 0),
+                lane1Mesh),
+            new (new Vector3((float)16.109,(float)-8.04,(float)12.997),
+                Quaternion.Euler(0, 195, 0),
+                lane2Mesh),
+            new (new Vector3((float)16.066,(float)-8.04,(float)10.635),
+                Quaternion.Euler(0, 200, 0),
+                lane1Mesh),
+            new (new Vector3((float)14.76,(float)-8.04,(float)9.95),
+                Quaternion.Euler(0, 210, 0),
+                lane2Mesh),
+            new (new Vector3((float)14.75,(float)-8.04,(float)8.45),
+                Quaternion.Euler(0, 210, 0),
+                lane1Mesh),
+            new (new Vector3((float)13.627,(float)-8.04,(float)7.775),
+                Quaternion.Euler(0, 205, 0),
+                lane2Mesh)
         };
         return list;
     }
@@ -101,8 +139,7 @@ public class DriveToGoalAgent : Agent
         carController.frontLeftWheelCollider.steerAngle = 0;
         carController.frontRightWheelCollider.steerAngle = 0;
         
-        int index = new Random().Next(0, listOfEpisodeBeginData.Length);
-        EpisodeBeginData data = listOfEpisodeBeginData[index];
+        EpisodeBeginData data = listOfEpisodeBeginData[episodeBeginIndex];
         Debug.Log("Resetting car!");
         transform.localPosition = data.position;
         transform.localRotation = data.rotation;
