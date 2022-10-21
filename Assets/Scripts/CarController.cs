@@ -65,6 +65,11 @@ public class CarController : MonoBehaviour
         }
     }
 
+    public float GetReward()
+    {
+        return (verticalInput > 0f) ? verticalInput : 0f;
+    }
+    
     public float[] GetRelativeDistanceAndDirectionOfPerson()
     {
         person1 = GameObject.Find("Person1");

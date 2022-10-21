@@ -224,7 +224,7 @@ public class DriveToGoalAgent : Agent
                 }
                 else
                 {
-                    SetReward(1f);
+                    SetReward(carController.GetReward());
                 }
                 break;
             case LaneChangeState.Failed:
@@ -239,7 +239,7 @@ public class DriveToGoalAgent : Agent
                 }
                 else
                 {
-                    SetReward(1f);
+                    SetReward(carController.GetReward());
                 }
                 break;
         }
