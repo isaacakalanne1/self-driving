@@ -297,7 +297,8 @@ public class DriveToGoalAgent : Agent
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collided!");
+        SetReward(-10000f);
+        EndEpisode();
     }
 
     private void ToggleTargetLane()
