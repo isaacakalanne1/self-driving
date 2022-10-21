@@ -30,7 +30,7 @@ public class EpisodeBeginData
 
 public class DriveToGoalAgent : Agent
 {
-
+    
     [SerializeField] private Material targetLaneMaterial;
     [SerializeField] private Material outOfBoundsMaterial;
     [SerializeField] private MeshRenderer lane1Mesh;
@@ -38,7 +38,7 @@ public class DriveToGoalAgent : Agent
     [SerializeField] private MeshRenderer terrainMesh;
 
     private EpisodeBeginData[] listOfEpisodeBeginData;
-    
+
     private CarController carController;
     private int episodeBeginIndex;
     private MeshRenderer targetLane;
@@ -52,16 +52,29 @@ public class DriveToGoalAgent : Agent
     private void Awake()
     {
         carController = GetComponent<CarController>();
-        episodeBeginIndex = GetEpisodeBeginIndex();
+        episodeBeginIndex = GetIndexFromString(carController.name, "Sedan");
         listOfEpisodeBeginData = CreateListOfEpisodeBeginData();
+        Camera.onPreRender += OnPreRenderCallback;
+    }
+    
+    void OnPreRenderCallback(Camera cam)
+    {
+        string indexString = cam.name.Replace("Car Camera Sedan", "");
+        indexString = indexString.Replace("Follow Camera Sedan", "");
+        indexString = indexString.Replace("Sedan", "");
+        Debug.Log("Index String is " + indexString);
+        int cameraIndex = int.Parse(indexString);
+        
+        if (cameraIndex == episodeBeginIndex)
+        {
+            UpdateLaneMaterials();
+        }
     }
 
-    private int GetEpisodeBeginIndex()
+    private int GetIndexFromString(string inputString, string stringToRemove)
     {
-        const string sedan = "Sedan";
-        var carName = carController.name;
-        var indexOfSedan = carName.IndexOf(sedan, StringComparison.Ordinal);
-        var indexString = carName.Remove(indexOfSedan, sedan.Length);
+        var indexString = inputString.Replace(stringToRemove, "");
+        Debug.Log("IndexString is " + indexString);
         return int.Parse(indexString);
     }
 
@@ -140,10 +153,15 @@ public class DriveToGoalAgent : Agent
         carController.frontRightWheelCollider.steerAngle = 0;
         
         EpisodeBeginData data = listOfEpisodeBeginData[episodeBeginIndex];
-        Debug.Log("Resetting car!");
         transform.localPosition = data.position;
         transform.localRotation = data.rotation;
         targetLane = data.initialLane;
+    }
+    
+    private void OnPreRender()
+    {
+        Debug.Log("Rendering!");
+        UpdateLaneMaterials();
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -184,7 +202,7 @@ public class DriveToGoalAgent : Agent
     {
 
         // Debug.Log("isChangingLane is " + isChangingLane);
-        // triggerLaneChangeCounter += 1;
+        triggerLaneChangeCounter += 1;
         
         if (currentState == LaneChangeState.Restricted && Input.GetKey(KeyCode.Space))
         {

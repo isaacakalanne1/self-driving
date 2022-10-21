@@ -632,6 +632,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7012821055741224538, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: m_Name
+      value: Car Camera Sedan3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012821055845611929, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: m_Name
+      value: Follow Camera Sedan3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
 --- !u!1001 &810355386
@@ -713,6 +721,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7012821055741224538, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: m_Name
+      value: Car Camera Sedan7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012821055845611929, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: m_Name
+      value: Follow Camera Sedan7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
 --- !u!1001 &861197406
@@ -793,6 +809,14 @@ PrefabInstance:
     - target: {fileID: 5348801597922184885, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012821055741224538, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: m_Name
+      value: Car Camera Sedan5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012821055845611929, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: m_Name
+      value: Follow Camera Sedan5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
@@ -1059,6 +1083,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7012821055741224538, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: m_Name
+      value: Car Camera Sedan6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012821055845611929, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: m_Name
+      value: Follow Camera Sedan6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
 --- !u!1001 &1094543500
@@ -1139,6 +1171,14 @@ PrefabInstance:
     - target: {fileID: 5348801597922184885, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012821055741224538, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: m_Name
+      value: Car Camera Sedan2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012821055845611929, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: m_Name
+      value: Follow Camera Sedan2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
@@ -1498,6 +1538,14 @@ PrefabInstance:
     - target: {fileID: 5348801597922184885, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012821055741224538, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: m_Name
+      value: Car Camera Sedan1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012821055845611929, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: m_Name
+      value: Follow Camera Sedan1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
@@ -2032,6 +2080,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7012821055741224538, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: m_Name
+      value: Car Camera Sedan4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012821055845611929, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: m_Name
+      value: Follow Camera Sedan4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
 --- !u!4 &2088009528 stripped
@@ -2118,6 +2174,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7012821055741224538, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: m_Name
+      value: Car Camera Sedan8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012821055845611929, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: m_Name
+      value: Follow Camera Sedan8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
 --- !u!1001 &2090975301
@@ -2198,6 +2262,14 @@ PrefabInstance:
     - target: {fileID: 5348801597922184885, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012821055741224538, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: m_Name
+      value: Car Camera Sedan9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012821055845611929, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: m_Name
+      value: Follow Camera Sedan9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
@@ -2284,6 +2356,14 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1812782871}
+    - target: {fileID: 5573480347273966805, guid: 9298f0828fcaa4bcc8c84df0a4260338, type: 3}
+      propertyPath: m_Name
+      value: Car Camera Sedan0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5573480348152097558, guid: 9298f0828fcaa4bcc8c84df0a4260338, type: 3}
+      propertyPath: m_Name
+      value: Follow Camera Sedan0
+      objectReference: {fileID: 0}
     - target: {fileID: 6508655401616466109, guid: 9298f0828fcaa4bcc8c84df0a4260338, type: 3}
       propertyPath: m_Mesh
       value: 
