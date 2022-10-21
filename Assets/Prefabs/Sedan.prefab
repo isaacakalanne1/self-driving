@@ -525,6 +525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00d1153bebdea4007a74b1a0bb2ee276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  verticalInput: 0
   motorForce: 20
   brakeForce: 0.001
   maxSteeringAngle: 30
@@ -551,7 +552,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 2
+    VectorObservationSize: 3
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 6
