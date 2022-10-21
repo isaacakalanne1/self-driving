@@ -189,17 +189,33 @@ public class DriveToGoalAgent : Agent
         {
             continuousActions[5] = 10;            
         }
-        var turnActions = continuousActions.ToList().GetRange(0, 3);
-        var motorActions = continuousActions.ToList().GetRange(3, 3);
-        var highestTurnValue = turnActions.Max();
-        var highestMotorValue = motorActions.Max();
-        var highestTurnIndex = turnActions.FindIndex(a => a.Equals(highestTurnValue));
-        var highestMotorIndex = motorActions.FindIndex(a => a.Equals(highestMotorValue));
+        var highestTurnIndex = GetTurnIndex(actionsOut);
+        var highestMotorIndex = GetMotorIndex(actionsOut);
         carController.SetInput(highestTurnIndex, highestMotorIndex);
+    }
+
+    private int GetIndexOfHighestValue(ActionBuffers actions, int startIndex)
+    {
+        var turnActions = actions.ContinuousActions.ToList().GetRange(startIndex, 3);
+        var highestTurnValue = turnActions.Max();
+        return turnActions.FindIndex(a => a.Equals(highestTurnValue));
+    }
+
+    private int GetTurnIndex(ActionBuffers actions)
+    {
+        return GetIndexOfHighestValue(actions, 0);
+    }
+    
+    private int GetMotorIndex(ActionBuffers actions)
+    {
+        return GetIndexOfHighestValue(actions, 3);
     }
 
     public override void OnActionReceived(ActionBuffers actions)
     {
+        var highestTurnIndex = GetTurnIndex(actions);
+        var highestMotorIndex = GetMotorIndex(actions);
+        carController.SetInput(highestTurnIndex, highestMotorIndex);
 
         // Debug.Log("isChangingLane is " + isChangingLane);
         triggerLaneChangeCounter += 1;
