@@ -140,8 +140,6 @@ public class DriveToGoalAgent : Agent
         var highestMotorValue = motorActions.Max();
         var highestTurnIndex = turnActions.FindIndex(a => a.Equals(highestTurnValue));
         var highestMotorIndex = motorActions.FindIndex(a => a.Equals(highestMotorValue));
-        Debug.Log("Turn index is " + highestTurnIndex);
-        Debug.Log("Motor index is " + highestMotorIndex);
         carController.SetInput(highestTurnIndex, highestMotorIndex);
     }
 
@@ -240,6 +238,11 @@ public class DriveToGoalAgent : Agent
         carController.frontLeftWheelCollider.GetGroundHit(out WheelHit lHit);
         carController.frontRightWheelCollider.GetGroundHit(out WheelHit rHit);
         return lHit.collider?.name == mesh.name && rHit.collider?.name == mesh.name;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Collided!");
     }
 
     private void ToggleTargetLane()

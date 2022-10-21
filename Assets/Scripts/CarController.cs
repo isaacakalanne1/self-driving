@@ -53,14 +53,12 @@ public class CarController : MonoBehaviour
             case 1:
                 if (verticalInput < 1.0f)
                 {
-                    Debug.Log("Forwards!");
                     verticalInput += 0.2f;
                 }
                 break;
             case 2:
                 if (verticalInput > -1.0f)
                 {
-                    Debug.Log("Backwards!");
                     verticalInput -= 0.2f;
                 }
                 break;  
@@ -79,7 +77,6 @@ public class CarController : MonoBehaviour
     }
 
     private void HandleMotor() {
-        Debug.Log("Vertical is " + verticalInput);
         frontLeftWheelCollider.motorTorque = verticalInput * motorForce;
         frontRightWheelCollider.motorTorque = verticalInput * motorForce;
         ApplyBraking();
