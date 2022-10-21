@@ -62,7 +62,6 @@ public class DriveToGoalAgent : Agent
         string indexString = cam.name.Replace("Car Camera Sedan", "");
         indexString = indexString.Replace("Follow Camera Sedan", "");
         indexString = indexString.Replace("Sedan", "");
-        Debug.Log("Index String is " + indexString);
         int cameraIndex = int.Parse(indexString);
         
         if (cameraIndex == episodeBeginIndex)
@@ -74,7 +73,6 @@ public class DriveToGoalAgent : Agent
     private int GetIndexFromString(string inputString, string stringToRemove)
     {
         var indexString = inputString.Replace(stringToRemove, "");
-        Debug.Log("IndexString is " + indexString);
         return int.Parse(indexString);
     }
 
@@ -121,6 +119,7 @@ public class DriveToGoalAgent : Agent
         var steerAngleDiscretized = (int) Math.Round(steerAngle + carController.maxSteeringAngle, 0);
         sensor.AddObservation(steerAngleDiscretized);
         sensor.AddObservation(IsChangingLane() && !DidChangeLaneTimeOut() ? 1 : 0);
+        sensor.AddObservation(carController.verticalInput);
 
         // 1. Get distance between ego and object
         // 2. Get relative position of object as Vec3

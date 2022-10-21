@@ -7,7 +7,7 @@ public class CarController : MonoBehaviour
     private const string Vertical = "Vertical";
 
     private float turnValue;
-    private float verticalInput;
+    public float verticalInput;
     private float currentSteerAngle;
     private float currentBrakeForce;
     private bool isBraking;
