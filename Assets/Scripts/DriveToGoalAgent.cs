@@ -103,7 +103,7 @@ public class DriveToGoalAgent : Agent
         
         int index = new Random().Next(0, listOfEpisodeBeginData.Length);
         EpisodeBeginData data = listOfEpisodeBeginData[index];
-        
+        Debug.Log("Resetting car!");
         transform.localPosition = data.position;
         transform.localRotation = data.rotation;
         targetLane = data.initialLane;

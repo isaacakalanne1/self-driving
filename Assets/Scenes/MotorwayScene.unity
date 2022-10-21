@@ -307,6 +307,11 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!23 &318690781 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3199171291649225522, guid: 9298f0828fcaa4bcc8c84df0a4260338, type: 3}
+  m_PrefabInstance: {fileID: 3199171290716133599}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &484631021
 Mesh:
   m_ObjectHideFlags: 0
@@ -491,6 +496,16 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!23 &495558850 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3199171290339279610, guid: 9298f0828fcaa4bcc8c84df0a4260338, type: 3}
+  m_PrefabInstance: {fileID: 3199171290716133599}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &566610038 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3199171290310416289, guid: 9298f0828fcaa4bcc8c84df0a4260338, type: 3}
+  m_PrefabInstance: {fileID: 3199171290716133599}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1019433767
 Mesh:
   m_ObjectHideFlags: 0
@@ -1484,6 +1499,26 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1019433767}
+    - target: {fileID: 7363583261152828474, guid: 9298f0828fcaa4bcc8c84df0a4260338, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 11.745
+      objectReference: {fileID: 0}
+    - target: {fileID: 7363583261152828474, guid: 9298f0828fcaa4bcc8c84df0a4260338, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 20.163
+      objectReference: {fileID: 0}
+    - target: {fileID: 7363583261152828476, guid: 9298f0828fcaa4bcc8c84df0a4260338, type: 3}
+      propertyPath: lane1Mesh
+      value: 
+      objectReference: {fileID: 566610038}
+    - target: {fileID: 7363583261152828476, guid: 9298f0828fcaa4bcc8c84df0a4260338, type: 3}
+      propertyPath: lane2Mesh
+      value: 
+      objectReference: {fileID: 495558850}
+    - target: {fileID: 7363583261152828476, guid: 9298f0828fcaa4bcc8c84df0a4260338, type: 3}
+      propertyPath: terrainMesh
+      value: 
+      objectReference: {fileID: 318690781}
     - target: {fileID: 7376755315690420350, guid: 9298f0828fcaa4bcc8c84df0a4260338, type: 3}
       propertyPath: m_LocalPosition.y
       value: -8.04
