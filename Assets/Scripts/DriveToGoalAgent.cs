@@ -230,7 +230,7 @@ public class DriveToGoalAgent : Agent
             case LaneChangeState.ControlledAccess:
                 if (IsOnlyTouching(targetLane))
                 {
-                    SetReward(10f);
+                    SetReward(50f);
                     ResetLaneChangeStates();
                 } else if (IsTouching(terrainMesh))
                 {

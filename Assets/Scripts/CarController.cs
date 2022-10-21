@@ -7,7 +7,9 @@ public class CarController : MonoBehaviour
     private const string Vertical = "Vertical";
 
     private float turnValue;
-    public float verticalInput;
+    public int verticalInput;
+    private int minVerticalInput = 0;
+    private int maxVerticalInput = 5;
     private float currentSteerAngle;
     private float currentBrakeForce;
     private bool isBraking;
@@ -51,15 +53,15 @@ public class CarController : MonoBehaviour
         switch (motor)
         {
             case 1:
-                if (verticalInput < 1.0f)
+                if (verticalInput < maxVerticalInput)
                 {
-                    verticalInput += 0.2f;
+                    verticalInput += 1;
                 }
                 break;
             case 2:
-                if (verticalInput > -1.0f)
+                if (verticalInput > minVerticalInput)
                 {
-                    verticalInput -= 0.2f;
+                    verticalInput -= 1;
                 }
                 break;  
         }
@@ -67,7 +69,7 @@ public class CarController : MonoBehaviour
 
     public float GetReward()
     {
-        return (verticalInput > 0f) ? verticalInput : 0f;
+        return verticalInput;
     }
     
     public float[] GetRelativeDistanceAndDirectionOfPerson()
@@ -82,8 +84,8 @@ public class CarController : MonoBehaviour
     }
 
     private void HandleMotor() {
-        frontLeftWheelCollider.motorTorque = verticalInput * motorForce;
-        frontRightWheelCollider.motorTorque = verticalInput * motorForce;
+        frontLeftWheelCollider.motorTorque = verticalInput/(float)maxVerticalInput * motorForce;
+        frontRightWheelCollider.motorTorque = verticalInput/(float)maxVerticalInput * motorForce;
         ApplyBraking();
     }
 
