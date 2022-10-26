@@ -36,8 +36,10 @@ public class DriveToGoalAgent : Agent
     [SerializeField] private MeshRenderer lane1Mesh;
     [SerializeField] private MeshRenderer lane2Mesh;
     [SerializeField] private MeshRenderer terrainMesh;
+    [SerializeField] private MeshRenderer shouldEndAllEpisodesNotifier;
 
     private EpisodeBeginData[] listOfEpisodeBeginData;
+    private string currentEpisodeInt = "0";
 
     private CarController carController;
     private int episodeBeginIndex;
@@ -51,6 +53,7 @@ public class DriveToGoalAgent : Agent
 
     private void Awake()
     {
+        shouldEndAllEpisodesNotifier.name = "0";
         carController = GetComponent<CarController>();
         episodeBeginIndex = GetIndexFromString(carController.name, "Sedan");
         listOfEpisodeBeginData = CreateListOfEpisodeBeginData();
@@ -131,6 +134,7 @@ public class DriveToGoalAgent : Agent
 
     public override void OnEpisodeBegin()
     {
+        shouldEndAllEpisodesNotifier.material = outOfBoundsMaterial;
         ResetCar();
         ResetLaneChangeStates();
         UpdateLaneMaterials();
@@ -218,7 +222,7 @@ public class DriveToGoalAgent : Agent
 
         // Debug.Log("isChangingLane is " + isChangingLane);
         triggerLaneChangeCounter += 1;
-        
+
         if (currentState == LaneChangeState.Restricted && Input.GetKey(KeyCode.Space))
         {
             triggerLaneChangeCounter = triggerLaneChangeMaxCount + 10;
@@ -235,7 +239,7 @@ public class DriveToGoalAgent : Agent
                 } else if (IsTouching(terrainMesh))
                 {
                     SetReward(-10000f);
-                    EndEpisode();
+                    SetAllEpisodesToEnd();
                 }
                 else
                 {
@@ -244,13 +248,13 @@ public class DriveToGoalAgent : Agent
                 break;
             case LaneChangeState.Failed:
                 SetReward(-10000f);
-                EndEpisode();
+                SetAllEpisodesToEnd();
                 break;
             case LaneChangeState.Restricted:
                 if (!IsOnlyTouching(targetLane))
                 {
                     SetReward(-10000f);
-                    EndEpisode();
+                    SetAllEpisodesToEnd();
                 }
                 else
                 {
@@ -258,12 +262,13 @@ public class DriveToGoalAgent : Agent
                 }
                 break;
         }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        SetReward(-10000f);
-        EndEpisode();
+        
+        if (ShouldEndAllEpisodes())
+        {
+            Debug.Log("Ending all!");
+            currentEpisodeInt = shouldEndAllEpisodesNotifier.name;
+            EndEpisode();
+        }
     }
 
     private void UpdateLaneChangeState()
@@ -312,8 +317,8 @@ public class DriveToGoalAgent : Agent
 
     private void OnCollisionEnter(Collision collision)
     {
+        SetAllEpisodesToEnd();
         SetReward(-10000f);
-        EndEpisode();
     }
 
     private void ToggleTargetLane()
@@ -325,5 +330,17 @@ public class DriveToGoalAgent : Agent
     {
         lane1Mesh.material = targetLane.Equals(lane1Mesh) ? targetLaneMaterial : outOfBoundsMaterial;
         lane2Mesh.material = targetLane.Equals(lane2Mesh) ? targetLaneMaterial : outOfBoundsMaterial;
+    }
+
+    private bool ShouldEndAllEpisodes()
+    {
+        return currentEpisodeInt != shouldEndAllEpisodesNotifier.name;
+    }
+
+    private void SetAllEpisodesToEnd()
+    {
+        var currentInt = int.Parse(shouldEndAllEpisodesNotifier.name);
+        currentInt += 1;
+        shouldEndAllEpisodesNotifier.name = currentInt.ToString();
     }
 }

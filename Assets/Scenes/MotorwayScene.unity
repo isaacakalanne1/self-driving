@@ -576,9 +576,13 @@ PrefabInstance:
       propertyPath: terrainMesh
       value: 
       objectReference: {fileID: 318690781}
+    - target: {fileID: 5348801597922184883, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: shouldEndAllEpisodesNotifier
+      value: 
+      objectReference: {fileID: 2023005278}
     - target: {fileID: 5348801597922184885, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5348801597922184885, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_LocalScale.x
@@ -665,9 +669,13 @@ PrefabInstance:
       propertyPath: terrainMesh
       value: 
       objectReference: {fileID: 318690781}
+    - target: {fileID: 5348801597922184883, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: shouldEndAllEpisodesNotifier
+      value: 
+      objectReference: {fileID: 2023005278}
     - target: {fileID: 5348801597922184885, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 5348801597922184885, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_LocalScale.x
@@ -754,9 +762,13 @@ PrefabInstance:
       propertyPath: terrainMesh
       value: 
       objectReference: {fileID: 318690781}
+    - target: {fileID: 5348801597922184883, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: shouldEndAllEpisodesNotifier
+      value: 
+      objectReference: {fileID: 2023005278}
     - target: {fileID: 5348801597922184885, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5348801597922184885, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_LocalScale.x
@@ -1027,9 +1039,13 @@ PrefabInstance:
       propertyPath: terrainMesh
       value: 
       objectReference: {fileID: 318690781}
+    - target: {fileID: 5348801597922184883, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: shouldEndAllEpisodesNotifier
+      value: 
+      objectReference: {fileID: 2023005278}
     - target: {fileID: 5348801597922184885, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5348801597922184885, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_LocalScale.x
@@ -1116,9 +1132,13 @@ PrefabInstance:
       propertyPath: terrainMesh
       value: 
       objectReference: {fileID: 318690781}
+    - target: {fileID: 5348801597922184883, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: shouldEndAllEpisodesNotifier
+      value: 
+      objectReference: {fileID: 2023005278}
     - target: {fileID: 5348801597922184885, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5348801597922184885, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_LocalScale.x
@@ -1483,9 +1503,13 @@ PrefabInstance:
       propertyPath: terrainMesh
       value: 
       objectReference: {fileID: 318690781}
+    - target: {fileID: 5348801597922184883, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: shouldEndAllEpisodesNotifier
+      value: 
+      objectReference: {fileID: 2023005278}
     - target: {fileID: 5348801597922184885, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5348801597922184885, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_LocalScale.x
@@ -2024,9 +2048,13 @@ PrefabInstance:
       propertyPath: terrainMesh
       value: 
       objectReference: {fileID: 318690781}
+    - target: {fileID: 5348801597922184883, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: shouldEndAllEpisodesNotifier
+      value: 
+      objectReference: {fileID: 2023005278}
     - target: {fileID: 5348801597922184885, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5348801597922184885, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_LocalScale.x
@@ -2090,6 +2118,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+--- !u!23 &2023005278 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5371227927625805360, guid: 9298f0828fcaa4bcc8c84df0a4260338, type: 3}
+  m_PrefabInstance: {fileID: 3199171290716133599}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2088009528 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3199171289902708329, guid: 9298f0828fcaa4bcc8c84df0a4260338, type: 3}
@@ -2118,9 +2151,13 @@ PrefabInstance:
       propertyPath: terrainMesh
       value: 
       objectReference: {fileID: 318690781}
+    - target: {fileID: 5348801597922184883, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: shouldEndAllEpisodesNotifier
+      value: 
+      objectReference: {fileID: 2023005278}
     - target: {fileID: 5348801597922184885, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5348801597922184885, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_LocalScale.x
@@ -2207,9 +2244,13 @@ PrefabInstance:
       propertyPath: terrainMesh
       value: 
       objectReference: {fileID: 318690781}
+    - target: {fileID: 5348801597922184883, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: shouldEndAllEpisodesNotifier
+      value: 
+      objectReference: {fileID: 2023005278}
     - target: {fileID: 5348801597922184885, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5348801597922184885, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_LocalScale.x
@@ -2280,10 +2321,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 959188497971915388, guid: 9298f0828fcaa4bcc8c84df0a4260338, type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 2061034014889197516, guid: 9298f0828fcaa4bcc8c84df0a4260338, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 484631021}
+    - target: {fileID: 3180408174628403899, guid: 9298f0828fcaa4bcc8c84df0a4260338, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3199171289902708329, guid: 9298f0828fcaa4bcc8c84df0a4260338, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -2332,6 +2381,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MotorwayEnvironment
       objectReference: {fileID: 0}
+    - target: {fileID: 3199171290210188716, guid: 9298f0828fcaa4bcc8c84df0a4260338, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3199171290310416288, guid: 9298f0828fcaa4bcc8c84df0a4260338, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -2352,6 +2405,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -7.987
       objectReference: {fileID: 0}
+    - target: {fileID: 3199171291649225524, guid: 9298f0828fcaa4bcc8c84df0a4260338, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4841996945894468697, guid: 9298f0828fcaa4bcc8c84df0a4260338, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -2368,6 +2425,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1019433767}
+    - target: {fileID: 7363583261152828474, guid: 9298f0828fcaa4bcc8c84df0a4260338, type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 7363583261152828474, guid: 9298f0828fcaa4bcc8c84df0a4260338, type: 3}
       propertyPath: m_LocalPosition.x
       value: 13.627
