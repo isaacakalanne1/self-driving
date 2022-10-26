@@ -265,7 +265,6 @@ public class DriveToGoalAgent : Agent
         
         if (ShouldEndAllEpisodes())
         {
-            Debug.Log("Ending all!");
             currentEpisodeInt = shouldEndAllEpisodesNotifier.name;
             EndEpisode();
         }
