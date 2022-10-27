@@ -10,7 +10,7 @@ public class CarController : MonoBehaviour
     public int verticalInput;
     public int minVerticalInput = 8;
     public int initialVerticalInput = 10;
-    private int maxVerticalInput = 15;
+    private int maxVerticalInput = 12;
     private float currentSteerAngle;
     private float currentBrakeForce;
     private bool isBraking;
