@@ -155,16 +155,13 @@ public class DriveToGoalAgent : Agent
         carController.frontLeftWheelCollider.steerAngle = 0;
         carController.frontRightWheelCollider.steerAngle = 0;
         
+        carController.turnValue = 0;
+        carController.verticalInput = carController.minVerticalInput;
+        
         EpisodeBeginData data = listOfEpisodeBeginData[episodeBeginIndex];
         transform.localPosition = data.position;
         transform.localRotation = data.rotation;
         targetLane = data.initialLane;
-    }
-    
-    private void OnPreRender()
-    {
-        Debug.Log("Rendering!");
-        UpdateLaneMaterials();
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -265,6 +262,7 @@ public class DriveToGoalAgent : Agent
         
         if (ShouldEndAllEpisodes())
         {
+            Debug.Log("End episode " + currentEpisodeInt);
             currentEpisodeInt = shouldEndAllEpisodesNotifier.name;
             EndEpisode();
         }
@@ -316,8 +314,8 @@ public class DriveToGoalAgent : Agent
 
     private void OnCollisionEnter(Collision collision)
     {
-        SetAllEpisodesToEnd();
         SetReward(-10000f);
+        SetAllEpisodesToEnd();
     }
 
     private void ToggleTargetLane()
