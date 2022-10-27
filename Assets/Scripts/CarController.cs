@@ -8,7 +8,7 @@ public class CarController : MonoBehaviour
 
     public float turnValue;
     public int verticalInput;
-    public int minVerticalInput = 5;
+    public int minVerticalInput = 8;
     public int initialVerticalInput = 10;
     private int maxVerticalInput = 15;
     private float currentSteerAngle;
