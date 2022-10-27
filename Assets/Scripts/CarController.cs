@@ -6,14 +6,34 @@ public class CarController : MonoBehaviour
     private const string Horizontal = "Horizontal";
     private const string Vertical = "Vertical";
 
-    public float turnValue;
-    public int verticalInput;
-    public int minVerticalInput = 8;
-    public int initialVerticalInput = 10;
-    private int maxVerticalInput = 12;
+    private float turnValue;
+    private int verticalInput;
+    private const int MinVerticalInput = 8;
+    private const int InitialVerticalInput = 10;
+    private const int MaxVerticalInput = 12;
     private float currentSteerAngle;
     private float currentBrakeForce;
     private bool isBraking;
+
+    public int GetInitialVerticalInput()
+    {
+        return InitialVerticalInput;
+    }
+
+    public void SetTurnValue(int value)
+    {
+        turnValue = value;
+    }
+
+    public void SetVerticalInput(int value)
+    {
+        verticalInput = value;
+    }
+
+    public int GetVerticalInput()
+    {
+        return verticalInput;
+    }
 
     [SerializeField] private float motorForce;
     [SerializeField] private float brakeForce;
@@ -54,18 +74,19 @@ public class CarController : MonoBehaviour
         switch (motor)
         {
             case 1:
-                if (verticalInput < maxVerticalInput)
+                if (verticalInput < MaxVerticalInput)
                 {
                     verticalInput += 1;
                 }
                 break;
             case 2:
-                if (verticalInput > minVerticalInput)
+                if (verticalInput > MinVerticalInput)
                 {
                     verticalInput -= 1;
                 }
                 break;  
         }
+        Debug.Log("Vertical input is " + verticalInput);
     }
 
     public float GetReward()
@@ -85,8 +106,8 @@ public class CarController : MonoBehaviour
     }
 
     private void HandleMotor() {
-        frontLeftWheelCollider.motorTorque = verticalInput/(float)initialVerticalInput * motorForce;
-        frontRightWheelCollider.motorTorque = verticalInput/(float)initialVerticalInput * motorForce;
+        frontLeftWheelCollider.motorTorque = verticalInput/(float)InitialVerticalInput * motorForce;
+        frontRightWheelCollider.motorTorque = verticalInput/(float)InitialVerticalInput * motorForce;
         ApplyBraking();
     }
 

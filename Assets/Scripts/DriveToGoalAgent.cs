@@ -122,7 +122,7 @@ public class DriveToGoalAgent : Agent
         var steerAngleDiscretized = (int) Math.Round(steerAngle + carController.maxSteeringAngle, 0);
         sensor.AddObservation(steerAngleDiscretized);
         sensor.AddObservation(IsChangingLane() && !DidChangeLaneTimeOut() ? 1 : 0);
-        sensor.AddObservation(carController.verticalInput);
+        sensor.AddObservation(carController.GetVerticalInput());
 
         // 1. Get distance between ego and object
         // 2. Get relative position of object as Vec3
@@ -155,8 +155,8 @@ public class DriveToGoalAgent : Agent
         carController.frontLeftWheelCollider.steerAngle = 0;
         carController.frontRightWheelCollider.steerAngle = 0;
         
-        carController.turnValue = 0;
-        carController.verticalInput = carController.minVerticalInput;
+        carController.SetTurnValue(0);
+        carController.SetVerticalInput(carController.GetInitialVerticalInput());
         
         EpisodeBeginData data = listOfEpisodeBeginData[episodeBeginIndex];
         transform.localPosition = data.position;
