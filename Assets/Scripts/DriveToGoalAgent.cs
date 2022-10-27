@@ -235,7 +235,6 @@ public class DriveToGoalAgent : Agent
                     ResetLaneChangeStates();
                 } else if (IsTouching(terrainMesh))
                 {
-                    SetReward(-10000f);
                     SetAllEpisodesToEnd();
                 }
                 else
@@ -244,13 +243,11 @@ public class DriveToGoalAgent : Agent
                 }
                 break;
             case LaneChangeState.Failed:
-                SetReward(-10000f);
                 SetAllEpisodesToEnd();
                 break;
             case LaneChangeState.Restricted:
                 if (!IsOnlyTouching(targetLane))
                 {
-                    SetReward(-10000f);
                     SetAllEpisodesToEnd();
                 }
                 else
@@ -313,7 +310,6 @@ public class DriveToGoalAgent : Agent
 
     private void OnCollisionEnter(Collision collision)
     {
-        SetReward(-10000f);
         SetAllEpisodesToEnd();
     }
 
