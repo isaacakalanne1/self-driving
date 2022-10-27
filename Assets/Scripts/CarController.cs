@@ -8,9 +8,9 @@ public class CarController : MonoBehaviour
 
     private float turnValue;
     private int verticalInput;
-    private const int MinVerticalInput = 8;
+    private const int MinVerticalInput = 6;
     private const int InitialVerticalInput = 10;
-    private const int MaxVerticalInput = 12;
+    private const int MaxVerticalInput = 10;
     private float currentSteerAngle;
     private float currentBrakeForce;
     private bool isBraking;
