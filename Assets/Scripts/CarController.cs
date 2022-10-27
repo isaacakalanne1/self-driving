@@ -8,8 +8,9 @@ public class CarController : MonoBehaviour
 
     public float turnValue;
     public int verticalInput;
-    public int minVerticalInput = 0;
-    private int maxVerticalInput = 5;
+    public int minVerticalInput = 5;
+    public int initialVerticalInput = 10;
+    private int maxVerticalInput = 15;
     private float currentSteerAngle;
     private float currentBrakeForce;
     private bool isBraking;
@@ -84,8 +85,8 @@ public class CarController : MonoBehaviour
     }
 
     private void HandleMotor() {
-        frontLeftWheelCollider.motorTorque = verticalInput/(float)maxVerticalInput * motorForce;
-        frontRightWheelCollider.motorTorque = verticalInput/(float)maxVerticalInput * motorForce;
+        frontLeftWheelCollider.motorTorque = verticalInput/(float)initialVerticalInput * motorForce;
+        frontRightWheelCollider.motorTorque = verticalInput/(float)initialVerticalInput * motorForce;
         ApplyBraking();
     }
 
