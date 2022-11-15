@@ -10,8 +10,7 @@ using Random = System.Random;
 enum LaneChangeState
 {
     Restricted,
-    ControlledAccess,
-    Failed
+    ControlledAccess
 }
 
 public class EpisodeBeginData
@@ -55,7 +54,7 @@ public class DriveToGoalAgent : Agent
     {
         shouldEndAllEpisodesNotifier.name = "0";
         carController = GetComponent<CarController>();
-        episodeBeginIndex = GetIndexFromString(carController.name, "Sedan");
+        // episodeBeginIndex = GetIndexFromString(carController.name, "Sedan");
         listOfEpisodeBeginData = CreateListOfEpisodeBeginData();
         Camera.onPreRender += OnPreRenderCallback;
     }
@@ -121,7 +120,7 @@ public class DriveToGoalAgent : Agent
         var steerAngle = (int) Math.Round(carController.frontLeftWheelCollider.steerAngle, 0);
         var steerAngleDiscretized = (int) Math.Round(steerAngle + carController.maxSteeringAngle, 0);
         sensor.AddObservation(steerAngleDiscretized);
-        sensor.AddObservation(IsChangingLane() && !DidChangeLaneTimeOut() ? 1 : 0);
+        sensor.AddObservation(IsChangingLane() ? 1 : 0);
         sensor.AddObservation(carController.GetVerticalInput());
 
         // 1. Get distance between ego and object
@@ -158,6 +157,8 @@ public class DriveToGoalAgent : Agent
         carController.SetTurnValue(0);
         carController.SetVerticalInput(carController.GetInitialVerticalInput());
         
+        Random rnd = new Random();
+        episodeBeginIndex = rnd.Next(0, 10);
         EpisodeBeginData data = listOfEpisodeBeginData[episodeBeginIndex];
         transform.localPosition = data.position;
         transform.localRotation = data.rotation;
@@ -242,9 +243,6 @@ public class DriveToGoalAgent : Agent
                     SetReward(carController.GetReward());
                 }
                 break;
-            case LaneChangeState.Failed:
-                SetAllEpisodesToEnd();
-                break;
             case LaneChangeState.Restricted:
                 if (!IsOnlyTouching(targetLane))
                 {
@@ -267,7 +265,6 @@ public class DriveToGoalAgent : Agent
     private void UpdateLaneChangeState()
     {
         currentState = IsChangingLane() ? LaneChangeState.ControlledAccess : LaneChangeState.Restricted;
-        currentState = DidChangeLaneTimeOut() ? LaneChangeState.Failed : currentState;
         if (previousState != currentState)
         {
             switch (currentState)
@@ -275,9 +272,6 @@ public class DriveToGoalAgent : Agent
                 case LaneChangeState.ControlledAccess:
                     ToggleTargetLane();
                     UpdateLaneMaterials();
-                    break;
-                case LaneChangeState.Failed:
-                    Debug.Log("Change lane timed out!");
                     break;
             }
         }
@@ -287,11 +281,6 @@ public class DriveToGoalAgent : Agent
     private bool IsChangingLane()
     {
         return triggerLaneChangeCounter >= triggerLaneChangeMaxCount;
-    }
-
-    private bool DidChangeLaneTimeOut()
-    {
-        return triggerLaneChangeCounter >= triggerLaneChangeMaxCount + LaneChangePermittedMaxCount;
     }
 
     private bool IsTouching(MeshRenderer mesh)
