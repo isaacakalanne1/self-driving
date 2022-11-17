@@ -149,10 +149,7 @@ public class DriveToGoalAgent : Agent
         rigidBody.velocity = Vector3.zero;
         carController.frontLeftWheelCollider.steerAngle = 0;
         carController.frontRightWheelCollider.steerAngle = 0;
-        
-        carController.SetTurnValue(0);
-        carController.SetVerticalInput(carController.GetInitialVerticalInput());
-        
+
         Random rnd = new Random();
         episodeBeginIndex = rnd.Next(0, 10);
         EpisodeBeginData data = listOfEpisodeBeginData[episodeBeginIndex];
@@ -160,6 +157,10 @@ public class DriveToGoalAgent : Agent
         transform.localRotation = data.rotation;
         targetLane = data.initialLane;
         currentLane = targetLane.Equals(lane1Mesh) ? CurrentLane.Low : CurrentLane.High;
+        
+        carController.SetTurnValue(0);
+        var initialVerticalInput = carController.GetInitialVerticalInput(currentLane);
+        carController.SetVerticalInput(initialVerticalInput);
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)

@@ -15,15 +15,14 @@ public class CarController : MonoBehaviour
     private float turnValue;
     private int verticalInput;
     private const int MinVerticalInput = 6;
-    private const int InitialVerticalInput = 10;
     private const int MaxVerticalInput = 10;
     private float currentSteerAngle;
     private float currentBrakeForce;
     private bool isBraking;
 
-    public int GetInitialVerticalInput()
+    public int GetInitialVerticalInput(CurrentLane currentLane)
     {
-        return InitialVerticalInput;
+        return currentLane == CurrentLane.Low ? MinVerticalInput : MaxVerticalInput;
     }
 
     public void SetTurnValue(int value)
@@ -101,8 +100,8 @@ public class CarController : MonoBehaviour
     }
 
     private void HandleMotor() {
-        frontLeftWheelCollider.motorTorque = verticalInput/(float)InitialVerticalInput * motorForce;
-        frontRightWheelCollider.motorTorque = verticalInput/(float)InitialVerticalInput * motorForce;
+        frontLeftWheelCollider.motorTorque = verticalInput/(float)MaxVerticalInput * motorForce;
+        frontRightWheelCollider.motorTorque = verticalInput/(float)MaxVerticalInput * motorForce;
         ApplyBraking();
     }
 
