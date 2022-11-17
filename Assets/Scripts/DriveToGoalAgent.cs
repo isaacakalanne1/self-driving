@@ -47,6 +47,8 @@ public class DriveToGoalAgent : Agent
     private int triggerLaneChangeCounter;
     private const int LaneChangePermittedMaxCount = 50;
 
+    private CurrentLane currentLane = CurrentLane.Low;
+
     private LaneChangeState currentState;
     private LaneChangeState previousState;
 
@@ -121,6 +123,7 @@ public class DriveToGoalAgent : Agent
         var steerAngleDiscretized = (int) Math.Round(steerAngle + carController.maxSteeringAngle, 0);
         sensor.AddObservation(steerAngleDiscretized);
         sensor.AddObservation(IsChangingLane() ? 1 : 0);
+        sensor.AddObservation(currentLane == CurrentLane.Low ? 0 : 1);
         sensor.AddObservation(carController.GetVerticalInput());
 
         // 1. Get distance between ego and object
@@ -163,6 +166,7 @@ public class DriveToGoalAgent : Agent
         transform.localPosition = data.position;
         transform.localRotation = data.rotation;
         targetLane = data.initialLane;
+        currentLane = targetLane.Equals(lane1Mesh) ? CurrentLane.Low : CurrentLane.High;
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -171,9 +175,6 @@ public class DriveToGoalAgent : Agent
         continuousActions[0] = 0;
         continuousActions[1] = 0;
         continuousActions[2] = 0;
-        continuousActions[3] = 0;
-        continuousActions[4] = 0;
-        continuousActions[5] = 0;
         
         if (Input.GetAxisRaw("Horizontal").Equals(-1f))
         {
@@ -183,40 +184,21 @@ public class DriveToGoalAgent : Agent
             continuousActions[2] = 10;            
         }
         
-        if (Input.GetAxisRaw("Vertical").Equals(1f))
-        {
-            continuousActions[4] = 10;            
-        } else if (Input.GetAxisRaw("Vertical").Equals(-1f))
-        {
-            continuousActions[5] = 10;            
-        }
-        var highestTurnIndex = GetTurnIndex(actionsOut);
-        var highestMotorIndex = GetMotorIndex(actionsOut);
-        carController.SetInput(highestTurnIndex, highestMotorIndex);
+        var highestTurnIndex = GetIndexOfHighestValue(actionsOut);
+        carController.SetInput(highestTurnIndex, currentLane);
     }
 
-    private int GetIndexOfHighestValue(ActionBuffers actions, int startIndex)
+    private int GetIndexOfHighestValue(ActionBuffers actions)
     {
-        var turnActions = actions.ContinuousActions.ToList().GetRange(startIndex, 3);
+        var turnActions = actions.ContinuousActions.ToList().GetRange(0, 3);
         var highestTurnValue = turnActions.Max();
         return turnActions.FindIndex(a => a.Equals(highestTurnValue));
     }
 
-    private int GetTurnIndex(ActionBuffers actions)
-    {
-        return GetIndexOfHighestValue(actions, 0);
-    }
-    
-    private int GetMotorIndex(ActionBuffers actions)
-    {
-        return GetIndexOfHighestValue(actions, 3);
-    }
-
     public override void OnActionReceived(ActionBuffers actions)
     {
-        var highestTurnIndex = GetTurnIndex(actions);
-        var highestMotorIndex = GetMotorIndex(actions);
-        carController.SetInput(highestTurnIndex, highestMotorIndex);
+        var highestTurnIndex = GetIndexOfHighestValue(actions);
+        carController.SetInput(highestTurnIndex, currentLane);
 
         // Debug.Log("isChangingLane is " + isChangingLane);
         triggerLaneChangeCounter += 1;
@@ -232,8 +214,9 @@ public class DriveToGoalAgent : Agent
             case LaneChangeState.ControlledAccess:
                 if (IsOnlyTouching(targetLane))
                 {
-                    SetReward(50f);
+                    SetReward(1000f);
                     ResetLaneChangeStates();
+                    currentLane = targetLane.Equals(lane1Mesh) ? CurrentLane.Low : CurrentLane.High;
                 } else if (IsTouching(terrainMesh))
                 {
                     SetAllEpisodesToEnd();

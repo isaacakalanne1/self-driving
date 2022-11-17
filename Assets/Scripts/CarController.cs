@@ -1,5 +1,11 @@
 using UnityEngine;
 
+public enum CurrentLane
+{
+    Low,
+    High
+}
+
 public class CarController : MonoBehaviour
 {
 
@@ -59,7 +65,7 @@ public class CarController : MonoBehaviour
         UpdateWheels();
     }
 
-    public void SetInput(int turn, int motor)
+    public void SetInput(int turn, CurrentLane currentLane)
     {
         turnValue = 0;
         switch (turn)
@@ -71,20 +77,20 @@ public class CarController : MonoBehaviour
                 turnValue = +softTurn;
                 break;  
         }
-        switch (motor)
+        switch (currentLane)
         {
-            case 1:
-                if (verticalInput < MaxVerticalInput)
-                {
-                    verticalInput += 1;
-                }
-                break;
-            case 2:
+            case CurrentLane.Low:
                 if (verticalInput > MinVerticalInput)
                 {
                     verticalInput -= 1;
                 }
                 break;  
+            case CurrentLane.High:
+                if (verticalInput < MaxVerticalInput)
+                {
+                    verticalInput += 1;
+                }
+                break;
         }
         Debug.Log("Vertical input is " + verticalInput);
     }
@@ -92,17 +98,6 @@ public class CarController : MonoBehaviour
     public float GetReward()
     {
         return verticalInput;
-    }
-    
-    public float[] GetRelativeDistanceAndDirectionOfPerson()
-    {
-        person1 = GameObject.Find("Person1");
-        var egoPosition = transform.position;
-        var personPosition = person1.transform.position;
-        var distance = Vector3.Distance (egoPosition, personPosition);
-        var relativeDirection = (egoPosition - personPosition) - transform.forward;
-        float[] distanceAndDirection = { distance, relativeDirection.x, relativeDirection.y, relativeDirection.z };
-        return distanceAndDirection;
     }
 
     private void HandleMotor() {
