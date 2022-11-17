@@ -125,13 +125,6 @@ public class DriveToGoalAgent : Agent
         sensor.AddObservation(IsChangingLane() ? 1 : 0);
         sensor.AddObservation(currentLane == CurrentLane.Low ? 0 : 1);
         sensor.AddObservation(carController.GetVerticalInput());
-
-        // 1. Get distance between ego and object
-        // 2. Get relative position of object as Vec3
-        //   - Create raycast from ego to object
-        //   - relativeDirection = raycast.direction - ego.direction
-        //   - May need to send raycast out in direction of ego (transform.forward) to get ego.direction
-        // 3. Send data as observation (e.g, [5, 0.5, 0.5, 0.5] means this object is 5 units away, diagonally in all 3 planes)
     }
 
     public override void OnEpisodeBegin()
