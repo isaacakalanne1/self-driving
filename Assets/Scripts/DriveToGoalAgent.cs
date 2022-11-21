@@ -56,7 +56,7 @@ public class DriveToGoalAgent : Agent
     {
         shouldEndAllEpisodesNotifier.name = "0";
         carController = GetComponent<CarController>();
-        // episodeBeginIndex = GetIndexFromString(carController.name, "Sedan");
+        episodeBeginIndex = GetIndexFromString(carController.name, "Sedan");
         listOfEpisodeBeginData = CreateListOfEpisodeBeginData();
         Camera.onPreRender += OnPreRenderCallback;
     }
@@ -83,36 +83,37 @@ public class DriveToGoalAgent : Agent
     private EpisodeBeginData[] CreateListOfEpisodeBeginData()
     {
         EpisodeBeginData[] list = {
-            new (new Vector3((float)11.552,(float)-8.04,(float)20.226),
-                Quaternion.Euler(0, 120, 0),
-                lane1Mesh),
-            new (new Vector3((float)12.262,(float)-8.04,(float)18.901),
-                Quaternion.Euler(0, 120, 0),
-                lane2Mesh),
-            new (new Vector3((float)15.108,(float)-8.04,(float)17.932),
-                Quaternion.Euler(0, 120, 0),
-                lane1Mesh),
-            new (new Vector3((float)15.59,(float)-8.04,(float)16.499),
-                Quaternion.Euler(0, 150, 0),
-                lane2Mesh),
-            new (new Vector3((float)17.129,(float)-8.04,(float)15.065),
-                Quaternion.Euler(0, 170, 0),
-                lane1Mesh),
-            new (new Vector3((float)16.109,(float)-8.04,(float)12.997),
-                Quaternion.Euler(0, 195, 0),
-                lane2Mesh),
-            new (new Vector3((float)16.066,(float)-8.04,(float)10.635),
-                Quaternion.Euler(0, 200, 0),
-                lane1Mesh),
-            new (new Vector3((float)14.76,(float)-8.04,(float)9.95),
-                Quaternion.Euler(0, 210, 0),
-                lane2Mesh),
-            new (new Vector3((float)14.75,(float)-8.04,(float)8.45),
-                Quaternion.Euler(0, 210, 0),
-                lane1Mesh),
             new (new Vector3((float)13.627,(float)-8.04,(float)7.775),
                 Quaternion.Euler(0, 205, 0),
-                lane2Mesh)
+                lane2Mesh),
+            new (new Vector3((float)3.543,(float)-8.04,(float)-11.105),
+                Quaternion.Euler(0, 270, 0),
+                lane2Mesh),
+            new (new Vector3((float)-13.656,(float)-8.04,(float)-3.791),
+                Quaternion.Euler(0, 20, 0),
+                lane2Mesh),
+            new (new Vector3((float)-15.018,(float)-8.04,(float)19.211),
+                Quaternion.Euler(0, 80, 0),
+                lane2Mesh),
+            new (new Vector3((float)6.143,(float)-8.04,(float)22.402),
+                Quaternion.Euler(0, 115, 0),
+                lane2Mesh),
+            
+            new (new Vector3((float)18.055,(float)-8.04,(float)-4.325),
+                Quaternion.Euler(0, 180, 0),
+                lane1Mesh),
+            new (new Vector3((float)-8.11,(float)-8.04,(float)-17.16),
+                Quaternion.Euler(0, 235, 0),
+                lane1Mesh),
+            new (new Vector3((float)-21.33,(float)-8.04,(float)15.676),
+                Quaternion.Euler(0, 25, 0),
+                lane1Mesh),
+            new (new Vector3((float)-3.398,(float)-8.04,(float)25.562),
+                Quaternion.Euler(0, 80, 0),
+                lane1Mesh),
+            new (new Vector3((float)15.585,(float)-8.04,(float)17.432),
+                Quaternion.Euler(0, 130, 0),
+                lane1Mesh)
         };
         return list;
     }
@@ -149,9 +150,7 @@ public class DriveToGoalAgent : Agent
         rigidBody.velocity = Vector3.zero;
         carController.frontLeftWheelCollider.steerAngle = 0;
         carController.frontRightWheelCollider.steerAngle = 0;
-
-        Random rnd = new Random();
-        episodeBeginIndex = rnd.Next(0, 10);
+        
         EpisodeBeginData data = listOfEpisodeBeginData[episodeBeginIndex];
         transform.localPosition = data.position;
         transform.localRotation = data.rotation;
