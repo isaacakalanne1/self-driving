@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public enum CurrentLane
@@ -38,6 +39,10 @@ public class CarController : MonoBehaviour
     [SerializeField] private MeshRenderer carBodyMesh;
     [SerializeField] private MeshRenderer carSpoilerMesh;
 
+    private Material[] carBodyMaterials;
+    private Material[] carSpoilerMaterials;
+    private Material[] carWheelMaterials;
+
     public int GetInitialVerticalInput(CurrentLane currentLane)
     {
         return currentLane == CurrentLane.Low ? MinVerticalInput : MaxVerticalInput;
@@ -58,6 +63,14 @@ public class CarController : MonoBehaviour
         return verticalInput;
     }
 
+    public void SaveCarMaterials()
+    {
+        carBodyMaterials = carBodyMesh.materials;
+        carSpoilerMaterials = carSpoilerMesh.materials;
+        frontLeftWheelTransform.TryGetComponent(out MeshRenderer flMesh);
+        carWheelMaterials = flMesh.materials;
+    }
+
     public void UpdateCarVisibility(CameraType cameraType)
     {
         frontLeftWheelTransform.TryGetComponent(out MeshRenderer flMesh);
@@ -65,12 +78,12 @@ public class CarController : MonoBehaviour
         backLeftWheelCollider.TryGetComponent(out MeshRenderer blMesh);
         backRightWheelCollider.TryGetComponent(out MeshRenderer brMesh);
         
-        carBodyMesh.enabled = cameraType == CameraType.Car;
-        carSpoilerMesh.enabled = cameraType == CameraType.Car;
-        flMesh.enabled = cameraType == CameraType.Car;
-        frMesh.enabled = cameraType == CameraType.Car;
-        blMesh.enabled = cameraType == CameraType.Car;
-        brMesh.enabled = cameraType == CameraType.Car;
+        carBodyMesh.materials = cameraType == CameraType.Car ? Array.Empty<Material>() : carBodyMaterials;
+        carSpoilerMesh.materials = cameraType == CameraType.Car ? Array.Empty<Material>() : carSpoilerMaterials;
+        // flMesh.materials = cameraType == CameraType.Car ? Array.Empty<Material>() : carWheelMaterials;
+        // frMesh.materials = cameraType == CameraType.Car ? Array.Empty<Material>() : carWheelMaterials;
+        // blMesh.materials = cameraType == CameraType.Car ? Array.Empty<Material>() : carWheelMaterials;
+        // brMesh.materials = cameraType == CameraType.Car ? Array.Empty<Material>() : carWheelMaterials;
     }
 
     private void FixedUpdate() {
