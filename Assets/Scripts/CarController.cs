@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public enum CurrentLane
@@ -9,9 +8,6 @@ public enum CurrentLane
 
 public class CarController : MonoBehaviour
 {
-
-    private const string Horizontal = "Horizontal";
-    private const string Vertical = "Vertical";
 
     private float turnValue;
     private int verticalInput;
@@ -39,10 +35,6 @@ public class CarController : MonoBehaviour
     [SerializeField] private MeshRenderer carBodyMesh;
     [SerializeField] private MeshRenderer carSpoilerMesh;
 
-    private Material[] carBodyMaterials;
-    private Material[] carSpoilerMaterials;
-    private Material[] carWheelMaterials;
-
     public int GetInitialVerticalInput(CurrentLane currentLane)
     {
         return currentLane == CurrentLane.Low ? MinVerticalInput : MaxVerticalInput;
@@ -63,27 +55,18 @@ public class CarController : MonoBehaviour
         return verticalInput;
     }
 
-    public void SaveCarMaterials()
-    {
-        carBodyMaterials = carBodyMesh.materials;
-        carSpoilerMaterials = carSpoilerMesh.materials;
-        frontLeftWheelTransform.TryGetComponent(out MeshRenderer flMesh);
-        carWheelMaterials = flMesh.materials;
-    }
-
     public void UpdateCarVisibility(CameraType cameraType)
     {
-        frontLeftWheelTransform.TryGetComponent(out MeshRenderer flMesh);
-        frontRightWheelCollider.TryGetComponent(out MeshRenderer frMesh);
-        backLeftWheelCollider.TryGetComponent(out MeshRenderer blMesh);
-        backRightWheelCollider.TryGetComponent(out MeshRenderer brMesh);
+        var hideScale = new Vector3(0, 0, 0);
+        var showScale = new Vector3(1, 1, 1);
         
-        carBodyMesh.materials = cameraType == CameraType.Car ? Array.Empty<Material>() : carBodyMaterials;
-        carSpoilerMesh.materials = cameraType == CameraType.Car ? Array.Empty<Material>() : carSpoilerMaterials;
-        // flMesh.materials = cameraType == CameraType.Car ? Array.Empty<Material>() : carWheelMaterials;
-        // frMesh.materials = cameraType == CameraType.Car ? Array.Empty<Material>() : carWheelMaterials;
-        // blMesh.materials = cameraType == CameraType.Car ? Array.Empty<Material>() : carWheelMaterials;
-        // brMesh.materials = cameraType == CameraType.Car ? Array.Empty<Material>() : carWheelMaterials;
+        carBodyMesh.transform.localScale = cameraType == CameraType.Car ? hideScale : showScale;
+        carSpoilerMesh.transform.localScale = cameraType == CameraType.Car ? hideScale : showScale;
+        
+        frontLeftWheelTransform.localScale = cameraType == CameraType.Car ? hideScale : showScale;
+        frontRightWheelTransform.localScale = cameraType == CameraType.Car ? hideScale : showScale;
+        backLeftWheelTransform.localScale = cameraType == CameraType.Car ? hideScale : showScale;
+        backRightWheelTransform.localScale = cameraType == CameraType.Car ? hideScale : showScale;
     }
 
     private void FixedUpdate() {

@@ -63,7 +63,6 @@ public class DriveToGoalAgent : Agent
         episodeBeginIndex = GetIndexFromString(carController.name, "Sedan");
         listOfEpisodeBeginData = CreateListOfEpisodeBeginData();
         Camera.onPreRender += OnPreRenderCallback;
-        carController.SaveCarMaterials();
     }
     
     void OnPreRenderCallback(Camera cam)
