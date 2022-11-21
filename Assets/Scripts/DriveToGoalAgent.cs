@@ -68,12 +68,11 @@ public class DriveToGoalAgent : Agent
     void OnPreRenderCallback(Camera cam)
     {
         CameraType cameraType = CameraType.Car;
-        string cameraName = cam.name;
-        if (cameraName.Contains("Car Camera Sedan"))
+        if (cam.name.Contains("Car Camera Sedan"))
         {
             cameraType = CameraType.Car;
         }
-        else if (cameraName.Contains("Follow Camera Sedan"))
+        else if (cam.name.Contains("Follow Camera Sedan"))
         {
             cameraType = CameraType.Follow;            
         }
@@ -81,11 +80,6 @@ public class DriveToGoalAgent : Agent
         UpdateMaterials(cameraType);
         
     }
-    //
-    // private int getIndexOfCamera(string inputString, CameraType type)
-    // {
-    //     
-    // }
 
     private int GetIndexFromString(string inputString, string stringToRemove)
     {
