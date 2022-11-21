@@ -19,6 +19,24 @@ public class CarController : MonoBehaviour
     private float currentSteerAngle;
     private float currentBrakeForce;
     private bool isBraking;
+    
+    [SerializeField] private float motorForce;
+    [SerializeField] private float brakeForce;
+    [SerializeField] public float maxSteeringAngle;
+    [SerializeField] private float softTurn;
+
+    [SerializeField] public WheelCollider frontLeftWheelCollider;
+    [SerializeField] public WheelCollider frontRightWheelCollider;
+    [SerializeField] public WheelCollider backLeftWheelCollider;
+    [SerializeField] public WheelCollider backRightWheelCollider;
+
+    [SerializeField] private Transform frontLeftWheelTransform;
+    [SerializeField] private Transform frontRightWheelTransform;
+    [SerializeField] private Transform backLeftWheelTransform;
+    [SerializeField] private Transform backRightWheelTransform;
+    
+    [SerializeField] private MeshRenderer carBodyMesh;
+    [SerializeField] private MeshRenderer carSpoilerMesh;
 
     public int GetInitialVerticalInput(CurrentLane currentLane)
     {
@@ -40,22 +58,20 @@ public class CarController : MonoBehaviour
         return verticalInput;
     }
 
-    [SerializeField] private float motorForce;
-    [SerializeField] private float brakeForce;
-    [SerializeField] public float maxSteeringAngle;
-    [SerializeField] private float softTurn;
-
-    [SerializeField] public WheelCollider frontLeftWheelCollider;
-    [SerializeField] public WheelCollider frontRightWheelCollider;
-    [SerializeField] public WheelCollider backLeftWheelCollider;
-    [SerializeField] public WheelCollider backRightWheelCollider;
-
-    [SerializeField] private Transform frontLeftWheelTransform;
-    [SerializeField] private Transform frontRightWheelTransform;
-    [SerializeField] private Transform backLeftWheelTransform;
-    [SerializeField] private Transform backRightWheelTransform;
-    
-    public GameObject person1;
+    public void UpdateCarVisibility(CameraType cameraType)
+    {
+        frontLeftWheelTransform.TryGetComponent(out MeshRenderer flMesh);
+        frontRightWheelCollider.TryGetComponent(out MeshRenderer frMesh);
+        backLeftWheelCollider.TryGetComponent(out MeshRenderer blMesh);
+        backRightWheelCollider.TryGetComponent(out MeshRenderer brMesh);
+        
+        carBodyMesh.enabled = cameraType == CameraType.Car;
+        carSpoilerMesh.enabled = cameraType == CameraType.Car;
+        flMesh.enabled = cameraType == CameraType.Car;
+        frMesh.enabled = cameraType == CameraType.Car;
+        blMesh.enabled = cameraType == CameraType.Car;
+        brMesh.enabled = cameraType == CameraType.Car;
+    }
 
     private void FixedUpdate() {
         // GetInput();

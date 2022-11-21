@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
@@ -11,6 +10,12 @@ enum LaneChangeState
 {
     Restricted,
     ControlledAccess
+}
+
+public enum CameraType
+{
+    Follow,
+    Car
 }
 
 public class EpisodeBeginData
@@ -45,7 +50,6 @@ public class DriveToGoalAgent : Agent
     private MeshRenderer targetLane;
     private int triggerLaneChangeMaxCount;
     private int triggerLaneChangeCounter;
-    private const int LaneChangePermittedMaxCount = 50;
 
     private CurrentLane currentLane = CurrentLane.Low;
 
@@ -63,16 +67,25 @@ public class DriveToGoalAgent : Agent
     
     void OnPreRenderCallback(Camera cam)
     {
-        string indexString = cam.name.Replace("Car Camera Sedan", "");
-        indexString = indexString.Replace("Follow Camera Sedan", "");
-        indexString = indexString.Replace("Sedan", "");
-        int cameraIndex = int.Parse(indexString);
-        
-        if (cameraIndex == episodeBeginIndex)
+        CameraType cameraType = CameraType.Car;
+        string cameraName = cam.name;
+        if (cameraName.Contains("Car Camera Sedan"))
         {
-            UpdateLaneMaterials();
+            cameraType = CameraType.Car;
         }
+        else if (cameraName.Contains("Follow Camera Sedan"))
+        {
+            cameraType = CameraType.Follow;            
+        }
+
+        UpdateMaterials(cameraType);
+        
     }
+    //
+    // private int getIndexOfCamera(string inputString, CameraType type)
+    // {
+    //     
+    // }
 
     private int GetIndexFromString(string inputString, string stringToRemove)
     {
@@ -133,7 +146,7 @@ public class DriveToGoalAgent : Agent
         shouldEndAllEpisodesNotifier.material = outOfBoundsMaterial;
         ResetCar();
         ResetLaneChangeStates();
-        UpdateLaneMaterials();
+        UpdateMaterials(CameraType.Car);
     }
 
     private void ResetLaneChangeStates()
@@ -247,7 +260,7 @@ public class DriveToGoalAgent : Agent
             {
                 case LaneChangeState.ControlledAccess:
                     ToggleTargetLane();
-                    UpdateLaneMaterials();
+                    UpdateMaterials(CameraType.Car);
                     break;
             }
         }
@@ -283,10 +296,20 @@ public class DriveToGoalAgent : Agent
         targetLane = targetLane.Equals(lane1Mesh) ? lane2Mesh : lane1Mesh;
     }
 
-    private void UpdateLaneMaterials()
+    private void UpdateMaterials(CameraType cameraType)
     {
-        lane1Mesh.material = targetLane.Equals(lane1Mesh) ? targetLaneMaterial : outOfBoundsMaterial;
-        lane2Mesh.material = targetLane.Equals(lane2Mesh) ? targetLaneMaterial : outOfBoundsMaterial;
+        switch (cameraType)
+        {
+            case CameraType.Car:
+                lane1Mesh.material = targetLane.Equals(lane1Mesh) ? targetLaneMaterial : outOfBoundsMaterial;
+                lane2Mesh.material = targetLane.Equals(lane2Mesh) ? targetLaneMaterial : outOfBoundsMaterial;
+                break;
+            case CameraType.Follow:
+                // Input code to set lane colours to grey
+                // Input mesh rendered to add lane divider, for aesthetics
+                break;
+        }
+        carController.UpdateCarVisibility(cameraType);
     }
 
     private bool ShouldEndAllEpisodes()
