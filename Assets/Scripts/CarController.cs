@@ -31,9 +31,6 @@ public class CarController : MonoBehaviour
     [SerializeField] private Transform frontRightWheelTransform;
     [SerializeField] private Transform backLeftWheelTransform;
     [SerializeField] private Transform backRightWheelTransform;
-    
-    [SerializeField] private MeshRenderer carBodyMesh;
-    [SerializeField] private MeshRenderer carSpoilerMesh;
 
     public int GetInitialVerticalInput(CurrentLane currentLane)
     {
@@ -53,20 +50,6 @@ public class CarController : MonoBehaviour
     public int GetVerticalInput()
     {
         return verticalInput;
-    }
-
-    public void UpdateCarVisibility(CameraType cameraType)
-    {
-        var hideScale = new Vector3(0, 0, 0);
-        var showScale = new Vector3(1, 1, 1);
-        
-        carBodyMesh.transform.localScale = cameraType == CameraType.Car ? hideScale : showScale;
-        carSpoilerMesh.transform.localScale = cameraType == CameraType.Car ? hideScale : showScale;
-        
-        frontLeftWheelTransform.localScale = cameraType == CameraType.Car ? hideScale : showScale;
-        frontRightWheelTransform.localScale = cameraType == CameraType.Car ? hideScale : showScale;
-        backLeftWheelTransform.localScale = cameraType == CameraType.Car ? hideScale : showScale;
-        backRightWheelTransform.localScale = cameraType == CameraType.Car ? hideScale : showScale;
     }
 
     private void FixedUpdate() {

@@ -35,12 +35,17 @@ public class EpisodeBeginData
 public class DriveToGoalAgent : Agent
 {
     
-    [SerializeField] private Material targetLaneMaterial;
     [SerializeField] private Material outOfBoundsMaterial;
     [SerializeField] private MeshRenderer lane1Mesh;
     [SerializeField] private MeshRenderer lane2Mesh;
     [SerializeField] private MeshRenderer terrainMesh;
     [SerializeField] private MeshRenderer shouldEndAllEpisodesNotifier;
+    
+    [SerializeField] private LayerMask lane1Mask;
+    [SerializeField] private LayerMask lane2Mask;
+
+    [SerializeField] private Camera carCamera;
+    [SerializeField] private Camera followCamera;
 
     private EpisodeBeginData[] listOfEpisodeBeginData;
     private string currentEpisodeInt = "0";
@@ -62,23 +67,6 @@ public class DriveToGoalAgent : Agent
         carController = GetComponent<CarController>();
         episodeBeginIndex = GetIndexFromString(carController.name, "Sedan");
         listOfEpisodeBeginData = CreateListOfEpisodeBeginData();
-        Camera.onPreRender += OnPreRenderCallback;
-    }
-    
-    void OnPreRenderCallback(Camera cam)
-    {
-        CameraType cameraType = CameraType.Car;
-        if (cam.name.Contains("Car Camera Sedan"))
-        {
-            cameraType = CameraType.Car;
-        }
-        else if (cam.name.Contains("Follow Camera Sedan"))
-        {
-            cameraType = CameraType.Follow;            
-        }
-
-        UpdateMaterials(cameraType);
-        
     }
 
     private int GetIndexFromString(string inputString, string stringToRemove)
@@ -140,7 +128,7 @@ public class DriveToGoalAgent : Agent
         shouldEndAllEpisodesNotifier.material = outOfBoundsMaterial;
         ResetCar();
         ResetLaneChangeStates();
-        UpdateMaterials(CameraType.Car);
+        UpdateMaterials();
     }
 
     private void ResetLaneChangeStates()
@@ -254,7 +242,7 @@ public class DriveToGoalAgent : Agent
             {
                 case LaneChangeState.ControlledAccess:
                     ToggleTargetLane();
-                    UpdateMaterials(CameraType.Car);
+                    UpdateMaterials();
                     break;
             }
         }
@@ -290,20 +278,10 @@ public class DriveToGoalAgent : Agent
         targetLane = targetLane.Equals(lane1Mesh) ? lane2Mesh : lane1Mesh;
     }
 
-    private void UpdateMaterials(CameraType cameraType)
+    private void UpdateMaterials()
     {
-        switch (cameraType)
-        {
-            case CameraType.Car:
-                lane1Mesh.material = targetLane.Equals(lane1Mesh) ? targetLaneMaterial : outOfBoundsMaterial;
-                lane2Mesh.material = targetLane.Equals(lane2Mesh) ? targetLaneMaterial : outOfBoundsMaterial;
-                break;
-            case CameraType.Follow:
-                // Input code to set lane colours to grey
-                // Input mesh rendered to add lane divider, for aesthetics
-                break;
-        }
-        carController.UpdateCarVisibility(cameraType);
+        carCamera.cullingMask = targetLane.Equals(lane1Mesh) ? lane1Mask : lane2Mask;
+        followCamera.cullingMask = targetLane.Equals(lane1Mesh) ? lane1Mask : lane2Mask;
     }
 
     private bool ShouldEndAllEpisodes()
@@ -313,6 +291,7 @@ public class DriveToGoalAgent : Agent
 
     private void SetAllEpisodesToEnd()
     {
+        SetReward(-10000f);
         var currentInt = int.Parse(shouldEndAllEpisodesNotifier.name);
         currentInt += 1;
         shouldEndAllEpisodesNotifier.name = currentInt.ToString();

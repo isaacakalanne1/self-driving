@@ -537,12 +537,6 @@ MonoBehaviour:
   frontRightWheelTransform: {fileID: 3302184792834820000}
   backLeftWheelTransform: {fileID: 5780540727148265376}
   backRightWheelTransform: {fileID: 1695724158917176390}
-  carBodyMesh: {fileID: 4103924371611653090}
-  carSpoilerMesh: {fileID: 2750102622519288078}
-  carBodyMaterial0: {fileID: 7576386722563338562, guid: d1716d34dfed147a7b47d15af5c54487, type: 3}
-  carBodyMaterial1: {fileID: -1991239904168531565, guid: d1716d34dfed147a7b47d15af5c54487, type: 3}
-  carBodyMaterial2: {fileID: 0}
-  carBodyMaterial3: {fileID: 0}
 --- !u!114 &5348801597922184880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -595,6 +589,17 @@ MonoBehaviour:
   lane2Mesh: {fileID: 0}
   terrainMesh: {fileID: 0}
   shouldEndAllEpisodesNotifier: {fileID: 0}
+  lane1Mask:
+    serializedVersion: 2
+    m_Bits: 64
+  lane2Mask:
+    serializedVersion: 2
+    m_Bits: 128
+  everythingMask:
+    serializedVersion: 2
+    m_Bits: 2147483647
+  carCamera: {fileID: 7012821055741224539}
+  followCamera: {fileID: 7012821055845611924}
 --- !u!114 &5348801597922184908
 MonoBehaviour:
   m_ObjectHideFlags: 0
