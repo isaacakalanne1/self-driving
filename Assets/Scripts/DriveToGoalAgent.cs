@@ -78,35 +78,35 @@ public class DriveToGoalAgent : Agent
     private EpisodeBeginData[] CreateListOfEpisodeBeginData()
     {
         EpisodeBeginData[] list = {
-            new (new Vector3((float)13.627,(float)-8.04,(float)7.775),
+            new (new Vector3((float)13.627,-8,(float)7.775),
                 Quaternion.Euler(0, 205, 0),
                 lane2Mesh),
-            new (new Vector3((float)3.543,(float)-8.04,(float)-11.105),
+            new (new Vector3((float)3.543,-8,(float)-11.105),
                 Quaternion.Euler(0, 270, 0),
                 lane2Mesh),
-            new (new Vector3((float)-13.656,(float)-8.04,(float)-3.791),
+            new (new Vector3((float)-13.656,-8,(float)-3.791),
                 Quaternion.Euler(0, 20, 0),
                 lane2Mesh),
-            new (new Vector3((float)-15.018,(float)-8.04,(float)19.211),
+            new (new Vector3((float)-15.018,-8,(float)19.211),
                 Quaternion.Euler(0, 80, 0),
                 lane2Mesh),
-            new (new Vector3((float)6.143,(float)-8.04,(float)22.402),
+            new (new Vector3((float)6.143,-8,(float)22.402),
                 Quaternion.Euler(0, 115, 0),
                 lane2Mesh),
             
-            new (new Vector3((float)18.055,(float)-8.04,(float)-4.325),
+            new (new Vector3((float)18.055,-8,(float)-4.325),
                 Quaternion.Euler(0, 180, 0),
                 lane1Mesh),
-            new (new Vector3((float)-8.11,(float)-8.04,(float)-17.16),
+            new (new Vector3((float)-8.11,-8,(float)-17.16),
                 Quaternion.Euler(0, 235, 0),
                 lane1Mesh),
-            new (new Vector3((float)-21.33,(float)-8.04,(float)15.676),
+            new (new Vector3((float)-21.33,-8,(float)15.676),
                 Quaternion.Euler(0, 25, 0),
                 lane1Mesh),
-            new (new Vector3((float)-3.398,(float)-8.04,(float)25.562),
+            new (new Vector3((float)-3.398,-8,(float)25.562),
                 Quaternion.Euler(0, 80, 0),
                 lane1Mesh),
-            new (new Vector3((float)15.585,(float)-8.04,(float)17.432),
+            new (new Vector3((float)15.585,-8,(float)17.432),
                 Quaternion.Euler(0, 130, 0),
                 lane1Mesh)
         };
@@ -185,6 +185,23 @@ public class DriveToGoalAgent : Agent
 
     public override void OnActionReceived(ActionBuffers actions)
     {
+        // var rcComponents = this.GetComponents<RayPerceptionSensorComponent3D>();
+        //
+        // foreach (var rc in rcComponents)
+        // {
+        //     var r2 = rc.GetRayPerceptionInput();
+        //     var r3 = RayPerceptionSensor.Perceive(r2);
+        //     {          
+        //         foreach(RayPerceptionOutput.RayOutput rayOutput in r3.RayOutputs)
+        //         {
+        //             if (rayOutput.HitTaggedObject)
+        //             {
+        //                 Debug.Log("Ray hit! Index is " + rayOutput.HitTagIndex);
+        //             }
+        //         }
+        //     }
+        // }
+        
         var highestTurnIndex = GetIndexOfHighestValue(actions);
         carController.SetInput(highestTurnIndex, currentLane);
 
@@ -270,6 +287,7 @@ public class DriveToGoalAgent : Agent
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("Cars collided!");
         SetAllEpisodesToEnd();
     }
 
@@ -281,7 +299,7 @@ public class DriveToGoalAgent : Agent
     private void UpdateMaterials()
     {
         carCamera.cullingMask = targetLane.Equals(lane1Mesh) ? lane1Mask : lane2Mask;
-        followCamera.cullingMask = targetLane.Equals(lane1Mesh) ? lane1Mask : lane2Mask;
+        // followCamera.cullingMask = targetLane.Equals(lane1Mesh) ? lane1Mask : lane2Mask;
     }
 
     private bool ShouldEndAllEpisodes()

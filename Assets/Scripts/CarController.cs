@@ -86,7 +86,6 @@ public class CarController : MonoBehaviour
                 }
                 break;
         }
-        Debug.Log("Vertical input is " + verticalInput);
     }
 
     public float GetReward()

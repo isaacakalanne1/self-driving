@@ -1,0 +1,65 @@
+{
+    "DriveToGoal": {
+        "checkpoints": [
+            {
+                "steps": 9499999,
+                "file_path": "results/DriveToGoal2.1.0/DriveToGoal/DriveToGoal-9499999.onnx",
+                "reward": -1993.996833773087,
+                "creation_time": 1669263986.278487,
+                "auxillary_file_paths": [
+                    "results/DriveToGoal2.1.0/DriveToGoal/DriveToGoal-9499999.pt"
+                ]
+            },
+            {
+                "steps": 9999999,
+                "file_path": "results/DriveToGoal2.1.0/DriveToGoal/DriveToGoal-9999999.onnx",
+                "reward": -1980.8483072258716,
+                "creation_time": 1669268334.060962,
+                "auxillary_file_paths": [
+                    "results/DriveToGoal2.1.0/DriveToGoal/DriveToGoal-9999999.pt"
+                ]
+            },
+            {
+                "steps": 10499999,
+                "file_path": "results/DriveToGoal2.1.0/DriveToGoal/DriveToGoal-10499999.onnx",
+                "reward": -1979.5963374754742,
+                "creation_time": 1669272731.5382621,
+                "auxillary_file_paths": [
+                    "results/DriveToGoal2.1.0/DriveToGoal/DriveToGoal-10499999.pt"
+                ]
+            },
+            {
+                "steps": 10999999,
+                "file_path": "results/DriveToGoal2.1.0/DriveToGoal/DriveToGoal-10999999.onnx",
+                "reward": -1977.300092678406,
+                "creation_time": 1669277151.2481122,
+                "auxillary_file_paths": [
+                    "results/DriveToGoal2.1.0/DriveToGoal/DriveToGoal-10999999.pt"
+                ]
+            },
+            {
+                "steps": 11089204,
+                "file_path": "results/DriveToGoal2.1.0/DriveToGoal/DriveToGoal-11089204.onnx",
+                "reward": -1989.740425531915,
+                "creation_time": 1669278011.55423,
+                "auxillary_file_paths": [
+                    "results/DriveToGoal2.1.0/DriveToGoal/DriveToGoal-11089204.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 11089204,
+            "file_path": "results/DriveToGoal2.1.0/DriveToGoal.onnx",
+            "reward": -1989.740425531915,
+            "creation_time": 1669278011.55423,
+            "auxillary_file_paths": [
+                "results/DriveToGoal2.1.0/DriveToGoal/DriveToGoal-11089204.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.29.0",
+        "torch_version": "1.8.1"
+    }
+}

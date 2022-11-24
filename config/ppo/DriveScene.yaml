@@ -40,7 +40,12 @@ behaviors:
     time_horizon: 64
     summary_freq: 50000
     threaded: false
-    self_play: null
+    self_play:
+      save_steps: 20000
+      team_change: 5 * save_steps
+      swap_steps: 10000
+      play_against_latest_model_ratio: 0.5
+      window: 10
     behavioral_cloning: null
 env_settings:
   env_path: null
