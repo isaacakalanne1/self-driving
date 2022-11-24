@@ -537,6 +537,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Car Camera Sedan0
       objectReference: {fileID: 0}
+    - target: {fileID: 7012821055845611924, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: m_TargetDisplay
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7012821055845611929, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_Name
       value: Follow Camera Sedan0
@@ -821,6 +825,10 @@ PrefabInstance:
     - target: {fileID: 7012821055741224538, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_Name
       value: Car Camera Sedan0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012821055845611924, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: m_TargetDisplay
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7012821055845611929, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_Name
@@ -1942,6 +1950,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Car Camera Sedan0
       objectReference: {fileID: 0}
+    - target: {fileID: 7012821055845611924, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: m_TargetDisplay
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7012821055845611929, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_Name
       value: Follow Camera Sedan0
@@ -2489,6 +2501,10 @@ PrefabInstance:
     - target: {fileID: 7012821055741224538, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_Name
       value: Car Camera Sedan0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012821055845611924, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
+      propertyPath: m_TargetDisplay
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7012821055845611929, guid: 58dbef1d931014e1abc0f969c6ecff15, type: 3}
       propertyPath: m_Name

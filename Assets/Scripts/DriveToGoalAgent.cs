@@ -224,6 +224,7 @@ public class DriveToGoalAgent : Agent
                     currentLane = targetLane.Equals(lane1Mesh) ? CurrentLane.Low : CurrentLane.High;
                 } else if (IsTouching(terrainMesh))
                 {
+                    SetReward(-10000f);
                     SetAllEpisodesToEnd();
                 }
                 else
@@ -234,6 +235,7 @@ public class DriveToGoalAgent : Agent
             case LaneChangeState.Restricted:
                 if (!IsOnlyTouching(targetLane))
                 {
+                    SetReward(-10000f);
                     SetAllEpisodesToEnd();
                 }
                 else
@@ -287,7 +289,11 @@ public class DriveToGoalAgent : Agent
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Cars collided!");
+        if (currentState == LaneChangeState.ControlledAccess)
+        {
+            Debug.Log("Cars collided!");
+            SetReward(-10000f);            
+        }
         SetAllEpisodesToEnd();
     }
 
@@ -309,7 +315,6 @@ public class DriveToGoalAgent : Agent
 
     private void SetAllEpisodesToEnd()
     {
-        SetReward(-10000f);
         var currentInt = int.Parse(shouldEndAllEpisodesNotifier.name);
         currentInt += 1;
         shouldEndAllEpisodesNotifier.name = currentInt.ToString();

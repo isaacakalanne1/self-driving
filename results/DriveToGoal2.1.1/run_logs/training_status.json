@@ -1,0 +1,66 @@
+{
+    "DriveToGoal": {
+        "checkpoints": [
+            {
+                "steps": 3499973,
+                "file_path": "results/DriveToGoal2.1.1/DriveToGoal/DriveToGoal-3499973.onnx",
+                "reward": -455.39130434782606,
+                "creation_time": 1669294846.8212779,
+                "auxillary_file_paths": [
+                    "results/DriveToGoal2.1.1/DriveToGoal/DriveToGoal-3499973.pt"
+                ]
+            },
+            {
+                "steps": 3984638,
+                "file_path": "results/DriveToGoal2.1.1/DriveToGoal/DriveToGoal-3984638.onnx",
+                "reward": -238.43846153846152,
+                "creation_time": 1669297080.291788,
+                "auxillary_file_paths": [
+                    "results/DriveToGoal2.1.1/DriveToGoal/DriveToGoal-3984638.pt"
+                ]
+            },
+            {
+                "steps": 3999988,
+                "file_path": "results/DriveToGoal2.1.1/DriveToGoal/DriveToGoal-3999988.onnx",
+                "reward": -182.66666666666666,
+                "creation_time": 1669297240.29357,
+                "auxillary_file_paths": [
+                    "results/DriveToGoal2.1.1/DriveToGoal/DriveToGoal-3999988.pt"
+                ]
+            },
+            {
+                "steps": 4499993,
+                "file_path": "results/DriveToGoal2.1.1/DriveToGoal/DriveToGoal-4499993.onnx",
+                "reward": -159.75555555555556,
+                "creation_time": 1669299506.9004061,
+                "auxillary_file_paths": [
+                    "results/DriveToGoal2.1.1/DriveToGoal/DriveToGoal-4499993.pt"
+                ]
+            },
+            {
+                "steps": 4843056,
+                "file_path": "results/DriveToGoal2.1.1/DriveToGoal/DriveToGoal-4843056.onnx",
+                "reward": -651.5076923076923,
+                "creation_time": 1669301243.0364192,
+                "auxillary_file_paths": [
+                    "results/DriveToGoal2.1.1/DriveToGoal/DriveToGoal-4843056.pt"
+                ]
+            }
+        ],
+        "elo": 384.43771229867866,
+        "final_checkpoint": {
+            "steps": 4843056,
+            "file_path": "results/DriveToGoal2.1.1/DriveToGoal.onnx",
+            "reward": -651.5076923076923,
+            "creation_time": 1669301243.0364192,
+            "auxillary_file_paths": [
+                "results/DriveToGoal2.1.1/DriveToGoal/DriveToGoal-4843056.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.29.0",
+        "torch_version": "1.8.1"
+    }
+}
