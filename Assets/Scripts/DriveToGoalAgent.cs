@@ -120,7 +120,9 @@ public class DriveToGoalAgent : Agent
         sensor.AddObservation(steerAngleDiscretized);
         sensor.AddObservation(IsChangingLane() ? 1 : 0);
         sensor.AddObservation(currentLane == CurrentLane.Low ? 0 : 1);
-        sensor.AddObservation(carController.GetVerticalInput());
+        carController.TryGetComponent(out Rigidbody rigidBody);
+        var localVelocity = transform.InverseTransformDirection(rigidBody.velocity);
+        sensor.AddObservation(localVelocity.z);
     }
 
     public override void OnEpisodeBegin()
