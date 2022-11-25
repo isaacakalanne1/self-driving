@@ -27,13 +27,13 @@ behaviors:
         strength: 1.0
         network_settings:
           normalize: false
-          hidden_units: 256
-          num_layers: 3
+          hidden_units: 128
+          num_layers: 2
           vis_encode_type: simple
           memory: null
           goal_conditioning_type: hyper
           deterministic: false
-    init_path: null
+    init_path: results/DriveToGoal2.1.1/DriveToGoal/checkpoint.pt
     keep_checkpoints: 5
     checkpoint_interval: 500000
     max_steps: 500000000
@@ -69,7 +69,7 @@ engine_settings:
 environment_parameters: null
 checkpoint_settings:
   run_id: DriveToGoal2.1.2
-  initialize_from: null
+  initialize_from: DriveToGoal2.1.1
   load_model: false
   resume: false
   force: false
