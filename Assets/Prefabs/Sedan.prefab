@@ -583,7 +583,6 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 10000000
-  targetLaneMaterial: {fileID: 2100000, guid: 978802ad1a38341389ee0c213897ae08, type: 2}
   outOfBoundsMaterial: {fileID: 2100000, guid: 839713b09a1b8454dbd769eedef11a8f, type: 2}
   lane1Mesh: {fileID: 0}
   lane2Mesh: {fileID: 0}
@@ -595,9 +594,6 @@ MonoBehaviour:
   lane2Mask:
     serializedVersion: 2
     m_Bits: 128
-  everythingMask:
-    serializedVersion: 2
-    m_Bits: 2147483647
   carCamera: {fileID: 7012821055741224539}
   followCamera: {fileID: 7012821055845611924}
 --- !u!114 &5348801597922184908
@@ -649,18 +645,18 @@ MonoBehaviour:
   m_SensorName: RayPerceptionSensor
   m_DetectableTags:
   - Car
-  m_RaysPerDirection: 10
+  m_RaysPerDirection: 20
   m_MaxRayDegrees: 180
   m_SphereCastRadius: 0.0000001
-  m_RayLength: 20
+  m_RayLength: 53
   m_RayLayerMask:
     serializedVersion: 2
     m_Bits: 4294967291
   m_ObservationStacks: 20
   rayHitColor: {r: 1, g: 0, b: 0, a: 1}
   rayMissColor: {r: 1, g: 1, b: 1, a: 1}
-  m_StartVerticalOffset: 0.7
-  m_EndVerticalOffset: 0.7
+  m_StartVerticalOffset: 1
+  m_EndVerticalOffset: 1
 --- !u!1 &4945673100857179602
 GameObject:
   m_ObjectHideFlags: 0
