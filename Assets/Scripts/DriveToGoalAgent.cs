@@ -308,7 +308,16 @@ public class DriveToGoalAgent : Agent
     {
         int layerLane1 = LayerMask.NameToLayer("Lane 1");
         int layerLane2 = LayerMask.NameToLayer("Lane 2");
-        carCamera.cullingMask = targetLane.Equals(lane1Mesh) ? (1 << layerLane1) : (1 << layerLane2);
+        int layerLane1Prev = LayerMask.NameToLayer("Lane 1 Prev");
+        int layerLane2Prev = LayerMask.NameToLayer("Lane 2 Prev");
+        if (currentState == LaneChangeState.ControlledAccess)
+        {
+            carCamera.cullingMask = targetLane.Equals(lane1Mesh) ? (1 << layerLane1) | (1 << layerLane2Prev) : (1 << layerLane2) | (1 << layerLane1Prev);            
+        }
+        else
+        {
+            carCamera.cullingMask = targetLane.Equals(lane1Mesh) ? 1 << layerLane1 : 1 << layerLane2;
+        }
         // followCamera.cullingMask = targetLane.Equals(lane1Mesh) ? lane1Mask : lane2Mask;
     }
 
