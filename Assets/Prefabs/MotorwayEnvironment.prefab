@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 7575959618158397999}
   - component: {fileID: 9102226604107124446}
   - component: {fileID: 1873759708089800603}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Lane 1 Prev
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -244,7 +244,7 @@ MonoBehaviour:
   roadWidth: 0.4
   thickness: 0.1
   flattenSurface: 0
-  roadMaterial: {fileID: 2100000, guid: 978802ad1a38341389ee0c213897ae08, type: 2}
+  roadMaterial: {fileID: 2100000, guid: caa5a5f25307142689fe0202d8ab451b, type: 2}
   undersideMaterial: {fileID: 2100000, guid: 839713b09a1b8454dbd769eedef11a8f, type: 2}
   textureTiling: 0
   meshHolder: {fileID: 1284693897975436817}
@@ -259,7 +259,6 @@ GameObject:
   - component: {fileID: 3754235686642335072}
   - component: {fileID: 7620000928180370880}
   - component: {fileID: 4178696950682427102}
-  - component: {fileID: 4411181162370460670}
   m_Layer: 7
   m_Name: Lane 1 Mesh Holder
   m_TagString: Untagged
@@ -275,7 +274,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1284693897975436817}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 16.92787, y: -7.986433, z: -1061.3896}
+  m_LocalPosition: {x: 16.92787, y: -7.9865, z: -1061.3896}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -334,20 +333,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4411181162370460670
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1284693897975436817}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!1 &1438865555508719668
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,7 +442,7 @@ GameObject:
   - component: {fileID: 5427093423228115385}
   - component: {fileID: 9169864979747644898}
   - component: {fileID: 4106832647336883007}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Lane 2 Prev
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -592,7 +577,7 @@ MonoBehaviour:
   roadWidth: 0.4
   thickness: 0.1
   flattenSurface: 0
-  roadMaterial: {fileID: 2100000, guid: 978802ad1a38341389ee0c213897ae08, type: 2}
+  roadMaterial: {fileID: 2100000, guid: caa5a5f25307142689fe0202d8ab451b, type: 2}
   undersideMaterial: {fileID: 2100000, guid: 839713b09a1b8454dbd769eedef11a8f, type: 2}
   textureTiling: 0
   meshHolder: {fileID: 6408785693618053739}
@@ -1376,7 +1361,6 @@ GameObject:
   - component: {fileID: 6788134595588499585}
   - component: {fileID: 4980553020384231079}
   - component: {fileID: 120386215955190196}
-  - component: {fileID: 1378327196970073229}
   m_Layer: 6
   m_Name: Lane 2 Mesh Holder
   m_TagString: Untagged
@@ -1392,7 +1376,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6408785693618053739}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 16.92787, y: -7.986433, z: -1061.3896}
+  m_LocalPosition: {x: 16.92787, y: -7.9865, z: -1061.3896}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1451,20 +1435,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1378327196970073229
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6408785693618053739}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!1 &8659988920172626159
 GameObject:
   m_ObjectHideFlags: 0

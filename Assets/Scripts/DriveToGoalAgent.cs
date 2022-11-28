@@ -306,7 +306,9 @@ public class DriveToGoalAgent : Agent
 
     private void UpdateMaterials()
     {
-        carCamera.cullingMask = targetLane.Equals(lane1Mesh) ? lane1Mask : lane2Mask;
+        int layerLane1 = LayerMask.NameToLayer("Lane 1");
+        int layerLane2 = LayerMask.NameToLayer("Lane 2");
+        carCamera.cullingMask = targetLane.Equals(lane1Mesh) ? (1 << layerLane1) : (1 << layerLane2);
         // followCamera.cullingMask = targetLane.Equals(lane1Mesh) ? lane1Mask : lane2Mask;
     }
 
