@@ -1,0 +1,57 @@
+{
+    "DriveToGoal": {
+        "checkpoints": [
+            {
+                "steps": 499994,
+                "file_path": "results/DriveToGoal2.1.3/DriveToGoal/DriveToGoal-499994.onnx",
+                "reward": -1084.0862533692723,
+                "creation_time": 1669417586.5438871,
+                "auxillary_file_paths": [
+                    "results/DriveToGoal2.1.3/DriveToGoal/DriveToGoal-499994.pt"
+                ]
+            },
+            {
+                "steps": 999980,
+                "file_path": "results/DriveToGoal2.1.3/DriveToGoal/DriveToGoal-999980.onnx",
+                "reward": -1017.45,
+                "creation_time": 1669420034.042965,
+                "auxillary_file_paths": [
+                    "results/DriveToGoal2.1.3/DriveToGoal/DriveToGoal-999980.pt"
+                ]
+            },
+            {
+                "steps": 1499999,
+                "file_path": "results/DriveToGoal2.1.3/DriveToGoal/DriveToGoal-1499999.onnx",
+                "reward": -985.1764148709449,
+                "creation_time": 1669422745.9537191,
+                "auxillary_file_paths": [
+                    "results/DriveToGoal2.1.3/DriveToGoal/DriveToGoal-1499999.pt"
+                ]
+            },
+            {
+                "steps": 1627326,
+                "file_path": "results/DriveToGoal2.1.3/DriveToGoal/DriveToGoal-1627326.onnx",
+                "reward": -987.1461988304094,
+                "creation_time": 1669423922.022146,
+                "auxillary_file_paths": [
+                    "results/DriveToGoal2.1.3/DriveToGoal/DriveToGoal-1627326.pt"
+                ]
+            }
+        ],
+        "elo": 383.55132432988967,
+        "final_checkpoint": {
+            "steps": 1627326,
+            "file_path": "results/DriveToGoal2.1.3/DriveToGoal.onnx",
+            "reward": -987.1461988304094,
+            "creation_time": 1669423922.022146,
+            "auxillary_file_paths": [
+                "results/DriveToGoal2.1.3/DriveToGoal/DriveToGoal-1627326.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.29.0",
+        "torch_version": "1.8.1"
+    }
+}

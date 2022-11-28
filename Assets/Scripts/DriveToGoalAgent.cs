@@ -224,6 +224,7 @@ public class DriveToGoalAgent : Agent
                     SetReward(1000f);
                     ResetLaneChangeStates();
                     currentLane = targetLane.Equals(lane1Mesh) ? CurrentLane.Low : CurrentLane.High;
+                    UpdateMaterials();
                 } else if (IsTouching(terrainMesh))
                 {
                     SetReward(-10000f);
@@ -263,7 +264,7 @@ public class DriveToGoalAgent : Agent
             {
                 case LaneChangeState.ControlledAccess:
                     ToggleTargetLane();
-                    UpdateMaterials();
+                    // UpdateMaterials();
                     break;
             }
         }
