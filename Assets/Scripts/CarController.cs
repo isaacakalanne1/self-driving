@@ -107,12 +107,6 @@ public class CarController : MonoBehaviour
 
     private int GetDistanceFromIdealSpeed(CurrentLane currentLane)
     {
-        var targetVerticalInput = currentLane switch
-        {
-            CurrentLane.Low => LowLaneVerticalInput,
-            CurrentLane.High => HighLaneVerticalInput,
-            _ => 0
-        };
         return Math.Abs(targetVerticalInput - verticalInput);;
     }
 
