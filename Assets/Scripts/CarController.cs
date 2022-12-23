@@ -11,8 +11,9 @@ public enum CurrentLane
 public class CarController : MonoBehaviour
 {
 
-    private float turnValue;
+    private float amountToTurn;
     private int verticalInput;
+    private int targetVerticalInput;
     private const int LowLaneVerticalInput = 6;
     private const int HighLaneVerticalInput = 10;
     private const int MaxLaneKeepReward = 10;
@@ -42,7 +43,7 @@ public class CarController : MonoBehaviour
 
     public void SetTurnValue(int value)
     {
-        turnValue = value;
+        amountToTurn = value;
     }
 
     public void SetVerticalInput(int value)
@@ -62,33 +63,39 @@ public class CarController : MonoBehaviour
         UpdateWheels();
     }
 
-    public void SetInput(int turn, CurrentLane currentLane)
+    public void SetInput(int turn, int vertical, CurrentLane currentLane)
     {
-        turnValue = 0;
-        switch (turn)
+        amountToTurn = turn switch
+        {
+            1 => -softTurn,
+            2 => +softTurn,
+            _ => 0
+        };
+
+        SetTargetVerticalInput(currentLane);
+
+        switch (vertical)
         {
             case 1:
-                turnValue = -softTurn;
-                break;
-            case 2:
-                turnValue = +softTurn;
-                break;  
-        }
-        switch (currentLane)
-        {
-            case CurrentLane.Low:
-                if (verticalInput > LowLaneVerticalInput)
+                if (verticalInput > 0)
                 {
                     verticalInput -= 1;
                 }
-                break;  
-            case CurrentLane.High:
-                if (verticalInput < HighLaneVerticalInput)
-                {
-                    verticalInput += 1;
-                }
+                break;
+            case 2:
+                verticalInput += 1;
                 break;
         }
+    }
+
+    private void SetTargetVerticalInput(CurrentLane currentLane)
+    {
+        targetVerticalInput = currentLane switch
+        {
+            CurrentLane.Low => LowLaneVerticalInput,
+            CurrentLane.High => HighLaneVerticalInput,
+            _ => 0
+        };
     }
 
     public float GetReward(CurrentLane currentLane)
@@ -127,7 +134,7 @@ public class CarController : MonoBehaviour
 
     private void HandleSteering()
     {
-        var newSteerAngle = frontLeftWheelCollider.steerAngle + turnValue;
+        var newSteerAngle = frontLeftWheelCollider.steerAngle + amountToTurn;
         if (newSteerAngle < -maxSteeringAngle)
         {
             newSteerAngle = -maxSteeringAngle;

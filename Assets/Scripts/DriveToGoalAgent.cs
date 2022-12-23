@@ -181,9 +181,9 @@ public class DriveToGoalAgent : Agent
         carController.SetInput(highestTurnIndex, currentLane);
     }
 
-    private static int GetIndexOfHighestValue(ActionBuffers actions)
+    private static int GetIndexOfHighestValue(ActionBuffers actions, int startIndex)
     {
-        var turnActions = actions.ContinuousActions.ToList().GetRange(0, 3);
+        var turnActions = actions.ContinuousActions.ToList().GetRange(startIndex, 3);
         var highestTurnValue = turnActions.Max();
         return turnActions.FindIndex(a => a.Equals(highestTurnValue));
     }
@@ -207,8 +207,10 @@ public class DriveToGoalAgent : Agent
         //     }
         // }
         
-        var highestTurnIndex = GetIndexOfHighestValue(actions);
-        carController.SetInput(highestTurnIndex, currentLane);
+        var highestTurnIndex = GetIndexOfHighestValue(actions, 0);
+        var highestVerticalInputIndex = GetIndexOfHighestValue(actions, 3);
+        carController.SetInput(highestTurnIndex, highestVerticalInputIndex, currentLane);
+        
 
         // Debug.Log("isChangingLane is " + isChangingLane);
         triggerLaneChangeCounter += 1;
