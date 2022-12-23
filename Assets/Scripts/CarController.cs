@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum CurrentLane
@@ -11,8 +13,9 @@ public class CarController : MonoBehaviour
 
     private float turnValue;
     private int verticalInput;
-    private const int MinVerticalInput = 6;
-    private const int MaxVerticalInput = 10;
+    private const int LowLaneVerticalInput = 6;
+    private const int HighLaneVerticalInput = 10;
+    private const int MaxLaneKeepReward = 10;
     private float currentSteerAngle;
     private float currentBrakeForce;
     private bool isBraking;
@@ -34,7 +37,7 @@ public class CarController : MonoBehaviour
 
     public int GetInitialVerticalInput(CurrentLane currentLane)
     {
-        return currentLane == CurrentLane.Low ? MinVerticalInput : MaxVerticalInput;
+        return currentLane == CurrentLane.Low ? LowLaneVerticalInput : HighLaneVerticalInput;
     }
 
     public void SetTurnValue(int value)
@@ -74,13 +77,13 @@ public class CarController : MonoBehaviour
         switch (currentLane)
         {
             case CurrentLane.Low:
-                if (verticalInput > MinVerticalInput)
+                if (verticalInput > LowLaneVerticalInput)
                 {
                     verticalInput -= 1;
                 }
                 break;  
             case CurrentLane.High:
-                if (verticalInput < MaxVerticalInput)
+                if (verticalInput < HighLaneVerticalInput)
                 {
                     verticalInput += 1;
                 }
@@ -88,14 +91,27 @@ public class CarController : MonoBehaviour
         }
     }
 
-    public float GetReward()
+    public float GetReward(CurrentLane currentLane)
     {
-        return verticalInput;
+        var distanceFromIdealSpeed = GetDistanceFromIdealSpeed(currentLane);
+        var reward = MaxLaneKeepReward - distanceFromIdealSpeed;
+        return reward;
+    }
+
+    private int GetDistanceFromIdealSpeed(CurrentLane currentLane)
+    {
+        var targetVerticalInput = currentLane switch
+        {
+            CurrentLane.Low => LowLaneVerticalInput,
+            CurrentLane.High => HighLaneVerticalInput,
+            _ => 0
+        };
+        return Math.Abs(targetVerticalInput - verticalInput);;
     }
 
     private void HandleMotor() {
-        frontLeftWheelCollider.motorTorque = verticalInput/(float)MaxVerticalInput * motorForce;
-        frontRightWheelCollider.motorTorque = verticalInput/(float)MaxVerticalInput * motorForce;
+        frontLeftWheelCollider.motorTorque = verticalInput/(float)HighLaneVerticalInput * motorForce;
+        frontRightWheelCollider.motorTorque = verticalInput/(float)HighLaneVerticalInput * motorForce;
         ApplyBraking();
     }
 

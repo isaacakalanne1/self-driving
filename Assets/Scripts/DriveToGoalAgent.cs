@@ -232,7 +232,7 @@ public class DriveToGoalAgent : Agent
                 }
                 else
                 {
-                    SetReward(carController.GetReward());
+                    SetReward(carController.GetReward(currentLane));
                 }
                 break;
             case LaneChangeState.Restricted:
@@ -243,7 +243,7 @@ public class DriveToGoalAgent : Agent
                 }
                 else
                 {
-                    SetReward(carController.GetReward());
+                    SetReward(carController.GetReward(currentLane));
                 }
                 break;
         }
