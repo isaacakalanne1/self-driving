@@ -47,7 +47,7 @@ public class DriveToGoalAgent : Agent
     [SerializeField] private Camera carCamera;
     [SerializeField] private Camera followCamera;
 
-    private int highestLaneSwitchIndex = 0;
+    private int highestLaneSwitchIndex;
 
     private EpisodeBeginData[] listOfEpisodeBeginData;
     private string currentEpisodeInt = "0";
@@ -55,7 +55,7 @@ public class DriveToGoalAgent : Agent
     private CarController carController;
     private int episodeBeginIndex;
     private MeshRenderer targetLane;
-    private int triggerLaneChangeMaxCount = 100;
+    private int triggerLaneChangeMaxCount = 30;
     private int triggerLaneChangeCounter;
 
     private CurrentLane currentLane = CurrentLane.Low;
@@ -144,6 +144,7 @@ public class DriveToGoalAgent : Agent
         triggerLaneChangeCounter = 0;
         currentState = LaneChangeState.Restricted;
         previousState = LaneChangeState.Restricted;
+        highestLaneSwitchIndex = 0;
     }
 
     private void ResetCar()
@@ -173,7 +174,7 @@ public class DriveToGoalAgent : Agent
         continuousActions[3] = 0;
         continuousActions[4] = 0;
         continuousActions[5] = 0;
-        continuousActions[6] = 10;
+        continuousActions[6] = 0;
         continuousActions[7] = 0;
         
         if (Input.GetAxisRaw("Horizontal").Equals(-1f))
@@ -192,9 +193,13 @@ public class DriveToGoalAgent : Agent
             continuousActions[5] = 10;            
         }
         
+        if (Input.GetAxisRaw("Jump").Equals(1f))
+        {
+            continuousActions[7] = 10;            
+        }
+        
         var highestTurnIndex = GetIndexOfHighestValue(actionsOut, 0, 3);
         var highestVerticalInputIndex = GetIndexOfHighestValue(actionsOut, 3, 3);
-        highestLaneSwitchIndex = GetIndexOfHighestValue(actionsOut, 6, 2);
         carController.SetInput(highestTurnIndex, highestVerticalInputIndex, currentLane);
     }
 
@@ -231,16 +236,14 @@ public class DriveToGoalAgent : Agent
         
         var highestTurnIndex = GetIndexOfHighestValue(actions, 0, 3);
         var highestVerticalInputIndex = GetIndexOfHighestValue(actions, 3, 3);
-        highestLaneSwitchIndex = GetIndexOfHighestValue(actions, 6, 2);
+        if (highestLaneSwitchIndex == 0)
+        {
+            highestLaneSwitchIndex = GetIndexOfHighestValue(actions, 6, 2);
+        }
         carController.SetInput(highestTurnIndex, highestVerticalInputIndex, currentLane);
 
         // Debug.Log("isChangingLane is " + isChangingLane);
         triggerLaneChangeCounter += 1;
-
-        if (currentState == LaneChangeState.Restricted && Input.GetKey(KeyCode.Space))
-        {
-            triggerLaneChangeCounter = triggerLaneChangeMaxCount + 10;
-        }
         
         UpdateLaneChangeState();
 
@@ -254,6 +257,7 @@ public class DriveToGoalAgent : Agent
                     currentLane = targetLane.Equals(lane1Mesh) ? CurrentLane.Low : CurrentLane.High;
                 } else if (IsTouching(terrainMesh))
                 {
+                    Debug.Log("Fail A!");
                     SetReward(-10000f);
                     SetAllEpisodesToEnd();
                 }
@@ -265,6 +269,7 @@ public class DriveToGoalAgent : Agent
             case LaneChangeState.Restricted:
                 if (!IsOnlyTouching(targetLane))
                 {
+                    Debug.Log("Fail B!");
                     SetReward(-10000f);
                     SetAllEpisodesToEnd();
                 }
@@ -283,15 +288,16 @@ public class DriveToGoalAgent : Agent
     private void UpdateLaneChangeState()
     {
         currentState = IsChangingLane() ? LaneChangeState.ControlledAccess : LaneChangeState.Restricted;
-        if (DidTriggerLaneChange())
+        if (LaneChangeJustTriggered())
         {
+            Debug.Log("Triggered lane change!");
             ToggleTargetLane();
             UpdateMaterials();
         }
         previousState = currentState;
     }
 
-    private bool DidTriggerLaneChange()
+    private bool LaneChangeJustTriggered()
     {
         return currentState != previousState && currentState == LaneChangeState.ControlledAccess;
     }
@@ -336,14 +342,7 @@ public class DriveToGoalAgent : Agent
         int layerLane2 = LayerMask.NameToLayer("Lane 2");
         int layerLane1Prev = LayerMask.NameToLayer("Lane 1 Prev");
         int layerLane2Prev = LayerMask.NameToLayer("Lane 2 Prev");
-        if (currentState == LaneChangeState.ControlledAccess)
-        {
-            carCamera.cullingMask = targetLane.Equals(lane1Mesh) ? (1 << layerLane1) | (1 << layerLane2Prev) : (1 << layerLane2) | (1 << layerLane1Prev);            
-        }
-        else
-        {
-            carCamera.cullingMask = targetLane.Equals(lane1Mesh) ? 1 << layerLane1 : 1 << layerLane2;
-        }
+        carCamera.cullingMask = targetLane.Equals(lane1Mesh) ? lane1Mask : lane2Mask;
         // followCamera.cullingMask = targetLane.Equals(lane1Mesh) ? lane1Mask : lane2Mask;
     }
 
