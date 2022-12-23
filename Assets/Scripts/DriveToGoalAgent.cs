@@ -117,12 +117,14 @@ public class DriveToGoalAgent : Agent
     public override void CollectObservations(VectorSensor sensor)
     {
         var steerAngle = (int) Math.Round(carController.frontLeftWheelCollider.steerAngle, 0);
+        
         var steerAngleDiscretized = (int) Math.Round(steerAngle + carController.maxSteeringAngle, 0);
+        carController.TryGetComponent(out Rigidbody rigidBody);
+        var localVelocity = transform.InverseTransformDirection(rigidBody.velocity);
+        
         sensor.AddObservation(steerAngleDiscretized);
         sensor.AddObservation(IsChangingLane() ? 1 : 0);
         sensor.AddObservation(currentLane == CurrentLane.Low ? 0 : 1);
-        carController.TryGetComponent(out Rigidbody rigidBody);
-        var localVelocity = transform.InverseTransformDirection(rigidBody.velocity);
         sensor.AddObservation(localVelocity.z);
     }
 
@@ -179,7 +181,7 @@ public class DriveToGoalAgent : Agent
         carController.SetInput(highestTurnIndex, currentLane);
     }
 
-    private int GetIndexOfHighestValue(ActionBuffers actions)
+    private static int GetIndexOfHighestValue(ActionBuffers actions)
     {
         var turnActions = actions.ContinuousActions.ToList().GetRange(0, 3);
         var highestTurnValue = turnActions.Max();
@@ -247,28 +249,26 @@ public class DriveToGoalAgent : Agent
                 }
                 break;
         }
-        
-        if (ShouldEndAllEpisodes())
-        {
-            currentEpisodeInt = shouldEndAllEpisodesNotifier.name;
-            EndEpisode();
-        }
+
+        if (!ShouldEndAllEpisodes()) return;
+        currentEpisodeInt = shouldEndAllEpisodesNotifier.name;
+        EndEpisode();
     }
 
     private void UpdateLaneChangeState()
     {
         currentState = IsChangingLane() ? LaneChangeState.ControlledAccess : LaneChangeState.Restricted;
-        if (previousState != currentState)
+        if (DidTriggerLaneChange())
         {
-            switch (currentState)
-            {
-                case LaneChangeState.ControlledAccess:
-                    ToggleTargetLane();
-                    UpdateMaterials();
-                    break;
-            }
+            ToggleTargetLane();
+            UpdateMaterials();
         }
         previousState = currentState;
+    }
+
+    private bool DidTriggerLaneChange()
+    {
+        return currentState != previousState && currentState == LaneChangeState.ControlledAccess;
     }
 
     private bool IsChangingLane()
