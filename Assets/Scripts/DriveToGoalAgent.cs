@@ -47,13 +47,15 @@ public class DriveToGoalAgent : Agent
     [SerializeField] private Camera carCamera;
     [SerializeField] private Camera followCamera;
 
+    private int highestLaneSwitchIndex = 0;
+
     private EpisodeBeginData[] listOfEpisodeBeginData;
     private string currentEpisodeInt = "0";
 
     private CarController carController;
     private int episodeBeginIndex;
     private MeshRenderer targetLane;
-    private int triggerLaneChangeMaxCount;
+    private int triggerLaneChangeMaxCount = 100;
     private int triggerLaneChangeCounter;
 
     private CurrentLane currentLane = CurrentLane.Low;
@@ -126,6 +128,7 @@ public class DriveToGoalAgent : Agent
         sensor.AddObservation(IsChangingLane() ? 1 : 0);
         sensor.AddObservation(currentLane == CurrentLane.Low ? 0 : 1);
         sensor.AddObservation(localVelocity.z);
+        sensor.AddObservation(IsReadyToSwitchLane() ? 1 : 0);
     }
 
     public override void OnEpisodeBegin()
@@ -139,7 +142,6 @@ public class DriveToGoalAgent : Agent
     private void ResetLaneChangeStates()
     {
         triggerLaneChangeCounter = 0;
-        triggerLaneChangeMaxCount = new Random().Next(1, 150);
         currentState = LaneChangeState.Restricted;
         previousState = LaneChangeState.Restricted;
     }
@@ -171,6 +173,8 @@ public class DriveToGoalAgent : Agent
         continuousActions[3] = 0;
         continuousActions[4] = 0;
         continuousActions[5] = 0;
+        continuousActions[6] = 10;
+        continuousActions[7] = 0;
         
         if (Input.GetAxisRaw("Horizontal").Equals(-1f))
         {
@@ -188,16 +192,22 @@ public class DriveToGoalAgent : Agent
             continuousActions[5] = 10;            
         }
         
-        var highestTurnIndex = GetIndexOfHighestValue(actionsOut, 0);
-        var highestVerticalInputIndex = GetIndexOfHighestValue(actionsOut, 3);
+        var highestTurnIndex = GetIndexOfHighestValue(actionsOut, 0, 3);
+        var highestVerticalInputIndex = GetIndexOfHighestValue(actionsOut, 3, 3);
+        highestLaneSwitchIndex = GetIndexOfHighestValue(actionsOut, 6, 2);
         carController.SetInput(highestTurnIndex, highestVerticalInputIndex, currentLane);
     }
 
-    private static int GetIndexOfHighestValue(ActionBuffers actions, int startIndex)
+    private static int GetIndexOfHighestValue(ActionBuffers actions, int startIndex, int count)
     {
-        var turnActions = actions.ContinuousActions.ToList().GetRange(startIndex, 3);
+        var turnActions = actions.ContinuousActions.ToList().GetRange(startIndex, count);
         var highestTurnValue = turnActions.Max();
         return turnActions.FindIndex(a => a.Equals(highestTurnValue));
+    }
+
+    private bool IsReadyToSwitchLane()
+    {
+        return triggerLaneChangeCounter >= triggerLaneChangeMaxCount;
     }
 
     public override void OnActionReceived(ActionBuffers actions)
@@ -219,10 +229,10 @@ public class DriveToGoalAgent : Agent
         //     }
         // }
         
-        var highestTurnIndex = GetIndexOfHighestValue(actions, 0);
-        var highestVerticalInputIndex = GetIndexOfHighestValue(actions, 3);
+        var highestTurnIndex = GetIndexOfHighestValue(actions, 0, 3);
+        var highestVerticalInputIndex = GetIndexOfHighestValue(actions, 3, 3);
+        highestLaneSwitchIndex = GetIndexOfHighestValue(actions, 6, 2);
         carController.SetInput(highestTurnIndex, highestVerticalInputIndex, currentLane);
-        
 
         // Debug.Log("isChangingLane is " + isChangingLane);
         triggerLaneChangeCounter += 1;
@@ -231,6 +241,7 @@ public class DriveToGoalAgent : Agent
         {
             triggerLaneChangeCounter = triggerLaneChangeMaxCount + 10;
         }
+        
         UpdateLaneChangeState();
 
         switch (currentState)
@@ -287,7 +298,7 @@ public class DriveToGoalAgent : Agent
 
     private bool IsChangingLane()
     {
-        return triggerLaneChangeCounter >= triggerLaneChangeMaxCount;
+        return triggerLaneChangeCounter >= triggerLaneChangeMaxCount && highestLaneSwitchIndex == 1;
     }
 
     private bool IsTouching(MeshRenderer mesh)
