@@ -304,7 +304,7 @@ public class DriveToGoalAgent : Agent
 
     private bool IsChangingLane()
     {
-        return triggerLaneChangeCounter >= triggerLaneChangeMaxCount && highestLaneSwitchIndex == 1;
+        return IsReadyToSwitchLane() && highestLaneSwitchIndex == 1;
     }
 
     private bool IsTouching(MeshRenderer mesh)
