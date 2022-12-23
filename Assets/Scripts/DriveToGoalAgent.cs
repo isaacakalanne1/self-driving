@@ -168,6 +168,9 @@ public class DriveToGoalAgent : Agent
         continuousActions[0] = 0;
         continuousActions[1] = 0;
         continuousActions[2] = 0;
+        continuousActions[3] = 0;
+        continuousActions[4] = 0;
+        continuousActions[5] = 0;
         
         if (Input.GetAxisRaw("Horizontal").Equals(-1f))
         {
@@ -177,8 +180,17 @@ public class DriveToGoalAgent : Agent
             continuousActions[2] = 10;            
         }
         
-        var highestTurnIndex = GetIndexOfHighestValue(actionsOut);
-        carController.SetInput(highestTurnIndex, currentLane);
+        if (Input.GetAxisRaw("Vertical").Equals(-1f))
+        {
+            continuousActions[4] = 10;            
+        } else if (Input.GetAxisRaw("Vertical").Equals(1f))
+        {
+            continuousActions[5] = 10;            
+        }
+        
+        var highestTurnIndex = GetIndexOfHighestValue(actionsOut, 0);
+        var highestVerticalInputIndex = GetIndexOfHighestValue(actionsOut, 3);
+        carController.SetInput(highestTurnIndex, highestVerticalInputIndex, currentLane);
     }
 
     private static int GetIndexOfHighestValue(ActionBuffers actions, int startIndex)
