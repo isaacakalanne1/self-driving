@@ -55,7 +55,7 @@ public class DriveToGoalAgent : Agent
     private CarController carController;
     private int episodeBeginIndex;
     private MeshRenderer targetLane;
-    private const int TriggerLaneChangeMaxCount = 30;
+    private const int TriggerLaneChangeMaxCount = 60;
     private int triggerLaneChangeCounter;
 
     private CurrentLane currentLane = CurrentLane.Low;
