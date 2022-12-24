@@ -55,7 +55,7 @@ public class DriveToGoalAgent : Agent
     private CarController carController;
     private int episodeBeginIndex;
     private MeshRenderer targetLane;
-    private int triggerLaneChangeMaxCount = 30;
+    private const int TriggerLaneChangeMaxCount = 30;
     private int triggerLaneChangeCounter;
 
     private CurrentLane currentLane = CurrentLane.Low;
@@ -212,7 +212,7 @@ public class DriveToGoalAgent : Agent
 
     private bool IsReadyToSwitchLane()
     {
-        return triggerLaneChangeCounter >= triggerLaneChangeMaxCount;
+        return triggerLaneChangeCounter >= TriggerLaneChangeMaxCount;
     }
 
     public override void OnActionReceived(ActionBuffers actions)
@@ -236,7 +236,7 @@ public class DriveToGoalAgent : Agent
         
         var highestTurnIndex = GetIndexOfHighestValue(actions, 0, 3);
         var highestVerticalInputIndex = GetIndexOfHighestValue(actions, 3, 3);
-        if (highestLaneSwitchIndex == 0)
+        if (highestLaneSwitchIndex == 0 && IsReadyToSwitchLane())
         {
             highestLaneSwitchIndex = GetIndexOfHighestValue(actions, 6, 2);
         }
@@ -257,7 +257,6 @@ public class DriveToGoalAgent : Agent
                     currentLane = targetLane.Equals(lane1Mesh) ? CurrentLane.Low : CurrentLane.High;
                 } else if (IsTouching(terrainMesh))
                 {
-                    Debug.Log("Fail A!");
                     SetReward(-10000f);
                     SetAllEpisodesToEnd();
                 }
@@ -269,7 +268,6 @@ public class DriveToGoalAgent : Agent
             case LaneChangeState.Restricted:
                 if (!IsOnlyTouching(targetLane))
                 {
-                    Debug.Log("Fail B!");
                     SetReward(-10000f);
                     SetAllEpisodesToEnd();
                 }
@@ -340,8 +338,6 @@ public class DriveToGoalAgent : Agent
     {
         int layerLane1 = LayerMask.NameToLayer("Lane 1");
         int layerLane2 = LayerMask.NameToLayer("Lane 2");
-        int layerLane1Prev = LayerMask.NameToLayer("Lane 1 Prev");
-        int layerLane2Prev = LayerMask.NameToLayer("Lane 2 Prev");
         carCamera.cullingMask = targetLane.Equals(lane1Mesh) ? lane1Mask : lane2Mask;
         // followCamera.cullingMask = targetLane.Equals(lane1Mesh) ? lane1Mask : lane2Mask;
     }
