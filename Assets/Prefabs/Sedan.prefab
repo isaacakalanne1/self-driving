@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4688330008417123942}
   - component: {fileID: 8533842771014795767}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Front Left Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5753143716534681977}
   - component: {fileID: 636845178018973675}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Back Right Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 7422149888121577192}
   - component: {fileID: 6591595337248500873}
   - component: {fileID: 2750102622519288078}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: spoiler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -218,7 +218,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6189607335439679451}
   - component: {fileID: 999211157499019811}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Back Left Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 3302184792834820000}
   - component: {fileID: 1677759268151413810}
   - component: {fileID: 7375126130779119424}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: wheel_frontRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -366,7 +366,7 @@ GameObject:
   - component: {fileID: 5780540727148265376}
   - component: {fileID: 3614920259819500402}
   - component: {fileID: 5270850708536729400}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: wheel_backLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -457,7 +457,7 @@ GameObject:
   - component: {fileID: 5348801597922184908}
   - component: {fileID: 6001637137908504632}
   - component: {fileID: 3084317725822300394}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sedan
   m_TagString: Car
   m_Icon: {fileID: 0}
@@ -651,7 +651,7 @@ MonoBehaviour:
   m_RayLength: 53
   m_RayLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967291
+    m_Bits: 4294966280
   m_ObservationStacks: 20
   rayHitColor: {r: 1, g: 0, b: 0, a: 1}
   rayMissColor: {r: 1, g: 1, b: 1, a: 1}
@@ -668,7 +668,7 @@ GameObject:
   - component: {fileID: 5549484354615558814}
   - component: {fileID: 4748897371899908315}
   - component: {fileID: 6489973462058229932}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: wheel_frontLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -826,7 +826,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7012821055801506428}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Transforms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -936,7 +936,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7012821056041765346}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -971,7 +971,7 @@ GameObject:
   - component: {fileID: 1695724158917176390}
   - component: {fileID: 5098537203374965565}
   - component: {fileID: 1798514328184999410}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: wheel_backRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1056,7 +1056,7 @@ GameObject:
   - component: {fileID: 7140576658948508769}
   - component: {fileID: 8534891322491786424}
   - component: {fileID: 4103924371611653090}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1144,7 +1144,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8656146394999777602}
   - component: {fileID: 8096878642481330814}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Front Right Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1205,7 +1205,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9180477356141490225}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
