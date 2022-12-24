@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9060620071020914630}
   - component: {fileID: 368159920619919045}
   - component: {fileID: 6554914789833221898}
-  m_Layer: 6
+  m_Layer: 2
   m_Name: Wall 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 8223144134646665634}
   - component: {fileID: 5371227927625805360}
   - component: {fileID: 1730685585118252413}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ShouldEndAllEpisodesNotifier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ GameObject:
   - component: {fileID: 3404891271972293778}
   - component: {fileID: 4846638188225007352}
   - component: {fileID: 4629996319917855129}
-  m_Layer: 6
+  m_Layer: 2
   m_Name: Wall 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -875,7 +875,7 @@ GameObject:
   - component: {fileID: 3199171291649225521}
   - component: {fileID: 3199171291649225522}
   - component: {fileID: 3199171291649225523}
-  m_Layer: 6
+  m_Layer: 2
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -973,7 +973,7 @@ GameObject:
   - component: {fileID: 3094364880847980622}
   - component: {fileID: 7567944994617786191}
   - component: {fileID: 1914169004617069749}
-  m_Layer: 6
+  m_Layer: 2
   m_Name: Wall 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1071,7 +1071,7 @@ GameObject:
   - component: {fileID: 949358381996248232}
   - component: {fileID: 7598343401290713973}
   - component: {fileID: 4069295703870560522}
-  m_Layer: 6
+  m_Layer: 2
   m_Name: Wall 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
