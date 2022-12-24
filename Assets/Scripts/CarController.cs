@@ -77,7 +77,7 @@ public class CarController : MonoBehaviour
         switch (vertical)
         {
             case 1:
-                if (verticalInput > 0)
+                if (verticalInput > LowLaneVerticalInput - 2)
                 {
                     verticalInput -= 1;
                 }
